@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Wagba</string>
+    <string name="loginSlogan">Get your food now</string>
+    <string name="sign_in">Sign in</string>
+    <string name="no_account_prompt">Don\'t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="login_description">Best solution to order food quickly and reliably from the comfort of your phone</string>
+    <string name="sign_in_with_emoji">Sign In ✌</string>
+    <string name="email_hint">E-mail</string>
+    <string name="password_hint">Password</string>
+    <string name="login">Login</string>
+    <string name="exist_account_prompt">Already have an account?</string>
+    <string name="create_your_account">Create your account</string>
+    <string name="full_name">Full Name</string>
+    <string name="confirm_password_hint">Confirm Password</string>
 </resources>
