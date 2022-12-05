@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/bottomSheetLayout"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheetLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,48 +19,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Create your account"
+            android:text="Sign In ✌"
             android:textColor="@color/dark_blue"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginTop="10dp"/>
 
         <EditText
-            android:id="@+id/signUpNameText"
+            android:id="@+id/signInEmailText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:hint="Full Name"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/signUpEmailText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:hint="E-mail"
             android:inputType="textWebEmailAddress" />
 
         <EditText
-            android:id="@+id/signUpPasswordText"
+            android:id="@+id/signInPasswordText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:hint="Password"
-            android:inputType="textPassword" />
-
-
-
-        <EditText
-            android:id="@+id/signUpConfirmPasswordText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:hint="Confirm Password"
             android:inputType="textPassword" />
 
         <Button
@@ -69,7 +52,10 @@
             android:text="Sign in"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:background="@drawable/sign_in_button_background"
+            app:backgroundTint="@color/dark_blue"
+            app:cornerRadius="50dp"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="15dp"
             android:textAllCaps="false"/>
 
         <LinearLayout
@@ -80,19 +66,20 @@
             android:layout_gravity="center">
 
             <TextView
-                android:id="@+id/alreadyHaveAccountTxt"
+                android:id="@+id/dontHaveAccountTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Already have an account?"
+                android:text="Don't have an account?"
                 android:textAlignment="center"
+                android:textColor="@color/dark_blue"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/signInSheetButton"
+                android:id="@+id/signUpSheetButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="Login"
+                android:text="Sign Up"
                 android:textColor="@color/orange"
                 android:textSize="14sp" />
         </LinearLayout>

@@ -8,47 +8,40 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import com.example.wagba.databinding.SignUpSheetBinding;
+import com.example.wagba.databinding.SignInSheetBinding;
+import com.example.wagba.databinding.ActivityLoginBinding;
 
 public class Login extends AppCompatActivity {
 
-    private Button showSignInSheetButton;
-    private TextView showSignUpSheetButton;
-    private View loginLayout;
-    private ImageView logoImageView;
+    private SignUpSheetBinding singUpSheetBinding;
+    private SignInSheetBinding singInSheetBinding;
+    private ActivityLoginBinding loginBinding;
     private BottomSheet bottomSheet;
-    private View signInSheet;
-    private View signUpSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_login);
+        loginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
+        singInSheetBinding = SignInSheetBinding.inflate(getLayoutInflater());
+        singUpSheetBinding = singUpSheetBinding.inflate(getLayoutInflater());
+        setContentView(loginBinding.getRoot());
 
-        loginLayout = findViewById(R.id.loginLayout);
-        logoImageView = findViewById(R.id.logo);
-        showSignInSheetButton = findViewById(R.id.signInSheetButton);
-        showSignUpSheetButton = findViewById(R.id.signUpSheetButton);
         bottomSheet = new BottomSheet(Login.this, R.style.bottomSheetTheme, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 setLightTheme();
             }
         });
-        signInSheet = LayoutInflater.from(getApplicationContext()).inflate(R.layout.sigin_in_sheet, null);
-        signUpSheet = LayoutInflater.from(getApplicationContext()).inflate(R.layout.sigin_up_sheet, null);
-        bottomSheet.setSheetView(signInSheet);
+        bottomSheet.setSheetView(singInSheetBinding.getRoot());
 
-
-        loginLayout.getViewTreeObserver().addOnGlobalLayoutListener(new  ViewTreeObserver.OnGlobalLayoutListener() {
+        loginBinding.loginLayout.getViewTreeObserver().addOnGlobalLayoutListener(new  ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 Rect r = new Rect();
-                loginLayout.getWindowVisibleDisplayFrame(r);
-                int screenHeight = loginLayout.getRootView().getHeight();
+                loginBinding.loginLayout.getWindowVisibleDisplayFrame(r);
+                int screenHeight = loginBinding.loginLayout.getRootView().getHeight();
                 int keypadHeight = screenHeight - r.bottom;
                 if (keypadHeight > screenHeight * 0.15) {
                     bottomSheet.setHeight(0.95);
@@ -58,7 +51,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        showSignInSheetButton.setOnClickListener(new View.OnClickListener() {
+        loginBinding.signInSheetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showSignInBottomSheet();
@@ -66,35 +59,51 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        showSignUpSheetButton.setOnClickListener(new View.OnClickListener() {
+        singUpSheetBinding.signInSheetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSignInBottomSheet();
+                setDarkTheme();
+            }
+        });
+
+        loginBinding.signUpSheetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showSignUpBottomSheet();
                 setDarkTheme();
             }
         });
+
+        singInSheetBinding.signUpSheetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSignUpBottomSheet();
+                setDarkTheme();
+            }
+        });
+
+
     }
 
     private void setLightTheme(){
-        loginLayout.setBackgroundColor(getResources().getColor(R.color.white));
-        logoImageView.setImageResource(R.drawable.logo_bg_light);
+        loginBinding.loginLayout.setBackgroundColor(getResources().getColor(R.color.white));
+        loginBinding.logo.setImageResource(R.drawable.logo_bg_light);
     }
 
     private void setDarkTheme(){
-        loginLayout.setBackgroundColor(getResources().getColor(R.color.dark_blue));
-        logoImageView.setImageResource(R.drawable.logo_bg_dark);
+        loginBinding.loginLayout.setBackgroundColor(getResources().getColor(R.color.dark_blue));
+        loginBinding.logo.setImageResource(R.drawable.logo_bg_dark);
     }
 
 
     private void showSignInBottomSheet() {
-        bottomSheet.setSheetView(signInSheet);
+        bottomSheet.setSheetView(singInSheetBinding.getRoot());
         bottomSheet.show();
     }
 
     private void showSignUpBottomSheet() {
-        bottomSheet.setSheetView(signUpSheet);
+        bottomSheet.setSheetView(singUpSheetBinding.getRoot());
         bottomSheet.show();
     }
-
-
 }
