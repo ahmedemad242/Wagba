@@ -42,7 +42,7 @@ public class BottomSheet extends BottomSheetDialog {
             percentage = 0;
         }
 
-        LinearLayout bottomSheetLayout = findViewById(sheetView.getId());
+        View bottomSheetLayout = findViewById(sheetView.getId());
         assert bottomSheetLayout != null;
         bottomSheetLayout.setMinimumHeight((int)(Resources.getSystem().getDisplayMetrics().heightPixels*percentage));
     }

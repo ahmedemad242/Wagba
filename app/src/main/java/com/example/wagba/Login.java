@@ -1,34 +1,26 @@
 package com.example.wagba;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.os.CancellationSignal;
 
 import android.content.DialogInterface;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import com.example.wagba.BottomSheet;
-
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import android.widget.TextView;
 
 public class Login extends AppCompatActivity {
 
-    private Button showSignInSheet;
+    private Button showSignInSheetButton;
+    private TextView showSignUpSheetButton;
     private View loginLayout;
     private ImageView logoImageView;
     private BottomSheet bottomSheet;
+    private View signInSheet;
+    private View signUpSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +30,17 @@ public class Login extends AppCompatActivity {
 
         loginLayout = findViewById(R.id.loginLayout);
         logoImageView = findViewById(R.id.logo);
-        showSignInSheet = findViewById(R.id.showSignInSheet);
+        showSignInSheetButton = findViewById(R.id.signInSheetButton);
+        showSignUpSheetButton = findViewById(R.id.signUpSheetButton);
         bottomSheet = new BottomSheet(Login.this, R.style.bottomSheetTheme, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                loginLayout.setBackgroundColor(getResources().getColor(R.color.white));
-                logoImageView.setImageResource(R.drawable.logo_bg_light);
+                setLightTheme();
             }
         });
-        View sheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.bottom_sheet, null);
-        bottomSheet.setSheetView(sheetView);
+        signInSheet = LayoutInflater.from(getApplicationContext()).inflate(R.layout.sigin_in_sheet, null);
+        signUpSheet = LayoutInflater.from(getApplicationContext()).inflate(R.layout.sigin_up_sheet, null);
+        bottomSheet.setSheetView(signInSheet);
 
 
         loginLayout.getViewTreeObserver().addOnGlobalLayoutListener(new  ViewTreeObserver.OnGlobalLayoutListener() {
@@ -65,19 +58,41 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        showSignInSheet.setOnClickListener(new View.OnClickListener() {
+        showSignInSheetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showSignInBottomSheet();
-                loginLayout.setBackgroundColor(getResources().getColor(R.color.dark_blue));
-                logoImageView.setImageResource(R.drawable.logo_bg_dark);
-                Log.d("keyboard","keyboard 2");
+                setDarkTheme();
+            }
+        });
+
+        showSignUpSheetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSignUpBottomSheet();
+                setDarkTheme();
             }
         });
     }
 
+    private void setLightTheme(){
+        loginLayout.setBackgroundColor(getResources().getColor(R.color.white));
+        logoImageView.setImageResource(R.drawable.logo_bg_light);
+    }
+
+    private void setDarkTheme(){
+        loginLayout.setBackgroundColor(getResources().getColor(R.color.dark_blue));
+        logoImageView.setImageResource(R.drawable.logo_bg_dark);
+    }
+
+
     private void showSignInBottomSheet() {
-        View sheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.bottom_sheet, null);
+        bottomSheet.setSheetView(signInSheet);
+        bottomSheet.show();
+    }
+
+    private void showSignUpBottomSheet() {
+        bottomSheet.setSheetView(signUpSheet);
         bottomSheet.show();
     }
 

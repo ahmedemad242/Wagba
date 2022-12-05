@@ -16,7 +16,7 @@
         android:layout_marginEnd="44dp"
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintBottom_toTopOf="@+id/deliveryIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +33,7 @@
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
         android:scaleX="-1"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/loginSlogan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
         tools:ignore="ContentDescription"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/loginSlogan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
@@ -54,14 +54,14 @@
         android:textColor="@color/dark_blue"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/loginDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/deliveryIcon" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/loginDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -74,11 +74,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/loginSlogan" />
 
 
     <Button
-        android:id="@+id/showSignInSheet"
+        android:id="@+id/signInSheetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
@@ -96,7 +96,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/loginDescription" />
 
 
     <LinearLayout
@@ -109,29 +109,30 @@
         android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/showSignInSheet">
+        app:layout_constraintTop_toBottomOf="@+id/signInSheetButton">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/dontHaveAccountTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Don't have an account?"
             android:textAlignment="center"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/textView4"
+            android:textColor="@color/dark_blue"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/signUpSheetButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textButton" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/signUpSheetButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="Sign up"
             android:textColor="@color/orange"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintStart_toEndOf="@+id/dontHaveAccountTxt"
             app:layout_constraintTop_toBottomOf="@+id/textButton" />
 
     </LinearLayout>
