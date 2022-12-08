@@ -51,9 +51,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         public FoodViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            image = itemView.findViewById(R.id.image);
-            name = itemView.findViewById(R.id.name);
-            price = itemView.findViewById(R.id.price);
+            image = itemView.findViewById(R.id.food_image);
+            name = itemView.findViewById(R.id.food_name);
+            price = itemView.findViewById(R.id.food_price);
 
         }
     }

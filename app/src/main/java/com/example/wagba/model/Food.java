@@ -34,7 +34,4 @@ public class Food {
     public void setImageUrl(Integer imageUrl) {
         this.imageUrl = imageUrl;
     }
-
-
-
 }
