@@ -14,12 +14,12 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:fontFamily="sans-serif-black"
-        android:text="Find \nFood near FE-ASU"
+        android:text="Find \nFood near FEASU"
         android:textColor="@color/dark_blue"
-        android:textSize="24sp"
+        android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Find \nFood near FE-ASU" />
+        tools:text="Find \nFood near FEASU" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -60,9 +60,9 @@
             android:id="@+id/foodRecycleView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />

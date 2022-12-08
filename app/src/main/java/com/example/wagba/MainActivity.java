@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
+import android.view.Window;
 
 import com.example.wagba.adapter.FoodAdapter;
 import com.example.wagba.databinding.ActivityMainBinding;
@@ -17,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding activityMainBinding;
     private FoodAdapter foodAdapter;
+    private Window window;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
+        window = this.getWindow();
+
+        WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.secondary_blue));
+        WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
+
 
         List<Food> foodList = new ArrayList<Food>();
         foodList.add(new Food("Cake", "7.43 LE", R.drawable.ic_launcher_background));

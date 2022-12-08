@@ -1,7 +1,6 @@
 package com.example.wagba;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
 import android.graphics.Rect;
@@ -12,7 +11,6 @@ import com.example.wagba.databinding.SignUpSheetBinding;
 import com.example.wagba.databinding.SignInSheetBinding;
 import com.example.wagba.databinding.ActivityLoginBinding;
 import android.view.Window;
-import android.view.WindowManager;
 
 
 public class Login extends AppCompatActivity {
@@ -32,13 +30,8 @@ public class Login extends AppCompatActivity {
         singUpSheetBinding = singUpSheetBinding.inflate(getLayoutInflater());
         setContentView(loginBinding.getRoot());
         window = this.getWindow();
-
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setNavigationBarColor(getResources().getColor(R.color.white));
-        window.setStatusBarColor(getResources().getColor(R.color.white));
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
+        WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.white));
+        WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
 
         bottomSheet = new BottomSheet(Login.this, R.style.bottomSheetTheme, new DialogInterface.OnCancelListener() {
             @Override
@@ -99,15 +92,13 @@ public class Login extends AppCompatActivity {
     }
 
     private void setLightTheme(){
-        window.setStatusBarColor(getResources().getColor(R.color.white));
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
         loginBinding.loginLayout.setBackgroundColor(getResources().getColor(R.color.white));
         loginBinding.logo.setImageResource(R.drawable.logo_bg_light);
     }
 
     private void setDarkTheme(){
-        window.setStatusBarColor(getResources().getColor(R.color.dark_blue));
-        getWindow().getDecorView().setSystemUiVisibility(0);
+        WindowController.changeStatusBarColor(window, getResources().getColor(R.color.dark_blue), false);
         loginBinding.loginLayout.setBackgroundColor(getResources().getColor(R.color.dark_blue));
         loginBinding.logo.setImageResource(R.drawable.logo_bg_dark);
     }
