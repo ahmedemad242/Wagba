@@ -24,7 +24,6 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         loginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         singInSheetBinding = SignInSheetBinding.inflate(getLayoutInflater());
         singUpSheetBinding = singUpSheetBinding.inflate(getLayoutInflater());

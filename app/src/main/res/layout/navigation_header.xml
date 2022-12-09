@@ -2,22 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="240dp"
-    android:background="#72B569"
-    android:gravity="bottom"
+    android:background="@color/dark_blue"
+    android:gravity="bottom|right"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="20dp">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:text="Ahmed Emad"
-        android:textColor="#fff"
+        android:textColor="@color/white"
         android:textSize="18dp"
         android:textStyle="bold" />
 
@@ -25,6 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ahmedemad@gmail.com"
-        android:textColor="#fff"
+        android:textColor="@color/white"
         android:textSize="15dp" />
 </LinearLayout>
