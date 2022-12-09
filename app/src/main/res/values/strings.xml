@@ -13,4 +13,6 @@
     <string name="create_your_account">Create your account</string>
     <string name="full_name">Full Name</string>
     <string name="confirm_password_hint">Confirm Password</string>
+    <string name="nav_drawer_open">Opening Drawer</string>
+    <string name="nav_drawer_close">Closing Drawer</string>
 </resources>

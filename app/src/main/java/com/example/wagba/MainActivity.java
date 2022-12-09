@@ -1,33 +1,40 @@
 package com.example.wagba;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.example.wagba.adapter.FoodAdapter;
 import com.example.wagba.adapter.RestaurantAdapter;
 import com.example.wagba.databinding.ActivityMainBinding;
 import com.example.wagba.model.Food;
 import com.example.wagba.model.Restaurant;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding activityMainBinding;
     private FoodAdapter foodAdapter;
     private RestaurantAdapter restaurantAdapter;
     private Window window;
-
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
         window = this.getWindow();
@@ -58,6 +65,25 @@ public class MainActivity extends AppCompatActivity {
 
         setRestaurantRecycler(restaurantList);
 
+        activityMainBinding.drawerButton.setOnClickListener(v -> {
+            activityMainBinding.drawer.openDrawer(GravityCompat.END);
+        });
+
+        toggle = new ActionBarDrawerToggle(this, activityMainBinding.drawer,
+                R.string.nav_drawer_open, R.string.nav_drawer_close) {
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
+            }
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                WindowController.changeStatusBarColor(window, getResources().getColor(R.color.dark_blue), false);
+            }
+        };
+        activityMainBinding.drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        activityMainBinding.navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     private void setFoodRecycler(List<Food> foodList){
@@ -73,4 +99,33 @@ public class MainActivity extends AppCompatActivity {
         restaurantAdapter = new RestaurantAdapter(this, restaurantList);
         activityMainBinding.restaurantRecycleView.setAdapter(restaurantAdapter);
     }
+
+    @Override
+    public void onBackPressed() {
+        if (activityMainBinding.drawer.isDrawerOpen(GravityCompat.END)) {
+            activityMainBinding.drawer.closeDrawer(GravityCompat.END);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//        switch (menuItem.getItemId()) {
+//            case R.id.homes:
+//                null;
+//                break;
+//            case R.id.work:
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame,
+//                        new second()).commit();
+//                break;
+//            case R.id.share:
+//                Toast.makeText(this, "Share Press", Toast.LENGTH_SHORT).show();
+//                break;
+//        }
+
+        activityMainBinding.drawer.closeDrawer(GravityCompat.END);
+        return true;
+    }
+
 }
