@@ -3,6 +3,7 @@ package com.example.wagba;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
@@ -85,6 +86,10 @@ public class Login extends AppCompatActivity {
                 showSignUpBottomSheet();
                 setDarkTheme();
             }
+        });
+
+        singInSheetBinding.singInBtn.setOnClickListener(v -> {
+            startActivity(new Intent(Login.this, MainActivity.class));
         });
 
 
