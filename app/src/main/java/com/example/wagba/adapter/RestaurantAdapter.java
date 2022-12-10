@@ -11,10 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wagba.MainActivity;
-import com.example.wagba.Profile;
 import com.example.wagba.R;
-import com.example.wagba.ResturantDetails;
+import com.example.wagba.RestaurantDetails;
 import com.example.wagba.model.Restaurant;
 
 import java.util.List;
@@ -43,7 +41,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.rating.setText(restaurantList.get(position).getRating());
 
         holder.itemView.setOnClickListener(v -> {
-            context.startActivity(new Intent(context, ResturantDetails.class));
+            context.startActivity(new Intent(context, RestaurantDetails.class));
 
         });
     }
