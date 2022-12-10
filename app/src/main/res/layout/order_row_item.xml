@@ -9,24 +9,18 @@
     app:cardElevation="3dp">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="10"
-        android:padding="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:weightSum="10">
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/order_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Order #1234"
+                android:text="@string/order_number_placeholder"
                 android:textColor="@color/orange"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -36,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:text="Delivered"
+                android:text="@string/status_placeholder"
                 />
 
             <TextView
@@ -44,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:text="Number of Items: 5"
+                android:text="@string/number_of_items_placeholder"
                 />
 
             <View
@@ -59,26 +53,27 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="8dp">
+                android:layout_marginStart="8dp">
                 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/dark_blue"
-                    android:text="Order on"
+                    android:text="@string/order_on"
                     android:textStyle="bold"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_date_range_24"/>
+                    android:src="@drawable/ic_baseline_date_range_24"
+                    android:contentDescription="@string/calender" />
 
                 <TextView
                     android:id="@+id/order_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/dark_blue"
-                    android:text="09/12/2022"
+                    android:text="@string/date_placeholder"
                     android:textStyle="italic"/>
 
                 <TextView
@@ -86,8 +81,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/orange"
-                    android:text="190.2LE"
-                    android:gravity="right"
+                    android:text="@string/price_placeholder"
+                    android:gravity="end"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -96,7 +91,5 @@
 
         </LinearLayout>
 
-
-    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

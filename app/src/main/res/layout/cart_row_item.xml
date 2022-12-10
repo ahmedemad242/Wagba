@@ -10,8 +10,7 @@
     android:layout_marginEnd="8dp"
     android:layout_height="wrap_content">
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -24,14 +23,15 @@
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@drawable/ic_launcher_background"
+        android:contentDescription="@string/food_image" />
 
 
     <TextView
         android:id="@+id/cart_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
+        android:text="@string/title"
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
         android:textColor="@color/blue_grey"
@@ -47,13 +47,14 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/cart_item_image"
         app:layout_constraintStart_toStartOf="@+id/cart_item_title"
-        app:srcCompat="@drawable/minus" />
+        app:srcCompat="@drawable/minus"
+        android:contentDescription="@string/cart_minus" />
 
     <TextView
         android:id="@+id/restaurant_food_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1"
+        android:text="@string/item_placeholder"
         android:layout_marginStart="8dp"
         android:textColor="@color/blue_grey"
         android:textSize="18sp"
@@ -70,13 +71,14 @@
         app:layout_constraintBottom_toBottomOf="@+id/restaurant_food_minus_btn"
         app:layout_constraintStart_toEndOf="@+id/restaurant_food_count"
         app:layout_constraintTop_toTopOf="@+id/restaurant_food_minus_btn"
-        app:srcCompat="@drawable/plus" />
+        app:srcCompat="@drawable/plus"
+        android:contentDescription="@string/cart_add" />
 
     <TextView
         android:id="@+id/cart_item_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/_0"
         android:textColor="@color/blue_grey"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -87,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="LE"
+        android:text="@string/currency"
         android:layout_marginStart="8dp"
         android:textColor="@color/blue_grey"
         android:textSize="16sp"
@@ -99,7 +101,7 @@
         android:id="@+id/cart_item_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/_0"
         android:textColor="@color/blue_grey"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -110,7 +112,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="LE"
+        android:text="@string/currency"
         android:layout_marginStart="8dp"
         android:textColor="@color/blue_grey"
         android:textSize="16sp"

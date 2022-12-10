@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     app:cardCornerRadius="15dp"
     android:elevation="5dp"
@@ -23,7 +22,8 @@
             android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            app:srcCompat="@drawable/ic_launcher_background"
+            android:contentDescription="@string/restaurant_image" />
 
         <TextView
             android:id="@+id/restaurant_food_description"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="50dp"
-            android:text="Float Cake Vietnam"
+            android:text="@string/food_name_placeholder"
             android:textColor="#99000000"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:text="@string/food_name_placeholder"
             android:textColor="@color/dark_blue"
             android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/restaurant_food_image"
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="2dp"
-            android:text="4.5"
+            android:text="@string/rating_placeholder"
             android:textColor="@color/dark_blue"
             app:layout_constraintBottom_toBottomOf="@+id/imageView4"
             app:layout_constraintStart_toEndOf="@+id/imageView4"
@@ -71,7 +71,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/restaurant_food_description"
             app:layout_constraintTop_toBottomOf="@+id/restaurant_food_description"
-            app:srcCompat="@drawable/ic_star_black_24dp" />
+            app:srcCompat="@drawable/ic_star_black_24dp"
+            android:contentDescription="@string/star" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

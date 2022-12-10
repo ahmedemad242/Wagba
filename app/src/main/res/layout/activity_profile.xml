@@ -23,7 +23,7 @@
             android:id="@+id/restaurant_details_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome, "
+            android:text="@string/welcome"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -34,7 +34,7 @@
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ahmed!"
+            android:text="@string/test_username"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -54,6 +54,7 @@
         android:padding="30dp"
         >
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,7 +63,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email"
+                android:text="@string/full_name"
                 android:textColor="@color/orange"
                 android:textSize="13sp" />
 
@@ -70,16 +71,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:text="18p3597@eng.asu.edu.eg"
+                android:text="@string/full_name_placeholder"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/blue_grey" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textColor="@color/orange"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/email_placeholder"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/blue_grey" />
         </LinearLayout>
 
 
