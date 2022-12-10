@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
@@ -20,7 +19,8 @@
             android:adjustViewBounds="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            app:srcCompat="@drawable/ic_launcher_background"
+            android:contentDescription="@string/food_image" />
 
         <TextView
             android:id="@+id/food_name"
@@ -30,7 +30,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:gravity="center_vertical"
-            android:text="Float Cake"
+            android:text="@string/food_name_placeholder"
             android:textColor="@color/dark_blue"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -48,7 +48,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:gravity="center_vertical"
-            android:text="119.12LE"
+            android:text="@string/price_placeholder"
             android:textColor="@color/orange"
             android:textSize="12sp"
             android:textStyle="bold"

@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24"
-        />
+        android:contentDescription="@string/back_to_main" />
 
 
     <ImageView
@@ -31,7 +31,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/restaurant_food_home"
         app:srcCompat="@drawable/ic_launcher_background"
-        />
+        android:contentDescription="@string/restaurant_image"
+        tools:targetApi="s" />
 
     <TextView
         android:id="@+id/restaurant_details_rating"
@@ -39,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:textStyle="bold"
-        android:text="4.8"
+        android:text="@string/rating_placeholder"
         android:textColor="#272670"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/restaurant_details_dish"
@@ -51,7 +52,7 @@
         android:id="@+id/restaurant_details_dish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="105"
+        android:text="@string/number_of_dishes_placeholder"
         android:textColor="#272670"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -66,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="375"
+        android:text="@string/number_of_orders_placeholder"
         android:textColor="#272670"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/restaurant_details_dish"
@@ -80,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:text="Rating"
+        android:text="@string/rating"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/restaurant_details_rating"
         app:layout_constraintStart_toStartOf="@+id/restaurant_details_rating"
@@ -91,7 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:text="Dish"
+        android:text="@string/dish"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/restaurant_details_dish"
         app:layout_constraintStart_toStartOf="@+id/restaurant_details_dish"
@@ -102,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:text="Order"
+        android:text="@string/order"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/restaurant_details_orders"
         app:layout_constraintStart_toStartOf="@+id/restaurant_details_orders"

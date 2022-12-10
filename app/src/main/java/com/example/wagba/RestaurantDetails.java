@@ -1,15 +1,13 @@
 package com.example.wagba;
 
+import android.os.Bundle;
+import android.view.Window;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.view.Window;
-
-import com.example.wagba.adapter.FoodAdapter;
 import com.example.wagba.adapter.RestaurantFoodAdapter;
-import com.example.wagba.databinding.ActivityCartBinding;
 import com.example.wagba.databinding.ActivityResturantDetailsBinding;
 import com.example.wagba.model.Food;
 

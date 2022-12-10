@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="240dp"
     android:background="@color/dark_blue"
-    android:gravity="bottom|right"
+    android:gravity="bottom|end"
     android:orientation="vertical"
     android:padding="20dp">
 
@@ -12,15 +12,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:text="Ahmed Emad"
+        android:text="@string/full_name_placeholder"
         android:textColor="@color/white"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ahmedemad@gmail.com"
+        android:text="@string/email_placeholder"
         android:textColor="@color/white"
-        android:textSize="15dp" />
+        android:textSize="15sp" />
 </LinearLayout>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     app:cardCornerRadius="15dp"
     android:elevation="5dp"
@@ -23,7 +22,8 @@
             android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            app:srcCompat="@drawable/ic_launcher_background"
+            android:contentDescription="@string/food_image" />
 
         <TextView
             android:id="@+id/restaurant_food_description"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="50dp"
-            android:text="Float Cake Vietnam"
+            android:text="@string/food_name_placeholder"
             android:textColor="#99000000"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:text="@string/food_name_placeholder"
             android:textColor="@color/dark_blue"
             android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/restaurant_food_image"
@@ -57,13 +57,14 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/restaurant_food_image"
             app:layout_constraintStart_toStartOf="@+id/restaurant_food_name"
-            app:srcCompat="@drawable/minus" />
+            app:srcCompat="@drawable/minus"
+            android:contentDescription="@string/cart_minus" />
 
         <TextView
             android:id="@+id/restaurant_food_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
+            android:text="@string/_0"
             android:layout_marginStart="8dp"
             android:textColor="@color/blue_grey"
             android:textSize="18sp"
@@ -80,13 +81,14 @@
             app:layout_constraintBottom_toBottomOf="@+id/restaurant_food_minus_btn"
             app:layout_constraintStart_toEndOf="@+id/restaurant_food_count"
             app:layout_constraintTop_toTopOf="@+id/restaurant_food_minus_btn"
-            app:srcCompat="@drawable/plus" />
+            app:srcCompat="@drawable/plus"
+            android:contentDescription="@string/cart_add" />
 
         <TextView
             android:id="@+id/restaurant_food_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:text="@string/_0"
             android:textColor="@color/blue_grey"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -97,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="LE"
+            android:text="@string/currency"
             android:layout_marginStart="8dp"
             android:textColor="@color/blue_grey"
             android:textSize="16sp"
