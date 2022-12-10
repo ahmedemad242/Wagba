@@ -181,7 +181,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:backgroundTint="@color/orange"
+                app:backgroundTint="@color/fire_orange"
                 app:cornerRadius="50dp" />
 
         </LinearLayout>
