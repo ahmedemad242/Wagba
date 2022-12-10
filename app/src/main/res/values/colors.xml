@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FFFF934F</color>>
     <color name="dark_blue">#FF191929</color>
-    <color name="secondary_blue">#272670</color>>
+    <color name="secondary_blue">#272670</color>
+    <color name="blue_grey">#373B54</color>
+    <color name="fire_orange">#ff3d00</color>>
 </resources>
