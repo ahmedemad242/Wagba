@@ -5,17 +5,17 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/Profile"
+            android:id="@+id/profileDrawerButton"
             android:icon="@drawable/ic_star_black_24dp"
             android:title="Profile" />
 
         <item
-            android:id="@+id/History"
+            android:id="@+id/historyDrawerButton"
             android:icon="@drawable/ic_star_black_24dp"
             android:title="History" />
 
         <item
-            android:id="@+id/Cart"
+            android:id="@+id/cartDrawerButton"
             android:icon="@drawable/ic_star_black_24dp"
             android:title="Cart" />
     </group>
