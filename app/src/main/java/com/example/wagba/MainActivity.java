@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.profileDrawerButton:
-                Toast.makeText(this, "Profile Press", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, Profile.class));
                 break;
             case R.id.historyDrawerButton:
                 startActivity(new Intent(MainActivity.this, History.class));
