@@ -9,19 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Wagba">
-
+        <activity
+            android:name=".Profile"
+            android:exported="false" />
         <activity
             android:name=".Cart"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".History"
             android:configChanges="keyboardHidden|orientation|screenSize"
