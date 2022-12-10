@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, History.class));
                 break;
             case R.id.cartDrawerButton:
-                Toast.makeText(this, "Share Press", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, Cart.class));
                 break;
         }
 
