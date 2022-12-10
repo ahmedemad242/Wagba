@@ -7,6 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -111,18 +113,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//        switch (menuItem.getItemId()) {
-//            case R.id.homes:
-//                null;
-//                break;
-//            case R.id.work:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame,
-//                        new second()).commit();
-//                break;
-//            case R.id.share:
-//                Toast.makeText(this, "Share Press", Toast.LENGTH_SHORT).show();
-//                break;
-//        }
+        switch (menuItem.getItemId()) {
+            case R.id.profileDrawerButton:
+                Toast.makeText(this, "Profile Press", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.historyDrawerButton:
+                startActivity(new Intent(MainActivity.this, History.class));
+                break;
+            case R.id.cartDrawerButton:
+                Toast.makeText(this, "Share Press", Toast.LENGTH_SHORT).show();
+                break;
+        }
 
         activityMainBinding.drawer.closeDrawer(GravityCompat.END);
         return true;
