@@ -3,25 +3,34 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23697916666666666" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/drawable/bottom_sheet_design.xml" value="0.23697916666666666" />
+        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/drawable/ic_baseline_date_range_24.xml" value="0.23697916666666666" />
+        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/drawable/ic_launcher_background.xml" value="0.23697916666666666" />
+        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/drawable/ic_list.xml" value="0.23697916666666666" />
+        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/drawable/ic_login_screen_fast_delivery_icon.xml" value="0.23697916666666666" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/drawable/ic_star_black_24dp.xml" value="0.23697916666666666" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/drawable/main_bg.xml" value="0.23697916666666666" />
+        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/drawable/restaurant_food_image_bg.xml" value="0.23697916666666666" />
+        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/drawable/restaurant_food_recycler_bg.xml" value="0.23697916666666666" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/drawable/sign_in_button_background.xml" value="0.125" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/activity_cart.xml" value="0.2056159420289855" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/activity_history.xml" value="0.2056159420289855" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/activity_login.xml" value="0.2" />
-        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/activity_profile.xml" value="0.2056159420289855" />
+        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/activity_resturant_details.xml" value="0.264" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/bottom_sheet.xml" value="0.2" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/bottom_sheet_layout.xml" value="0.10260416666666666" />
-        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/cart_row_item.xml" value="0.264" />
+        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/cart_row_item.xml" value="0.8" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/food_row_item.xml" value="0.264" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/fragment_sign_in.xml" value="0.1802536231884058" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/fragment_sign_up.xml" value="0.1802536231884058" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/navigation_header.xml" value="0.2056159420289855" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/navigation_menu.xml" value="0.2056159420289855" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/order_row_item.xml" value="0.264" />
-        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/restaurant_row_item.xml" value="0.6" />
+        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/restaurant_row_item.xml" value="0.264" />
+        <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/resturant_food_row_item.xml" value="0.176" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/sigin_in_sheet.xml" value="0.125" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/sigin_up_sheet.xml" value="0.1802536231884058" />
         <entry key="..\:/University/Semster9/Mobile Programming/project/Wagba/app/src/main/res/layout/sign_in_sheet.xml" value="0.1046875" />

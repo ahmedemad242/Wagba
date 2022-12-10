@@ -1,6 +1,5 @@
 package com.example.wagba.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wagba.R;
 import com.example.wagba.model.CartItem;
-import com.example.wagba.model.Food;
 
 import java.util.List;
 import java.util.Locale;
@@ -63,7 +61,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             total = itemView.findViewById(R.id.cart_item_total);
             price = itemView.findViewById(R.id.cart_item_price);
             title = itemView.findViewById(R.id.cart_item_title);
-            quantity = itemView.findViewById(R.id.cart_item_number);
+            quantity = itemView.findViewById(R.id.restaurant_food_count);
 
         }
     }
