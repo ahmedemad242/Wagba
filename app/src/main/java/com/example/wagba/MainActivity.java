@@ -46,10 +46,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         List<Food> foodList = new ArrayList<Food>();
-        foodList.add(new Food("Cake", "7.43 LE", R.drawable.ic_launcher_background));
-        foodList.add(new Food("Food", "24.72 LE", R.drawable.ic_launcher_background));
-        foodList.add(new Food("Italian pasta", "119.1 LE", R.drawable.ic_launcher_background));
-        foodList.add(new Food("LOL", "1219.1 LE", R.drawable.ic_launcher_background));
+        foodList.add(new Food("Cake", "7.43 LE", R.drawable.ic_launcher_background, "Sad"));
+        foodList.add(new Food("Food", "24.72 LE", R.drawable.ic_launcher_background, "Sad"));
+        foodList.add(new Food("Italian pasta", "119.1 LE", R.drawable.ic_launcher_background, "Sad"));
+        foodList.add(new Food("LOL", "1219.1 LE", R.drawable.ic_launcher_background, "Sad"));
 
         setFoodRecycler(foodList);
 

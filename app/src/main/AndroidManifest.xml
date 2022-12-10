@@ -11,10 +11,15 @@
         android:theme="@style/Theme.Wagba">
         <activity
             android:name=".ResturantDetails"
-            android:exported="false" />
+            android:exported="true"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Wagba.NoActionBar"/>
         <activity
             android:name=".Profile"
-            android:exported="false" />
+            android:exported="true"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"  />
         <activity
             android:name=".Cart"
             android:configChanges="keyboardHidden|orientation|screenSize"

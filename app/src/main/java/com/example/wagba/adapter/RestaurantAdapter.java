@@ -1,6 +1,7 @@
 package com.example.wagba.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wagba.MainActivity;
+import com.example.wagba.Profile;
 import com.example.wagba.R;
+import com.example.wagba.ResturantDetails;
 import com.example.wagba.model.Restaurant;
 
 import java.util.List;
@@ -37,6 +41,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.name.setText(restaurantList.get(position).getName());
         holder.description.setText(restaurantList.get(position).getDescription());
         holder.rating.setText(restaurantList.get(position).getRating());
+
+        holder.itemView.setOnClickListener(v -> {
+            context.startActivity(new Intent(context, ResturantDetails.class));
+
+        });
     }
 
     @Override
@@ -52,11 +61,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            image = itemView.findViewById(R.id.restaurant_image);
-            name = itemView.findViewById(R.id.restaurant_name);
-            description = itemView.findViewById(R.id.restaurant_Description);
+            image = itemView.findViewById(R.id.restaurant_food_image);
+            name = itemView.findViewById(R.id.restaurant_food_name);
+            description = itemView.findViewById(R.id.restaurant_food_description);
             rating = itemView.findViewById(R.id.restaurant_rating);
-
         }
     }
 
