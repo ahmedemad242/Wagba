@@ -6,17 +6,21 @@
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/profileDrawerButton"
-            android:icon="@drawable/ic_star_black_24dp"
+            android:icon="@drawable/ic_baseline_person_24"
             android:title="Profile" />
 
         <item
             android:id="@+id/historyDrawerButton"
-            android:icon="@drawable/ic_star_black_24dp"
+            android:icon="@drawable/ic_baseline_history_24"
             android:title="History" />
 
         <item
             android:id="@+id/cartDrawerButton"
-            android:icon="@drawable/ic_star_black_24dp"
+            android:icon="@drawable/ic_baseline_shopping_cart_24"
             android:title="Cart" />
+        <item
+            android:id="@+id/logOutDrawerButton"
+            android:icon="@drawable/ic_baseline_login_24"
+            android:title="Logout" />
     </group>
 </menu>
