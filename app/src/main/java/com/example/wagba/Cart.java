@@ -39,13 +39,13 @@ public class Cart extends AppCompatActivity {
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.dark_blue), false);
 
         List<CartItem> cartList = new ArrayList<CartItem>();
-        cartList.add(new CartItem(new Food("Cake", "7.43", R.drawable.ic_launcher_background, "Sad"),2));
-        cartList.add(new CartItem(new Food("Food", "24.72", R.drawable.ic_launcher_background, "Sad"),4));
-        cartList.add(new CartItem(new Food("Italian pasta", "119.1", R.drawable.ic_launcher_background, "Sad"), 1));
-        cartList.add(new CartItem(new Food("LOL", "1219.1", R.drawable.ic_launcher_background, "Sad"), 12));
-        cartList.add(new CartItem(new Food("Cake", "7.43", R.drawable.ic_launcher_background, "Sad"),2));
-        cartList.add(new CartItem(new Food("Food", "24.72", R.drawable.ic_launcher_background, "Sad"),4));
-        cartList.add(new CartItem(new Food("Italian pasta", "119.1", R.drawable.ic_launcher_background, "Sad"), 1));
+//        cartList.add(new CartItem(new Food("Cake", "7.43", R.drawable.ic_launcher_background, "Sad"),2));
+//        cartList.add(new CartItem(new Food("Food", "24.72", R.drawable.ic_launcher_background, "Sad"),4));
+//        cartList.add(new CartItem(new Food("Italian pasta", "119.1", R.drawable.ic_launcher_background, "Sad"), 1));
+//        cartList.add(new CartItem(new Food("LOL", "1219.1", R.drawable.ic_launcher_background, "Sad"), 12));
+//        cartList.add(new CartItem(new Food("Cake", "7.43", R.drawable.ic_launcher_background, "Sad"),2));
+//        cartList.add(new CartItem(new Food("Food", "24.72", R.drawable.ic_launcher_background, "Sad"),4));
+//        cartList.add(new CartItem(new Food("Italian pasta", "119.1", R.drawable.ic_launcher_background, "Sad"), 1));
 
         setCartItemRecycler(cartList);
 

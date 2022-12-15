@@ -2,6 +2,8 @@ package com.example.wagba.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wagba.R;
 import com.example.wagba.RestaurantDetails;
 import com.example.wagba.model.Restaurant;
+import com.example.wagba.utils.ImageUtils;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
@@ -35,7 +41,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-        holder.image.setImageResource(restaurantList.get(position).getImageUrl());
+        ImageUtils.loadImage(context, restaurantList.get(position).getImageUrl(), holder.image, R.drawable.logo_bg_light);
         holder.name.setText(restaurantList.get(position).getName());
         holder.description.setText(restaurantList.get(position).getDescription());
         holder.rating.setText(restaurantList.get(position).getRating());

@@ -51,22 +51,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         List<Food> foodList = new ArrayList<Food>();
-        foodList.add(new Food("Cake", "7.43 LE", R.drawable.ic_launcher_background, "Sad"));
-        foodList.add(new Food("Food", "24.72 LE", R.drawable.ic_launcher_background, "Sad"));
-        foodList.add(new Food("Italian pasta", "119.1 LE", R.drawable.ic_launcher_background, "Sad"));
-        foodList.add(new Food("LOL", "1219.1 LE", R.drawable.ic_launcher_background, "Sad"));
+        foodList.add(new Food("Cake", "7.43 LE", "https://i.ibb.co/fS0HkY7/cilantro.jpg", "Sad"));
+//        foodList.add(new Food("Food", "24.72 LE", R.drawable.ic_launcher_background, "Sad"));
+//        foodList.add(new Food("Italian pasta", "119.1 LE", R.drawable.ic_launcher_background, "Sad"));
+//        foodList.add(new Food("LOL", "1219.1 LE", R.drawable.ic_launcher_background, "Sad"));
 
         setFoodRecycler(foodList);
 
         List<Restaurant> restaurantList = new ArrayList<Restaurant>();
-        restaurantList.add(new Restaurant("3am Sadam", "Best fool in the world",
-                R.drawable.ic_launcher_background, "5.0"));
-        restaurantList.add(new Restaurant("Cilantroooo", "Imagine Cilantro in Handasa ainshams lol",
-                R.drawable.ic_launcher_background, "3.0"));
-        restaurantList.add(new Restaurant("Macdonals", "Crazy prices due to inflation",
-                R.drawable.ic_launcher_background, "1.0"));
-        restaurantList.add(new Restaurant("Tybat Elsham", "Syrian Shawerma",
-                R.drawable.ic_launcher_background, "4.8"));
+//        restaurantList.add(new Restaurant("3am Sadam", "Best fool in the world",
+//                R.drawable.ic_launcher_background, "5.0"));
+//        restaurantList.add(new Restaurant("Cilantroooo", "Imagine Cilantro in Handasa ainshams lol",
+//                R.drawable.ic_launcher_background, "3.0"));
+//        restaurantList.add(new Restaurant("Macdonals", "Crazy prices due to inflation",
+//                R.drawable.ic_launcher_background, "1.0"));
+//        restaurantList.add(new Restaurant("Tybat Elsham", "Syrian Shawerma",
+//                R.drawable.ic_launcher_background, "4.8"));
 
 
 

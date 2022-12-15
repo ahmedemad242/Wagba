@@ -1,16 +1,28 @@
 package com.example.wagba.model;
 
+import java.util.List;
+
 public class Restaurant {
     private String name;
     private String description;
-    private Integer imageUrl;
+    private String imageUrl;
     private String rating;
+    public List<Food> menuItems;
 
-    public Restaurant(String name, String description, Integer imageUrl, String rating) {
+    public Restaurant(String name, String description, String imageUrl, String rating, List<Food> menuItems) {
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
         this.rating = rating;
+        this.menuItems = menuItems;
+    }
+
+    public List<Food> getMenuItems() {
+        return menuItems;
+    }
+
+    public void setMenuItems(List<Food> menuItems) {
+        this.menuItems = menuItems;
     }
 
     public String getName() {
@@ -25,7 +37,7 @@ public class Restaurant {
         return rating;
     }
 
-    public Integer getImageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
@@ -41,7 +53,7 @@ public class Restaurant {
         this.rating = rating;
     }
 
-    public void setImageUrl(Integer imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 

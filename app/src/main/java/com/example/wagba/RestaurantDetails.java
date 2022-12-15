@@ -32,10 +32,10 @@ public class RestaurantDetails extends AppCompatActivity {
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
 
         List<Food> foodList = new ArrayList<Food>();
-        foodList.add(new Food("Cake", "7.45", R.drawable.ic_launcher_background, "Grilled chicken with beans"));
-        foodList.add(new Food("Food", "24.72", R.drawable.ic_launcher_background, "Pasta grilled on 340°C with a grain of salt"));
-        foodList.add(new Food("Italian pasta", "119.1", R.drawable.ic_launcher_background, "Lettuce, tomato, and cheese"));
-        foodList.add(new Food("LOL", "1219.1", R.drawable.ic_launcher_background, "The most exotic food ever tasted"));
+//        foodList.add(new Food("Cake", "7.45", R.drawable.ic_launcher_background, "Grilled chicken with beans"));
+//        foodList.add(new Food("Food", "24.72", R.drawable.ic_launcher_background, "Pasta grilled on 340°C with a grain of salt"));
+//        foodList.add(new Food("Italian pasta", "119.1", R.drawable.ic_launcher_background, "Lettuce, tomato, and cheese"));
+//        foodList.add(new Food("LOL", "1219.1", R.drawable.ic_launcher_background, "The most exotic food ever tasted"));
 
         setFoodRecycler(foodList);
 
