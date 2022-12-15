@@ -21,6 +21,7 @@ import com.example.wagba.databinding.ActivityMainBinding;
 import com.example.wagba.model.Food;
 import com.example.wagba.model.Restaurant;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +34,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RestaurantAdapter restaurantAdapter;
     private Window window;
     private ActionBarDrawerToggle toggle;
+    FirebaseAuth firebaseAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        firebaseAuth = FirebaseAuth.getInstance();
+
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
         window = this.getWindow();
@@ -82,9 +87,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 WindowController.changeStatusBarColor(window, getResources().getColor(R.color.dark_blue), false);
             }
         };
+
         activityMainBinding.drawer.addDrawerListener(toggle);
         toggle.syncState();
         activityMainBinding.navigationView.setNavigationItemSelectedListener(this);
+
+
+        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) {
+                    startActivity(new Intent(MainActivity.this, Login.class));
+                }
+            }
+        });
+
 
     }
 
@@ -113,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
         switch (menuItem.getItemId()) {
             case R.id.profileDrawerButton:
                 startActivity(new Intent(MainActivity.this, Profile.class));
@@ -123,6 +141,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.cartDrawerButton:
                 startActivity(new Intent(MainActivity.this, Cart.class));
                 break;
+            case R.id.logOutDrawerButton:
+                firebaseAuth.signOut();
         }
 
         activityMainBinding.drawer.closeDrawer(GravityCompat.END);

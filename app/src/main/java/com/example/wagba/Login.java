@@ -7,7 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.View;
 import android.view.ViewTreeObserver;
 import com.example.wagba.databinding.SignUpSheetBinding;
