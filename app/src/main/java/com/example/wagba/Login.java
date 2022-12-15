@@ -13,11 +13,13 @@ import android.view.ViewTreeObserver;
 import com.example.wagba.databinding.SignUpSheetBinding;
 import com.example.wagba.databinding.SignInSheetBinding;
 import com.example.wagba.databinding.ActivityLoginBinding;
+import com.example.wagba.utils.Validator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import android.view.Window;
 import android.widget.Toast;
@@ -101,19 +103,26 @@ public class Login extends AppCompatActivity {
         });
 
         singInSheetBinding.signInButton.setOnClickListener(v -> {
-            String email = String.valueOf(singInSheetBinding.signInEmailText.getText());
-            String password = String.valueOf(singInSheetBinding.signInPasswordText.getText());
+            String email = String.valueOf(singInSheetBinding.signInEmailText.getText()).trim();
+            String password = String.valueOf(singInSheetBinding.signInPasswordText.getText()).trim();
+
+            if(!Validator.isValidEmail(email)){
+                singInSheetBinding.signInEmailText.setError("We only accept emails from @eng.asu.edu.eg");
+                return;
+            }
+            if(!Validator.isValidPassword(password)){
+                singInSheetBinding.signInPasswordText.setError("Password should at least be 6 characters");
+                return;
+            }
 
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 successfulLogin();
                             } else {
-                                // If sign in fails, display a message to the user.
                                 Toast.makeText(Login.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
                             }
@@ -122,9 +131,27 @@ public class Login extends AppCompatActivity {
         });
 
         singUpSheetBinding.signUpButton.setOnClickListener(v -> {
-            String name = String.valueOf(singUpSheetBinding.signUpNameText.getText());
-            String email = String.valueOf(singUpSheetBinding.signUpEmailText.getText());
-            String password = String.valueOf(singUpSheetBinding.signUpPasswordText.getText());
+            String name = String.valueOf(singUpSheetBinding.signUpNameText.getText()).trim();
+            String email = String.valueOf(singUpSheetBinding.signUpEmailText.getText()).trim();
+            String password = String.valueOf(singUpSheetBinding.signUpPasswordText.getText()).trim();
+            String confirmPassword = String.valueOf(singUpSheetBinding.signUpConfirmPasswordText.getText()).trim();
+
+            if(!Validator.isValidName(name)) {
+                singUpSheetBinding.signUpNameText.setError("Name should at least be 3 characters");
+                return;
+            }
+            if(!Validator.isValidEmail(email)){
+                singUpSheetBinding.signUpEmailText.setError("We only accept emails from @eng.asu.edu.eg");
+                return;
+            }
+            if(!Validator.isValidPassword(password)){
+                singUpSheetBinding.signUpPasswordText.setError("Password should at least be 6 characters");
+                return;
+            }
+            if(!password.equals(confirmPassword)){
+                singUpSheetBinding.signUpConfirmPasswordText.setError("Password should at least be 6 characters");
+                return;
+            }
 
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -132,7 +159,22 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                successfulLogin();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(name)
+                                        .build();
+
+                                user.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    successfulLogin();
+                                                } else {
+                                                    //TODO:: Handle display name not set
+                                                }
+                                            }
+                                        });
+
                             } else {
                                 Toast.makeText(Login.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
