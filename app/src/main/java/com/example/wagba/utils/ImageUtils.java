@@ -1,16 +1,9 @@
 package com.example.wagba.utils;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class ImageUtils {
 

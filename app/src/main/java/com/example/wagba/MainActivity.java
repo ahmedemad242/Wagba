@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +23,11 @@ import com.example.wagba.model.Food;
 import com.example.wagba.model.Restaurant;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +41,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Window window;
     private ActionBarDrawerToggle toggle;
     FirebaseAuth firebaseAuth;
+    FirebaseDatabase database;
+    DatabaseReference restaurantRef;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         firebaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/");
+        restaurantRef = database.getReference("restaurants");
+
 
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
@@ -58,19 +70,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setFoodRecycler(foodList);
 
-        List<Restaurant> restaurantList = new ArrayList<Restaurant>();
-//        restaurantList.add(new Restaurant("3am Sadam", "Best fool in the world",
-//                R.drawable.ic_launcher_background, "5.0"));
-//        restaurantList.add(new Restaurant("Cilantroooo", "Imagine Cilantro in Handasa ainshams lol",
-//                R.drawable.ic_launcher_background, "3.0"));
-//        restaurantList.add(new Restaurant("Macdonals", "Crazy prices due to inflation",
-//                R.drawable.ic_launcher_background, "1.0"));
-//        restaurantList.add(new Restaurant("Tybat Elsham", "Syrian Shawerma",
-//                R.drawable.ic_launcher_background, "4.8"));
 
 
+        restaurantRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                List<Restaurant> restaurants = new ArrayList<>();
+                for (DataSnapshot childSnapshot: snapshot.getChildren()) {
+                    Log.d("hello","hello");
+                    Restaurant restaurant = childSnapshot.getValue(Restaurant.class);
+                    restaurants.add(restaurant);
+                }
+                setRestaurantRecycler(restaurants);
+            }
 
-        setRestaurantRecycler(restaurantList);
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("TAG", "Failed to read value.", error.toException());
+            }
+        });
+
 
         activityMainBinding.drawerButton.setOnClickListener(v -> {
             activityMainBinding.drawer.openDrawer(GravityCompat.END);

@@ -1,20 +1,51 @@
 package com.example.wagba.model;
 
+import com.example.wagba.model.Food;
+
 import java.util.List;
 
 public class Restaurant {
     private String name;
     private String description;
     private String imageUrl;
+    private List<Food> menuItems;
     private String rating;
-    public List<Food> menuItems;
 
-    public Restaurant(String name, String description, String imageUrl, String rating, List<Food> menuItems) {
-        this.name = name;
-        this.description = description;
-        this.imageUrl = imageUrl;
+
+
+    // Default constructor required for calls to DataSnapshot.getValue(Restaurant.class)
+    public Restaurant() { }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
         this.rating = rating;
-        this.menuItems = menuItems;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public List<Food> getMenuItems() {
@@ -24,39 +55,4 @@ public class Restaurant {
     public void setMenuItems(List<Food> menuItems) {
         this.menuItems = menuItems;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setRating(String description) {
-        this.rating = rating;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-
-
 }
