@@ -54,7 +54,7 @@
             android:id="@+id/restaurant_food_minus_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="5dp"
             app:layout_constraintBottom_toBottomOf="@+id/restaurant_food_image"
             app:layout_constraintStart_toStartOf="@+id/restaurant_food_name"
             app:srcCompat="@drawable/minus"
