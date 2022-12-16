@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onDataChange(DataSnapshot snapshot) {
                 List<Restaurant> restaurants = new ArrayList<>();
                 for (DataSnapshot childSnapshot: snapshot.getChildren()) {
-                    Log.d("hello","hello");
                     Restaurant restaurant = childSnapshot.getValue(Restaurant.class);
                     restaurants.add(restaurant);
                 }

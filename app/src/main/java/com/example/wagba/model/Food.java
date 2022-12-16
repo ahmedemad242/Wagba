@@ -6,6 +6,10 @@ public class Food {
     private String description;
     private String imageUrl;
 
+    public Food() {
+    }
+
+
     public Food(String name, String price, String imageUrl, String description) {
         this.name = name;
         this.price = price;
