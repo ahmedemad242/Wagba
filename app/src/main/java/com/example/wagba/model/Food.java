@@ -1,6 +1,9 @@
 package com.example.wagba.model;
 
-public class Food {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Food implements Parcelable {
     private String name;
     private String price;
     private String description;
@@ -16,6 +19,25 @@ public class Food {
         this.imageUrl = imageUrl;
         this.description = description;
     }
+
+    protected Food(Parcel in) {
+        name = in.readString();
+        price = in.readString();
+        description = in.readString();
+        imageUrl = in.readString();
+    }
+
+    public static final Creator<Food> CREATOR = new Creator<Food>() {
+        @Override
+        public Food createFromParcel(Parcel in) {
+            return new Food(in);
+        }
+
+        @Override
+        public Food[] newArray(int size) {
+            return new Food[size];
+        }
+    };
 
     public String getDescription() {
         return description;
@@ -47,5 +69,18 @@ public class Food {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(price);
+        dest.writeString(description);
+        dest.writeString(imageUrl);
     }
 }

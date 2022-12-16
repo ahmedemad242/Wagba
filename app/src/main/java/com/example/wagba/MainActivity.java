@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onCancelled(DatabaseError error) {
+                //TODO:: Handle errors
                 Log.w("TAG", "Failed to read value.", error.toException());
             }
         });

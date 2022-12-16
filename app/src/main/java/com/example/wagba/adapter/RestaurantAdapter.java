@@ -47,8 +47,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.rating.setText(restaurantList.get(position).getRating());
 
         holder.itemView.setOnClickListener(v -> {
-            context.startActivity(new Intent(context, RestaurantDetails.class));
-
+            Intent intent = new Intent(context, RestaurantDetails.class);
+            intent.putExtra("restaurant", restaurantList.get(position));
+            context.startActivity(intent);
         });
     }
 
