@@ -1,6 +1,8 @@
 package com.example.wagba.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wagba.R;
 import com.example.wagba.model.CartItem;
+import com.example.wagba.utils.ImageUtils;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
@@ -36,7 +42,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         Double price = Double.valueOf(cartList.get(position).getFood().getPrice());
 
-        holder.image.setImageResource(cartList.get(position).getFood().getImageUrl());
+        ImageUtils.loadImage(context, cartList.get(position).getFood().getImageUrl(), holder.image, R.drawable.logo_bg_light);
         holder.price.setText(cartList.get(position).getFood().getPrice());
         holder.title.setText(cartList.get(position).getFood().getName());
         holder.quantity.setText(String.valueOf(cartList.get(position).getQuantity()));

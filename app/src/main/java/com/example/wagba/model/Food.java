@@ -4,9 +4,13 @@ public class Food {
     private String name;
     private String price;
     private String description;
-    private Integer imageUrl;
+    private String imageUrl;
 
-    public Food(String name, String price, Integer imageUrl, String description) {
+    public Food() {
+    }
+
+
+    public Food(String name, String price, String imageUrl, String description) {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
@@ -29,7 +33,7 @@ public class Food {
         return price;
     }
 
-    public Integer getImageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
@@ -41,7 +45,7 @@ public class Food {
         this.price = price;
     }
 
-    public void setImageUrl(Integer imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 }
