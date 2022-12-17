@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wagba.adapter.OrderAdapter;
 import com.example.wagba.databinding.ActivityHistoryBinding;
 import com.example.wagba.model.Order;
+import com.example.wagba.utils.WindowController;
 
 import java.util.ArrayList;
 import java.util.List;

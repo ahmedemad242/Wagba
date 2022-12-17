@@ -1,4 +1,4 @@
-package com.example.wagba;
+package com.example.wagba.utils;
 
 import android.view.View;
 import android.view.Window;

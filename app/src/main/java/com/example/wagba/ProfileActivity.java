@@ -2,12 +2,12 @@ package com.example.wagba;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Window;
 
 import com.example.wagba.databinding.ActivityProfileBinding;
+import com.example.wagba.utils.WindowController;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

@@ -14,6 +14,7 @@ import com.example.wagba.databinding.SignUpSheetBinding;
 import com.example.wagba.databinding.SignInSheetBinding;
 import com.example.wagba.databinding.ActivityLoginBinding;
 import com.example.wagba.utils.Validator;
+import com.example.wagba.utils.WindowController;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

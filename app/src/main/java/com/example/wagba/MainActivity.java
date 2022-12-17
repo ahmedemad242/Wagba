@@ -18,6 +18,7 @@ import com.example.wagba.adapter.PopularFoodAdapter;
 import com.example.wagba.adapter.RestaurantAdapter;
 import com.example.wagba.databinding.ActivityMainBinding;
 import com.example.wagba.model.Restaurant;
+import com.example.wagba.utils.WindowController;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
