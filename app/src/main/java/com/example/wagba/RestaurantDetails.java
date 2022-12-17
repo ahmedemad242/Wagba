@@ -1,6 +1,7 @@
 package com.example.wagba;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wagba.adapter.RestaurantFoodAdapter;
 import com.example.wagba.databinding.ActivityResturantDetailsBinding;
+import com.example.wagba.model.Cart;
 import com.example.wagba.model.Food;
 import com.example.wagba.model.Restaurant;
 import com.example.wagba.utils.ImageUtils;
+import com.example.wagba.utils.WindowController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RestaurantDetails extends AppCompatActivity {
@@ -21,6 +23,7 @@ public class RestaurantDetails extends AppCompatActivity {
     private ActivityResturantDetailsBinding activityResturantDetailsBinding;
     private RestaurantFoodAdapter restaurantFoodAdapter;
     private Window window;
+    private Cart cart;
 
 
     @Override
@@ -29,6 +32,7 @@ public class RestaurantDetails extends AppCompatActivity {
         activityResturantDetailsBinding = ActivityResturantDetailsBinding.inflate(getLayoutInflater());
         setContentView(activityResturantDetailsBinding.getRoot());
         window = this.getWindow();
+        cart = Cart.getInstance();
 
         WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.secondary_blue));
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
@@ -52,7 +56,9 @@ public class RestaurantDetails extends AppCompatActivity {
     private void setFoodRecycler(List<Food> foodList){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         activityResturantDetailsBinding.restaurantFoodRecyclerView.setLayoutManager(layoutManager);
-        restaurantFoodAdapter = new RestaurantFoodAdapter(this, foodList);
+        restaurantFoodAdapter = new RestaurantFoodAdapter(this, foodList, cart);
         activityResturantDetailsBinding.restaurantFoodRecyclerView.setAdapter(restaurantFoodAdapter);
     }
+
+
 }

@@ -8,14 +8,28 @@ import java.util.Map;
 
 
 public class Cart {
-    private Map<Food, Integer> items;
+    public Map<Food, Integer> items;
     private DeliveryFeeCalculator deliveryFeeCalculator;
     private TaxCalculator taxCalculator;
+    private static Cart instance;
 
-    public Cart(DeliveryFeeCalculator deliveryFeeCalculator, TaxCalculator taxCalculator) {
+    private Cart() {
         items = new HashMap<>();
+    }
+
+    public void setDeliveryFeeCalculator(DeliveryFeeCalculator deliveryFeeCalculator) {
         this.deliveryFeeCalculator = deliveryFeeCalculator;
+    }
+
+    public void setTaxCalculator(TaxCalculator taxCalculator) {
         this.taxCalculator = taxCalculator;
+    }
+
+    public static Cart getInstance() {
+        if (instance == null) {
+            instance = new Cart();
+        }
+        return instance;
     }
 
     public void plus(Food item) {
@@ -38,36 +52,58 @@ public class Cart {
     }
 
     public double getTotalCost() {
-        double subtotal = 0;
-        for (Map.Entry<Food, Integer> entry : items.entrySet()) {
-            Food menuItem = entry.getKey();
-            int itemQuantity = entry.getValue();
-            subtotal += Float.parseFloat(menuItem.getPrice()) * itemQuantity;
-        }
+        double subtotal = getSubtotal();
         double deliveryFee = deliveryFeeCalculator.calculateDeliveryFee(subtotal);
         double tax = taxCalculator.calculateTax(subtotal + deliveryFee);
         return subtotal + deliveryFee + tax;
     }
 
     public double getDeliveryFee() {
-        double subtotal = 0;
-        for (Map.Entry<Food, Integer> entry : items.entrySet()) {
-            Food menuItem = entry.getKey();
-            int itemQuantity = entry.getValue();
-            subtotal += Float.parseFloat(menuItem.getPrice()) * itemQuantity;
+        if(deliveryFeeCalculator != null) {
+            double subtotal = getSubtotal();
+            return deliveryFeeCalculator.calculateDeliveryFee(subtotal);
         }
-        return deliveryFeeCalculator.calculateDeliveryFee(subtotal);
+        return 0;
+    }
+
+    public double getDeliveryFee(double subtotal) {
+        if(deliveryFeeCalculator != null) {
+            return deliveryFeeCalculator.calculateDeliveryFee(subtotal);
+        }
+        return 0;
     }
 
     public double getTax() {
+        if(taxCalculator != null) {
+            double subtotal = getSubtotal();
+            double deliveryFee = deliveryFeeCalculator.calculateDeliveryFee(subtotal);
+            return taxCalculator.calculateTax(subtotal + deliveryFee);
+        }
+        return 0;
+    }
+
+    public double getTax(double subtotal) {
+        if(taxCalculator != null) {
+            return taxCalculator.calculateTax(subtotal);
+        }
+        return 0;
+    }
+
+    public double getSubtotal() {
         double subtotal = 0;
         for (Map.Entry<Food, Integer> entry : items.entrySet()) {
             Food menuItem = entry.getKey();
             int itemQuantity = entry.getValue();
             subtotal += Float.parseFloat(menuItem.getPrice()) * itemQuantity;
         }
-        double deliveryFee = deliveryFeeCalculator.calculateDeliveryFee(subtotal);
-        return taxCalculator.calculateTax(subtotal + deliveryFee);
+        return subtotal;
+    }
+
+    public int getQuantity(Food item) {
+        if (this.items.containsKey(item)) {
+            return this.items.get(item);
+        }
+        return 0;
     }
 
     public void clear() {
