@@ -3,7 +3,6 @@ package com.example.wagba;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,12 +13,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
 
-import com.example.wagba.adapter.FoodAdapter;
+import com.example.wagba.adapter.PopularFoodAdapter;
 import com.example.wagba.adapter.RestaurantAdapter;
 import com.example.wagba.databinding.ActivityMainBinding;
-import com.example.wagba.model.Food;
 import com.example.wagba.model.Restaurant;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,13 +27,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding activityMainBinding;
-    private FoodAdapter foodAdapter;
+    private PopularFoodAdapter popularFoodAdapter;
     private RestaurantAdapter restaurantAdapter;
     private Window window;
     private ActionBarDrawerToggle toggle;
@@ -62,14 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
 
 
-        List<Food> foodList = new ArrayList<Food>();
-        foodList.add(new Food("Cake", "7.43 LE", "https://i.ibb.co/fS0HkY7/cilantro.jpg", "Sad"));
-//        foodList.add(new Food("Food", "24.72 LE", R.drawable.ic_launcher_background, "Sad"));
-//        foodList.add(new Food("Italian pasta", "119.1 LE", R.drawable.ic_launcher_background, "Sad"));
-//        foodList.add(new Food("LOL", "1219.1 LE", R.drawable.ic_launcher_background, "Sad"));
-
-        setFoodRecycler(foodList);
-
 
 
         restaurantRef.addValueEventListener(new ValueEventListener() {
@@ -80,11 +70,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Restaurant restaurant = childSnapshot.getValue(Restaurant.class);
                     restaurants.add(restaurant);
                 }
+                Collections.shuffle(restaurants);
                 setRestaurantRecycler(restaurants);
+                setPopularFoodRecycler(restaurants.subList(0, 5));
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
+                //TODO:: Handle errors
                 Log.w("TAG", "Failed to read value.", error.toException());
             }
         });
@@ -123,11 +116,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void setFoodRecycler(List<Food> foodList){
+    private void setPopularFoodRecycler(List<Restaurant> foodList){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         activityMainBinding.foodRecycleView.setLayoutManager(layoutManager);
-        foodAdapter = new FoodAdapter(this, foodList);
-        activityMainBinding.foodRecycleView.setAdapter(foodAdapter);
+        popularFoodAdapter = new PopularFoodAdapter(this, foodList);
+        activityMainBinding.foodRecycleView.setAdapter(popularFoodAdapter);
     }
 
     private void setRestaurantRecycler(List<Restaurant> restaurantList){

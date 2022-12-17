@@ -8,14 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wagba.adapter.FoodAdapter;
 import com.example.wagba.adapter.OrderAdapter;
 import com.example.wagba.databinding.ActivityHistoryBinding;
-import com.example.wagba.model.Food;
 import com.example.wagba.model.Order;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class History extends AppCompatActivity {

@@ -1,8 +1,7 @@
 package com.example.wagba.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +12,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wagba.R;
+import com.example.wagba.RestaurantDetails;
 import com.example.wagba.model.Food;
+import com.example.wagba.model.Restaurant;
 import com.example.wagba.utils.ImageUtils;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 
-public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
+public class PopularFoodAdapter extends RecyclerView.Adapter<PopularFoodAdapter.FoodViewHolder> {
     private Context context;
-    private List<Food> foodList;
+    private List<Restaurant> restaurantList;
 
-    public FoodAdapter(Context context, List<Food> foodList) {
+    public PopularFoodAdapter(Context context, List<Restaurant> restaurantList) {
         this.context = context;
-        this.foodList = foodList;
+        this.restaurantList = restaurantList;
     }
 
     @NonNull
@@ -39,14 +38,25 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
-        ImageUtils.loadImage(context, foodList.get(position).getImageUrl(), holder.image, R.drawable.logo_bg_light);
-        holder.name.setText(foodList.get(position).getName());
-        holder.price.setText(foodList.get(position).getPrice());
+        List<Food> menuItems = restaurantList.get(position).getMenuItems();
+        Collections.shuffle(menuItems);
+
+        Food randomFood = menuItems.get(0);
+        ImageUtils.loadImage(context, randomFood.getImageUrl(), holder.image, R.drawable.logo_bg_light);
+        holder.name.setText(randomFood.getName());
+        holder.price.setText(randomFood.getPrice());
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, RestaurantDetails.class);
+            intent.putExtra("restaurant", restaurantList.get(position));
+            context.startActivity(intent);
+        });
+
     }
 
     @Override
     public int getItemCount() {
-        return foodList.size();
+        return restaurantList.size();
     }
 
     public static final class FoodViewHolder extends RecyclerView.ViewHolder{
