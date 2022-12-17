@@ -9,12 +9,8 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.example.wagba.adapter.CartAdapter;
-import com.example.wagba.adapter.FoodAdapter;
-import com.example.wagba.adapter.RestaurantAdapter;
 import com.example.wagba.databinding.ActivityCartBinding;
 import com.example.wagba.model.CartItem;
-import com.example.wagba.model.Food;
-import com.example.wagba.model.Order;
 
 import java.util.ArrayList;
 import java.util.List;

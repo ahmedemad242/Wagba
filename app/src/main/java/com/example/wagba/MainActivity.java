@@ -3,7 +3,6 @@ package com.example.wagba;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,12 +13,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
 
-import com.example.wagba.adapter.FoodAdapter;
+import com.example.wagba.adapter.PopularFoodAdapter;
 import com.example.wagba.adapter.RestaurantAdapter;
 import com.example.wagba.databinding.ActivityMainBinding;
-import com.example.wagba.model.Food;
 import com.example.wagba.model.Restaurant;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,7 +34,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding activityMainBinding;
-    private FoodAdapter foodAdapter;
+    private PopularFoodAdapter popularFoodAdapter;
     private RestaurantAdapter restaurantAdapter;
     private Window window;
     private ActionBarDrawerToggle toggle;
@@ -75,15 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 Collections.shuffle(restaurants);
                 setRestaurantRecycler(restaurants);
-
-                List<Food> popularFoodList = new ArrayList<Food>();
-                for (Restaurant restaurant : restaurants.subList(0, 5)) {
-                    List<Food> menuItems = restaurant.getMenuItems();
-                    Collections.shuffle(menuItems);
-                    if(menuItems.size() > 0)
-                        popularFoodList.add(menuItems.get(0));
-                }
-                setFoodRecycler(popularFoodList);
+                setPopularFoodRecycler(restaurants.subList(0, 5));
             }
 
             @Override
@@ -127,11 +116,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void setFoodRecycler(List<Food> foodList){
+    private void setPopularFoodRecycler(List<Restaurant> foodList){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         activityMainBinding.foodRecycleView.setLayoutManager(layoutManager);
-        foodAdapter = new FoodAdapter(this, foodList);
-        activityMainBinding.foodRecycleView.setAdapter(foodAdapter);
+        popularFoodAdapter = new PopularFoodAdapter(this, foodList);
+        activityMainBinding.foodRecycleView.setAdapter(popularFoodAdapter);
     }
 
     private void setRestaurantRecycler(List<Restaurant> restaurantList){
