@@ -8,7 +8,9 @@ import android.content.DialogInterface;
 import com.example.wagba.feeCalculator.delivery.DeliveryFeeCalculator;
 import com.example.wagba.feeCalculator.tax.TaxCalculator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -24,6 +26,10 @@ public class Cart {
         this.restaurant = restaurant;
     }
 
+    private Cart() {
+        items = new HashMap<>();
+    }
+
     public void setDeliveryFeeCalculator(DeliveryFeeCalculator deliveryFeeCalculator) {
         this.deliveryFeeCalculator = deliveryFeeCalculator;
     }
@@ -36,8 +42,21 @@ public class Cart {
         if (instance == null) {
             instance = new Cart(restaurant);
         }
-        if(!restaurant.getId().equals(instance.restaurant.getId())){
-            showConfirmationDialog(restaurant, context);
+        if(instance.restaurant != null){
+            if(!restaurant.getId().equals(instance.restaurant.getId())){
+                showConfirmationDialog(restaurant, context);
+            }
+        }
+        else {
+            instance.restaurant = restaurant;
+        }
+
+        return instance;
+    }
+
+    public static Cart getInstance() {
+        if (instance == null) {
+            instance = new Cart();
         }
         return instance;
     }
@@ -63,8 +82,8 @@ public class Cart {
 
     public double getTotalCost() {
         double subtotal = getSubtotal();
-        double deliveryFee = deliveryFeeCalculator.calculateDeliveryFee(subtotal);
-        double tax = taxCalculator.calculateTax(subtotal + deliveryFee);
+        double deliveryFee = getDeliveryFee(subtotal);
+        double tax = getTax(subtotal + deliveryFee);
         return subtotal + deliveryFee + tax;
     }
 
@@ -137,6 +156,19 @@ public class Cart {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public Food getFood(String foodId){
+        return restaurant.getFoodById(foodId);
+    }
+
+    public List<String> getFoodIdList(){
+        return new ArrayList<String>(items.keySet());
+
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
     public void clear() {

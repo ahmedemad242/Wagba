@@ -1,8 +1,8 @@
 package com.example.wagba.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,25 +10,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wagba.R;
-import com.example.wagba.model.CartItem;
+import com.example.wagba.model.Cart;
+import com.example.wagba.model.Food;
+import com.example.wagba.model.Restaurant;
 import com.example.wagba.utils.ImageUtils;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     private Context context;
-    private List<CartItem> cartList;
+    private List<String> foodIdList;
+    private Runnable updateCartUi;
 
-    public CartAdapter(Context context, List<CartItem> cartList) {
+    public CartAdapter(Context context, List<String> foodIdList, Runnable updateCartUi) {
         this.context = context;
-        this.cartList = cartList;
+        this.foodIdList = foodIdList;
+        this.updateCartUi = updateCartUi;
     }
 
     @NonNull
@@ -38,26 +41,48 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         return new CartViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-        Double price = Double.valueOf(cartList.get(position).getFood().getPrice());
+        Restaurant restaurant = Cart.getInstance().getRestaurant();
+        Cart cart = Cart.getInstance();
+        Food currentFood = cart.getFood(foodIdList.get(position));
+        Double price = Double.valueOf(currentFood.getPrice());
 
-        ImageUtils.loadImage(context, cartList.get(position).getFood().getImageUrl(), holder.image, R.drawable.logo_bg_light);
-        holder.price.setText(cartList.get(position).getFood().getPrice());
-        holder.title.setText(cartList.get(position).getFood().getName());
-        holder.quantity.setText(String.valueOf(cartList.get(position).getQuantity()));
-        holder.total.setText(String.format(Locale.getDefault(), "%.2f",
-                price*cartList.get(position).getQuantity()));
+        ImageUtils.loadImage(context, currentFood.getImageUrl(), holder.image, R.drawable.logo_bg_light);
+        holder.price.setText(currentFood.getPrice());
+        holder.title.setText(currentFood.getName());
+        holder.quantity.setText(
+                String.valueOf(Cart.getInstance().getQuantity(foodIdList.get(position))));
+        holder.total.setText(
+                String.format(Locale.getDefault(), "%.2f",
+                price*Cart.getInstance().getQuantity(foodIdList.get(position))));
+
+        holder.plusBtn.setOnClickListener(v -> {
+            int quantity = Integer.parseInt((String) holder.quantity.getText());
+            holder.quantity.setText(String.valueOf(quantity + 1));
+            Cart.getInstance().plus(foodIdList.get(position));
+            updateCartUi.run();
+        });
+
+        holder.minusBtn.setOnClickListener(v -> {
+            int quantity = Integer.parseInt((String) holder.quantity.getText());
+            if (quantity > 0) {
+                holder.quantity.setText(String.valueOf(quantity - 1));
+                Cart.getInstance().minus(foodIdList.get(position));
+                updateCartUi.run();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return cartList.size();
+        return foodIdList.size();
     }
 
     public static final class CartViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView image;
+        ImageView image, plusBtn, minusBtn;
         TextView price, total, title, quantity;
 
         public CartViewHolder(@NonNull View itemView) {
@@ -67,8 +92,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             total = itemView.findViewById(R.id.cart_item_total);
             price = itemView.findViewById(R.id.cart_item_price);
             title = itemView.findViewById(R.id.cart_item_title);
-            quantity = itemView.findViewById(R.id.restaurant_food_count);
-
+            plusBtn = itemView.findViewById(R.id.cart_plus_btn);
+            minusBtn = itemView.findViewById(R.id.cart_minus_btn);
+            quantity = itemView.findViewById(R.id.cart_count);
         }
     }
 
