@@ -8,16 +8,9 @@ public class Food implements Parcelable {
     private String price;
     private String description;
     private String imageUrl;
+    private String id;
 
     public Food() {
-    }
-
-
-    public Food(String name, String price, String imageUrl, String description) {
-        this.name = name;
-        this.price = price;
-        this.imageUrl = imageUrl;
-        this.description = description;
     }
 
     protected Food(Parcel in) {
@@ -25,6 +18,7 @@ public class Food implements Parcelable {
         price = in.readString();
         description = in.readString();
         imageUrl = in.readString();
+        id = in.readString();
     }
 
     public static final Creator<Food> CREATOR = new Creator<Food>() {
@@ -82,5 +76,6 @@ public class Food implements Parcelable {
         dest.writeString(price);
         dest.writeString(description);
         dest.writeString(imageUrl);
+        dest.writeString(id);
     }
 }
