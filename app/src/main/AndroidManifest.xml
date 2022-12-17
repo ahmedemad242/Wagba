@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RestaurantDetails"
+            android:name=".RestaurantDetailsActivity"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"

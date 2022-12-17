@@ -61,7 +61,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.plusBtn.setOnClickListener(v -> {
             int quantity = Integer.parseInt((String) holder.quantity.getText());
             holder.quantity.setText(String.valueOf(quantity + 1));
-            Cart.getInstance().plus(foodIdList.get(position));
+            Cart.getInstance().plus(cart.getFood(foodIdList.get(position)));
             updateCartUi.run();
         });
 
@@ -69,7 +69,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             int quantity = Integer.parseInt((String) holder.quantity.getText());
             if (quantity > 0) {
                 holder.quantity.setText(String.valueOf(quantity - 1));
-                Cart.getInstance().minus(foodIdList.get(position));
+                Cart.getInstance().minus(cart.getFood(foodIdList.get(position)));
                 updateCartUi.run();
             }
         });

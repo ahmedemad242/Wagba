@@ -15,7 +15,7 @@ import java.util.Map;
 
 
 public class Cart {
-    public Map<String, Integer> items;
+    public Map<String, CartItem> items;
     private DeliveryFeeCalculator deliveryFeeCalculator;
     private TaxCalculator taxCalculator;
     private static Cart instance;
@@ -61,21 +61,21 @@ public class Cart {
         return instance;
     }
 
-    public void plus(String foodId) {
+    public void plus(Food food) {
         int quantity = 1;
-        if (items.containsKey(foodId)) {
-            quantity += items.get(foodId);
+        if (items.containsKey(food.getId())) {
+            quantity += items.get(food.getId()).getQuantity();
         }
-        items.put(foodId, quantity);
+        items.put(food.getId(), new CartItem(food, quantity));
     }
 
-    public void minus(String foodId) {
-        if (items.containsKey(foodId)) {
-            int quantity = items.get(foodId);
+    public void minus(Food food) {
+        if (items.containsKey(food.getId())) {
+            int quantity = items.get(food.getId()).getQuantity();
             if (quantity > 1) {
-                items.put(foodId, quantity - 1);
+                items.put(food.getId(), new CartItem(food, quantity - 1) );
             } else {
-                items.remove(foodId);
+                items.remove(food.getId());
             }
         }
     }
@@ -120,17 +120,17 @@ public class Cart {
 
     public double getSubtotal() {
         double subtotal = 0;
-        for (Map.Entry<String, Integer> entry : items.entrySet()) {
+        for (Map.Entry<String, CartItem> entry : items.entrySet()) {
             String foodId = entry.getKey();
-            int itemQuantity = entry.getValue();
-            subtotal += Float.parseFloat(restaurant.getFoodById(foodId).getPrice()) * itemQuantity;
+            int itemQuantity = entry.getValue().getQuantity();
+            subtotal += Float.parseFloat(items.get(foodId).getFood().getPrice()) * itemQuantity;
         }
         return subtotal;
     }
 
     public int getQuantity(String foodId) {
         if (this.items.containsKey(foodId)) {
-            return this.items.get(foodId);
+            return this.items.get(foodId).getQuantity();
         }
         return 0;
     }
@@ -159,7 +159,7 @@ public class Cart {
     }
 
     public Food getFood(String foodId){
-        return restaurant.getFoodById(foodId);
+        return items.get(foodId).getFood();
     }
 
     public List<String> getFoodIdList(){

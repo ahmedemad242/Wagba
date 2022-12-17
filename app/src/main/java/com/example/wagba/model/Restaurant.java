@@ -13,7 +13,6 @@ public class Restaurant implements Parcelable {
     private String id;
     private String description;
     private String imageUrl;
-    private List<Food> menuItems;
     private String rating;
 
     protected Restaurant(Parcel in) {
@@ -21,7 +20,6 @@ public class Restaurant implements Parcelable {
         description = in.readString();
         imageUrl = in.readString();
         rating = in.readString();
-        menuItems = in.readArrayList(Food.class.getClassLoader());
         id = in.readString();
     }
 
@@ -48,7 +46,6 @@ public class Restaurant implements Parcelable {
         dest.writeString(description);
         dest.writeString(imageUrl);
         dest.writeString(rating);
-        dest.writeList(menuItems);
         dest.writeString(id);
     }
 
@@ -86,14 +83,6 @@ public class Restaurant implements Parcelable {
         this.imageUrl = imageUrl;
     }
 
-    public List<Food> getMenuItems() {
-        return menuItems;
-    }
-
-    public void setMenuItems(List<Food> menuItems) {
-        this.menuItems = menuItems;
-    }
-
     public String getId() {
         return id;
     }
@@ -102,13 +91,5 @@ public class Restaurant implements Parcelable {
         this.id = id;
     }
 
-    public Food getFoodById(String foodId) {
-        for (Food food : menuItems) {
-            if (food.getId().equals(foodId)) {
-                return food;
-            }
-        }
-        return null;
-    }
 
 }
