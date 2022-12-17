@@ -2,8 +2,6 @@ package com.example.wagba.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +16,6 @@ import com.example.wagba.RestaurantDetails;
 import com.example.wagba.model.Restaurant;
 import com.example.wagba.utils.ImageUtils;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
@@ -69,7 +64,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             image = itemView.findViewById(R.id.restaurant_food_image);
             name = itemView.findViewById(R.id.restaurant_food_name);
             description = itemView.findViewById(R.id.restaurant_food_description);
-            rating = itemView.findViewById(R.id.restaurant_rating);
+            rating = itemView.findViewById(R.id.popular_restaurant_rating);
         }
     }
 
