@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -62,14 +63,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
 
 
-        List<Food> foodList = new ArrayList<Food>();
-        foodList.add(new Food("Cake", "7.43 LE", "https://i.ibb.co/fS0HkY7/cilantro.jpg", "Sad"));
-//        foodList.add(new Food("Food", "24.72 LE", R.drawable.ic_launcher_background, "Sad"));
-//        foodList.add(new Food("Italian pasta", "119.1 LE", R.drawable.ic_launcher_background, "Sad"));
-//        foodList.add(new Food("LOL", "1219.1 LE", R.drawable.ic_launcher_background, "Sad"));
-
-        setFoodRecycler(foodList);
-
 
 
         restaurantRef.addValueEventListener(new ValueEventListener() {
@@ -80,7 +73,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Restaurant restaurant = childSnapshot.getValue(Restaurant.class);
                     restaurants.add(restaurant);
                 }
+                Collections.shuffle(restaurants);
                 setRestaurantRecycler(restaurants);
+
+                List<Food> popularFoodList = new ArrayList<Food>();
+                for (Restaurant restaurant : restaurants.subList(0, 5)) {
+                    List<Food> menuItems = restaurant.getMenuItems();
+                    Collections.shuffle(menuItems);
+                    if(menuItems.size() > 0)
+                        popularFoodList.add(menuItems.get(0));
+                }
+                setFoodRecycler(popularFoodList);
             }
 
             @Override
