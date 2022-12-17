@@ -44,6 +44,19 @@ public class RestaurantFoodAdapter extends RecyclerView.Adapter<RestaurantFoodAd
 
         holder.quantity.setText(String.valueOf(Cart.getInstance(restaurant, context).getQuantity(foodList.get(position).getId())));
 
+        if(!foodList.get(position).getAvailability()) {
+            holder.available.setVisibility(View.VISIBLE);
+            holder.plusBtn.setVisibility(View.GONE);
+            holder.minusBtn.setVisibility(View.GONE);
+            holder.quantity.setVisibility(View.GONE);
+        }
+        else {
+            holder.available.setVisibility(View.GONE);
+            holder.plusBtn.setVisibility(View.VISIBLE);
+            holder.minusBtn.setVisibility(View.VISIBLE);
+            holder.quantity.setVisibility(View.VISIBLE);
+        }
+
         holder.plusBtn.setOnClickListener(v -> {
             int quantity = Integer.parseInt((String) holder.quantity.getText());
             holder.quantity.setText(String.valueOf(quantity + 1));
@@ -67,7 +80,7 @@ public class RestaurantFoodAdapter extends RecyclerView.Adapter<RestaurantFoodAd
     public static final class RestaurantFoodViewHolder extends RecyclerView.ViewHolder{
 
         ImageView image, plusBtn, minusBtn;
-        TextView name, description, price, quantity;
+        TextView name, description, price, quantity, available;
 
         public RestaurantFoodViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +92,7 @@ public class RestaurantFoodAdapter extends RecyclerView.Adapter<RestaurantFoodAd
             plusBtn = itemView.findViewById(R.id.restaurant_food_plus_btn);
             minusBtn = itemView.findViewById(R.id.restaurant_food_minus_btn);
             quantity = itemView.findViewById(R.id.restaurant_food_count);
+            available = itemView.findViewById(R.id.restaurant_food_availability);
         }
     }
 }

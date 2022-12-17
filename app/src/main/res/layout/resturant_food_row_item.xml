@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     app:cardCornerRadius="15dp"
     android:elevation="5dp"
@@ -19,11 +20,12 @@
             android:layout_width="105dp"
             android:layout_height="100dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/food_image"
             android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_launcher_background"
-            android:contentDescription="@string/food_image" />
+            tools:ignore="ImageContrastCheck" />
 
         <TextView
             android:id="@+id/restaurant_food_description"
@@ -33,7 +35,7 @@
             android:layout_marginEnd="50dp"
             android:text="@string/food_name_placeholder"
             android:textColor="#99000000"
-            android:textSize="10sp"
+            android:textSize="11sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/restaurant_food_name"
             app:layout_constraintTop_toBottomOf="@+id/restaurant_food_name" />
@@ -49,6 +51,20 @@
             android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/restaurant_food_image"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/restaurant_food_availability"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/not_available"
+            android:textColor="@color/orange"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/restaurant_food_image"
+            app:layout_constraintStart_toStartOf="@+id/restaurant_food_name"
+            android:visibility="gone"
+            />
 
         <ImageView
             android:id="@+id/restaurant_food_minus_btn"

@@ -1,7 +1,10 @@
 package com.example.wagba.model;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.annotation.RequiresApi;
 
 public class Food implements Parcelable {
     private String name;
@@ -9,6 +12,8 @@ public class Food implements Parcelable {
     private String description;
     private String imageUrl;
     private String id;
+    private Boolean availability;
+
 
     public Food() {
     }
@@ -19,6 +24,7 @@ public class Food implements Parcelable {
         description = in.readString();
         imageUrl = in.readString();
         id = in.readString();
+        availability = in.readBoolean();
     }
 
     public static final Creator<Food> CREATOR = new Creator<Food>() {
@@ -73,6 +79,14 @@ public class Food implements Parcelable {
         this.imageUrl = imageUrl;
     }
 
+    public Boolean getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(Boolean availability) {
+        this.availability = availability;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -85,5 +99,6 @@ public class Food implements Parcelable {
         dest.writeString(description);
         dest.writeString(imageUrl);
         dest.writeString(id);
+        dest.writeBoolean(availability);
     }
 }
