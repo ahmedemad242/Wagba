@@ -49,7 +49,7 @@ public class CartActivity extends AppCompatActivity {
             activityCartBinding.cartTotal.setText(
                     String.format(Locale.getDefault(), "%.2f", cart.getTotalCost()));
         };
-        
+
         updateCartUi.run();
         setCartItemRecycler(Cart.getInstance().getFoodIdList(), updateCartUi);
 

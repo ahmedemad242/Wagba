@@ -35,7 +35,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
         android:textColor="@color/blue_grey"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/cart_item_image"
         app:layout_constraintTop_toTopOf="@+id/cart_item_image"/>
