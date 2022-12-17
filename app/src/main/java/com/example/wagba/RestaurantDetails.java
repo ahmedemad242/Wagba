@@ -23,7 +23,6 @@ public class RestaurantDetails extends AppCompatActivity {
     private ActivityResturantDetailsBinding activityResturantDetailsBinding;
     private RestaurantFoodAdapter restaurantFoodAdapter;
     private Window window;
-    private Cart cart;
 
 
     @Override
@@ -32,7 +31,6 @@ public class RestaurantDetails extends AppCompatActivity {
         activityResturantDetailsBinding = ActivityResturantDetailsBinding.inflate(getLayoutInflater());
         setContentView(activityResturantDetailsBinding.getRoot());
         window = this.getWindow();
-        cart = Cart.getInstance();
 
         WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.secondary_blue));
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
@@ -46,17 +44,17 @@ public class RestaurantDetails extends AppCompatActivity {
                 String.valueOf(restaurant.getMenuItems().size()));
         activityResturantDetailsBinding.restaurantDetailsRating.setText(restaurant.getRating());
         activityResturantDetailsBinding.restaurantDetailsOrders.setText("10");
-        setFoodRecycler(restaurant.getMenuItems());
+        setFoodRecycler(restaurant);
 
         activityResturantDetailsBinding.restaurantFoodHome.setOnClickListener(v -> {
             onBackPressed();
         });
     }
 
-    private void setFoodRecycler(List<Food> foodList){
+    private void setFoodRecycler(Restaurant restaurant){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         activityResturantDetailsBinding.restaurantFoodRecyclerView.setLayoutManager(layoutManager);
-        restaurantFoodAdapter = new RestaurantFoodAdapter(this, foodList, cart);
+        restaurantFoodAdapter = new RestaurantFoodAdapter(this, restaurant);
         activityResturantDetailsBinding.restaurantFoodRecyclerView.setAdapter(restaurantFoodAdapter);
     }
 

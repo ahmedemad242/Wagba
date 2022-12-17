@@ -1,7 +1,6 @@
 package com.example.wagba.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wagba.R;
 import com.example.wagba.model.Cart;
 import com.example.wagba.model.Food;
+import com.example.wagba.model.Restaurant;
 import com.example.wagba.utils.ImageUtils;
 import java.util.List;
 
 public class RestaurantFoodAdapter extends RecyclerView.Adapter<RestaurantFoodAdapter.RestaurantFoodViewHolder> {
-    private Context context;
-    private List<Food> foodList;
-    private Cart cart;
+    private final Context context;
+    private final Restaurant restaurant;
 
-    public RestaurantFoodAdapter(Context context, List<Food> foodList, Cart cart) {
+    public RestaurantFoodAdapter(Context context, Restaurant restaurant) {
         this.context = context;
-        this.foodList = foodList;
-        this.cart = cart;
+        this.restaurant = restaurant;
     }
 
     @NonNull
@@ -37,33 +35,33 @@ public class RestaurantFoodAdapter extends RecyclerView.Adapter<RestaurantFoodAd
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantFoodViewHolder holder, int position) {
-
+        List<Food> foodList= restaurant.getMenuItems();
         ImageUtils.loadImage(context, foodList.get(position).getImageUrl(), holder.image, R.drawable.logo_bg_light);
 
         holder.name.setText(foodList.get(position).getName());
         holder.price.setText(foodList.get(position).getPrice());
         holder.description.setText(foodList.get(position).getDescription());
-        holder.quantity.setText(String.valueOf(cart.getQuantity(foodList.get(position))));
+
+        holder.quantity.setText(String.valueOf(Cart.getInstance(restaurant, context).getQuantity(foodList.get(position).getId())));
 
         holder.plusBtn.setOnClickListener(v -> {
             int quantity = Integer.parseInt((String) holder.quantity.getText());
             holder.quantity.setText(String.valueOf(quantity + 1));
-            cart.plus(foodList.get(position));
-            Log.d("cart", cart.items.toString());
+            Cart.getInstance(restaurant, context).plus(foodList.get(position).getId());
         });
 
         holder.minusBtn.setOnClickListener(v -> {
             int quantity = Integer.parseInt((String) holder.quantity.getText());
             if (quantity > 0) {
                 holder.quantity.setText(String.valueOf(quantity - 1));
-                cart.minus(foodList.get(position));
+                Cart.getInstance(restaurant, context).minus(foodList.get(position).getId());
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return foodList.size();
+        return restaurant.getMenuItems().size();
     }
 
     public static final class RestaurantFoodViewHolder extends RecyclerView.ViewHolder{
