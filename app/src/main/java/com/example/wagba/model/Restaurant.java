@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Restaurant implements Parcelable {
     private String name;
+    private String id;
     private String description;
     private String imageUrl;
     private List<Food> menuItems;
@@ -21,6 +22,7 @@ public class Restaurant implements Parcelable {
         imageUrl = in.readString();
         rating = in.readString();
         menuItems = in.readArrayList(Food.class.getClassLoader());
+        id = in.readString();
     }
 
     public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
@@ -47,6 +49,7 @@ public class Restaurant implements Parcelable {
         dest.writeString(imageUrl);
         dest.writeString(rating);
         dest.writeList(menuItems);
+        dest.writeString(id);
     }
 
     // Default constructor required for calls to DataSnapshot.getValue(Restaurant.class)
