@@ -64,14 +64,14 @@ public class RestaurantFoodAdapter extends RecyclerView.Adapter<RestaurantFoodAd
         holder.plusBtn.setOnClickListener(v -> {
             int quantity = Integer.parseInt((String) holder.quantity.getText());
             holder.quantity.setText(String.valueOf(quantity + 1));
-            cart.plus(cart.getFood(foodList.get(position).getId()));
+            cart.plus(foodList.get(position));
         });
 
         holder.minusBtn.setOnClickListener(v -> {
             int quantity = Integer.parseInt((String) holder.quantity.getText());
             if (quantity > 0) {
                 holder.quantity.setText(String.valueOf(quantity - 1));
-                cart.minus(cart.getFood(foodList.get(position).getId()));
+                cart.minus(foodList.get(position));
             }
         });
     }
