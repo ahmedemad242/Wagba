@@ -24,11 +24,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RestaurantDetails extends AppCompatActivity {
+public class RestaurantDetailsActivity extends AppCompatActivity {
 
     private ActivityResturantDetailsBinding activityResturantDetailsBinding;
     private RestaurantFoodAdapter restaurantFoodAdapter;
     private Window window;
+    FirebaseDatabase database;
     DatabaseReference foodRef;
 
 
@@ -38,6 +39,8 @@ public class RestaurantDetails extends AppCompatActivity {
         activityResturantDetailsBinding = ActivityResturantDetailsBinding.inflate(getLayoutInflater());
         setContentView(activityResturantDetailsBinding.getRoot());
         window = this.getWindow();
+        database = FirebaseDatabase.getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/");
+
 
         WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.secondary_blue));
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
@@ -45,14 +48,12 @@ public class RestaurantDetails extends AppCompatActivity {
         Restaurant restaurant = getIntent().getParcelableExtra("restaurant");
 
         String path = "/restaurants/" + restaurant.getId() + "/menuItems";
-        foodRef = FirebaseDatabase.getInstance("https://wagba-c33d4-default-rtdb.firebaseio.com/").getReference(path);
+        foodRef = database.getReference(path);
 
         List<Food> foodList = new ArrayList<>();
         foodRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                // Retrieve the list of dishes from the snapshot
-
                 for (DataSnapshot dishSnapshot : snapshot.getChildren()) {
                     Food food = dishSnapshot.getValue(Food.class);
                     foodList.add(food);

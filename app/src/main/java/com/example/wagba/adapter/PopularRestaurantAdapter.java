@@ -12,12 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wagba.R;
-import com.example.wagba.RestaurantDetails;
-import com.example.wagba.model.Food;
+import com.example.wagba.RestaurantDetailsActivity;
 import com.example.wagba.model.Restaurant;
 import com.example.wagba.utils.ImageUtils;
 
-import java.util.Collections;
 import java.util.List;
 
 public class PopularRestaurantAdapter extends RecyclerView.Adapter<PopularRestaurantAdapter.FoodViewHolder> {
@@ -43,7 +41,7 @@ public class PopularRestaurantAdapter extends RecyclerView.Adapter<PopularRestau
         holder.price.setText(restaurantList.get(position).getRating());
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, RestaurantDetails.class);
+            Intent intent = new Intent(context, RestaurantDetailsActivity.class);
             intent.putExtra("restaurant", restaurantList.get(position));
             context.startActivity(intent);
         });
