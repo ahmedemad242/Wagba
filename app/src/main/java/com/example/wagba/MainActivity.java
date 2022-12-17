@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
-import com.example.wagba.adapter.PopularFoodAdapter;
+import com.example.wagba.adapter.PopularRestaurantAdapter;
 import com.example.wagba.adapter.RestaurantAdapter;
 import com.example.wagba.databinding.ActivityMainBinding;
 import com.example.wagba.model.Restaurant;
@@ -35,7 +35,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding activityMainBinding;
-    private PopularFoodAdapter popularFoodAdapter;
+    private PopularRestaurantAdapter popularFoodAdapter;
     private RestaurantAdapter restaurantAdapter;
     private Window window;
     private ActionBarDrawerToggle toggle;
@@ -71,9 +71,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Restaurant restaurant = childSnapshot.getValue(Restaurant.class);
                     restaurants.add(restaurant);
                 }
-                Collections.shuffle(restaurants);
                 setRestaurantRecycler(restaurants);
-                setPopularFoodRecycler(restaurants.subList(0, 5));
+                setPopularFoodRecycler(restaurants.subList(0, 3));
             }
 
             @Override
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setPopularFoodRecycler(List<Restaurant> foodList){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         activityMainBinding.foodRecycleView.setLayoutManager(layoutManager);
-        popularFoodAdapter = new PopularFoodAdapter(this, foodList);
+        popularFoodAdapter = new PopularRestaurantAdapter(this, foodList);
         activityMainBinding.foodRecycleView.setAdapter(popularFoodAdapter);
     }
 

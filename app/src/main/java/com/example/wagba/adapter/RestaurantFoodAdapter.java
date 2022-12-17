@@ -20,10 +20,13 @@ import java.util.List;
 public class RestaurantFoodAdapter extends RecyclerView.Adapter<RestaurantFoodAdapter.RestaurantFoodViewHolder> {
     private final Context context;
     private final Restaurant restaurant;
+    private final List<Food> foodList;
 
-    public RestaurantFoodAdapter(Context context, Restaurant restaurant) {
+
+    public RestaurantFoodAdapter(Context context, Restaurant restaurant, List<Food> foodList) {
         this.context = context;
         this.restaurant = restaurant;
+        this.foodList = foodList;
     }
 
     @NonNull
@@ -35,7 +38,8 @@ public class RestaurantFoodAdapter extends RecyclerView.Adapter<RestaurantFoodAd
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantFoodViewHolder holder, int position) {
-        List<Food> foodList= restaurant.getMenuItems();
+        Cart cart = Cart.getInstance(restaurant, context);
+
         ImageUtils.loadImage(context, foodList.get(position).getImageUrl(), holder.image, R.drawable.logo_bg_light);
 
         holder.name.setText(foodList.get(position).getName());
@@ -60,21 +64,21 @@ public class RestaurantFoodAdapter extends RecyclerView.Adapter<RestaurantFoodAd
         holder.plusBtn.setOnClickListener(v -> {
             int quantity = Integer.parseInt((String) holder.quantity.getText());
             holder.quantity.setText(String.valueOf(quantity + 1));
-            Cart.getInstance(restaurant, context).plus(foodList.get(position).getId());
+            cart.plus(foodList.get(position));
         });
 
         holder.minusBtn.setOnClickListener(v -> {
             int quantity = Integer.parseInt((String) holder.quantity.getText());
             if (quantity > 0) {
                 holder.quantity.setText(String.valueOf(quantity - 1));
-                Cart.getInstance(restaurant, context).minus(foodList.get(position).getId());
+                cart.minus(foodList.get(position));
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return restaurant.getMenuItems().size();
+        return foodList.size();
     }
 
     public static final class RestaurantFoodViewHolder extends RecyclerView.ViewHolder{
