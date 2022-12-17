@@ -11,7 +11,7 @@ import com.example.wagba.databinding.ActivityProfileBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Profile extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private ActivityProfileBinding activityProfileBinding;
     private Window window;

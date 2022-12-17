@@ -15,7 +15,7 @@ import com.example.wagba.model.CartItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cart extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity {
 
     private ActivityCartBinding activityCartBinding;
     private CartAdapter cartAdapter;

@@ -15,7 +15,7 @@ import com.example.wagba.model.Order;
 import java.util.ArrayList;
 import java.util.List;
 
-public class History extends AppCompatActivity {
+public class HistoryActivity extends AppCompatActivity {
 
     private ActivityHistoryBinding activityHistoryBinding;
     private OrderAdapter orderAdapter;
