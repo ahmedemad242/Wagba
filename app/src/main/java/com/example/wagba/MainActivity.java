@@ -18,6 +18,7 @@ import com.example.wagba.adapter.PopularFoodAdapter;
 import com.example.wagba.adapter.RestaurantAdapter;
 import com.example.wagba.databinding.ActivityMainBinding;
 import com.example.wagba.model.Restaurant;
+import com.example.wagba.utils.WindowController;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
-                    startActivity(new Intent(MainActivity.this, Login.class));
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 }
             }
         });
@@ -144,13 +145,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (menuItem.getItemId()) {
             case R.id.profileDrawerButton:
-                startActivity(new Intent(MainActivity.this, Profile.class));
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                 break;
             case R.id.historyDrawerButton:
-                startActivity(new Intent(MainActivity.this, History.class));
+                startActivity(new Intent(MainActivity.this, HistoryActivity.class));
                 break;
             case R.id.cartDrawerButton:
-                startActivity(new Intent(MainActivity.this, Cart.class));
+                startActivity(new Intent(MainActivity.this, CartActivity.class));
                 break;
             case R.id.logOutDrawerButton:
                 firebaseAuth.signOut();

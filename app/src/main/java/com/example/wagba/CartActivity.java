@@ -5,21 +5,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 
 import com.example.wagba.adapter.CartAdapter;
 import com.example.wagba.databinding.ActivityCartBinding;
-import com.example.wagba.model.CartItem;
+import com.example.wagba.model.Cart;
+import com.example.wagba.utils.WindowController;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class Cart extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity {
 
     private ActivityCartBinding activityCartBinding;
     private CartAdapter cartAdapter;
     private Window window;
+    private Runnable updateCartUi;
 
 
     @Override
@@ -30,20 +33,26 @@ public class Cart extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(activityCartBinding.getRoot());
         window = this.getWindow();
-
         WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.white));
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.dark_blue), false);
 
-        List<CartItem> cartList = new ArrayList<CartItem>();
-//        cartList.add(new CartItem(new Food("Cake", "7.43", R.drawable.ic_launcher_background, "Sad"),2));
-//        cartList.add(new CartItem(new Food("Food", "24.72", R.drawable.ic_launcher_background, "Sad"),4));
-//        cartList.add(new CartItem(new Food("Italian pasta", "119.1", R.drawable.ic_launcher_background, "Sad"), 1));
-//        cartList.add(new CartItem(new Food("LOL", "1219.1", R.drawable.ic_launcher_background, "Sad"), 12));
-//        cartList.add(new CartItem(new Food("Cake", "7.43", R.drawable.ic_launcher_background, "Sad"),2));
-//        cartList.add(new CartItem(new Food("Food", "24.72", R.drawable.ic_launcher_background, "Sad"),4));
-//        cartList.add(new CartItem(new Food("Italian pasta", "119.1", R.drawable.ic_launcher_background, "Sad"), 1));
+        updateCartUi = () -> {
+            Cart cart = Cart.getInstance();
+            double subtotal = cart.getSubtotal();
 
-        setCartItemRecycler(cartList);
+            activityCartBinding.cartItemsTotal.setText(
+                    String.format(Locale.getDefault(), "%.2f", subtotal));
+            activityCartBinding.cartDeliveryTotal.setText(
+                    String.format(Locale.getDefault(), "%.2f", cart.getDeliveryFee(subtotal)));
+            activityCartBinding.cartTaxTotal.setText(
+                    String.format(Locale.getDefault(), "%.2f", cart.getTax(subtotal)));
+            activityCartBinding.cartTotal.setText(
+                    String.format(Locale.getDefault(), "%.2f", cart.getTotalCost()));
+        };
+
+        updateCartUi.run();
+        setCartItemRecycler(Cart.getInstance().getFoodIdList(), updateCartUi);
+
 
     }
 
@@ -57,10 +66,10 @@ public class Cart extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setCartItemRecycler(List<CartItem> cartList){
+    private void setCartItemRecycler(List<String> foodIdList, Runnable updateCartUi){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         activityCartBinding.cartRecyclerView.setLayoutManager(layoutManager);
-        cartAdapter = new CartAdapter(this, cartList);
+        cartAdapter = new CartAdapter(this, foodIdList, updateCartUi);
         activityCartBinding.cartRecyclerView.setAdapter(cartAdapter);
     }
 }

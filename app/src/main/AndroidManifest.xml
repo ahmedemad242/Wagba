@@ -12,7 +12,7 @@
         android:usesCleartextTraffic="true"
         >
         <activity
-            android:name=".Login"
+            android:name=".LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -30,17 +30,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Wagba.NoActionBar"/>
         <activity
-            android:name=".Profile"
+            android:name=".ProfileActivity"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"  />
         <activity
-            android:name=".Cart"
+            android:name=".CartActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".History"
+            android:name=".HistoryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />

@@ -35,13 +35,13 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
         android:textColor="@color/blue_grey"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/cart_item_image"
         app:layout_constraintTop_toTopOf="@+id/cart_item_image"/>
 
     <ImageView
-        android:id="@+id/restaurant_food_minus_btn"
+        android:id="@+id/cart_minus_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -51,7 +51,7 @@
         android:contentDescription="@string/cart_minus" />
 
     <TextView
-        android:id="@+id/restaurant_food_count"
+        android:id="@+id/cart_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/item_placeholder"
@@ -59,18 +59,18 @@
         android:textColor="@color/blue_grey"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/restaurant_food_minus_btn"
-        app:layout_constraintTop_toTopOf="@+id/restaurant_food_minus_btn" />
+        app:layout_constraintStart_toEndOf="@+id/cart_minus_btn"
+        app:layout_constraintTop_toTopOf="@+id/cart_minus_btn" />
 
     <ImageView
-        android:id="@+id/restaurant_food_plus_btn"
+        android:id="@+id/cart_plus_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/restaurant_food_minus_btn"
-        app:layout_constraintStart_toEndOf="@+id/restaurant_food_count"
-        app:layout_constraintTop_toTopOf="@+id/restaurant_food_minus_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/cart_minus_btn"
+        app:layout_constraintStart_toEndOf="@+id/cart_count"
+        app:layout_constraintTop_toTopOf="@+id/cart_minus_btn"
         app:srcCompat="@drawable/plus"
         android:contentDescription="@string/cart_add" />
 
@@ -106,7 +106,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/textView19"
-        app:layout_constraintTop_toTopOf="@+id/restaurant_food_plus_btn" />
+        app:layout_constraintTop_toTopOf="@+id/cart_plus_btn" />
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
@@ -118,7 +118,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/restaurant_food_plus_btn" />
+        app:layout_constraintTop_toTopOf="@+id/cart_plus_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -14,6 +14,7 @@ import com.example.wagba.databinding.SignUpSheetBinding;
 import com.example.wagba.databinding.SignInSheetBinding;
 import com.example.wagba.databinding.ActivityLoginBinding;
 import com.example.wagba.utils.Validator;
+import com.example.wagba.utils.WindowController;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,7 +26,7 @@ import android.view.Window;
 import android.widget.Toast;
 
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private SignUpSheetBinding singUpSheetBinding;
     private SignInSheetBinding singInSheetBinding;
@@ -47,7 +48,7 @@ public class Login extends AppCompatActivity {
         WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.white));
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
 
-        bottomSheet = new BottomSheet(Login.this, R.style.bottomSheetTheme, new DialogInterface.OnCancelListener() {
+        bottomSheet = new BottomSheet(LoginActivity.this, R.style.bottomSheetTheme, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 setLightTheme();
@@ -123,7 +124,7 @@ public class Login extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 successfulLogin();
                             } else {
-                                Toast.makeText(Login.this, "Authentication failed.",
+                                Toast.makeText(LoginActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -176,7 +177,7 @@ public class Login extends AppCompatActivity {
                                         });
 
                             } else {
-                                Toast.makeText(Login.this, "Authentication failed.",
+                                Toast.makeText(LoginActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -196,7 +197,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void successfulLogin(){
-        startActivity(new Intent(Login.this, MainActivity.class));
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
     }
 

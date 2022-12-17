@@ -52,7 +52,6 @@ public class Restaurant implements Parcelable {
         dest.writeString(id);
     }
 
-    // Default constructor required for calls to DataSnapshot.getValue(Restaurant.class)
     public Restaurant() { }
 
     public String getRating() {
@@ -94,4 +93,22 @@ public class Restaurant implements Parcelable {
     public void setMenuItems(List<Food> menuItems) {
         this.menuItems = menuItems;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Food getFoodById(String foodId) {
+        for (Food food : menuItems) {
+            if (food.getId().equals(foodId)) {
+                return food;
+            }
+        }
+        return null;
+    }
+
 }
