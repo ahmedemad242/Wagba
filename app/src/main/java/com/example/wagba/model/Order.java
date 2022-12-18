@@ -9,6 +9,7 @@ public class Order {
     private String orderId;
     private String status;
 
+
     public Order(String orderDate, String price, int numberOfObjects, String orderId, String status) {
         this.orderDate = orderDate;
         this.price = price;
