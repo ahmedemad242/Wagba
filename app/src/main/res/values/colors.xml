@@ -11,5 +11,10 @@
     <color name="dark_blue">#FF191929</color>
     <color name="secondary_blue">#272670</color>
     <color name="blue_grey">#373B54</color>
-    <color name="fire_orange">#ff3d00</color>>
+    <color name="fire_orange">#ff3d00</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="blue">#0000FF</color>
+    <color name="green">#319B54</color>
+    <color name="grey">#808080</color>
+    <color name="red">#cf142b</color>>
 </resources>

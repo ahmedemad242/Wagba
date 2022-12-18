@@ -14,8 +14,16 @@ import com.example.wagba.databinding.ActivityHistoryBinding;
 import com.example.wagba.model.Order;
 import com.example.wagba.model.OrderItem;
 import com.example.wagba.utils.WindowController;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {
@@ -27,6 +35,11 @@ public class HistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        DatabaseReference ordersRef = FirebaseDatabase.getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users")
+                .child(userId).child("orders");
+
         activityHistoryBinding = ActivityHistoryBinding.inflate(getLayoutInflater());
         getSupportActionBar().setTitle("History");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -36,25 +49,23 @@ public class HistoryActivity extends AppCompatActivity {
         WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.white));
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.dark_blue), false);
 
-        List<Order> orderList = new ArrayList<Order>();
-        List<OrderItem> orderItemList = new ArrayList<>();
-        orderItemList.add(new OrderItem("burger", "3", "15"));
-        orderItemList.add(new OrderItem("burger1", "5", "17"));
-        orderItemList.add(new OrderItem("burger2", "1", "90"));
+        ordersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
 
-        orderList.add(new Order("resfcr","22/11/2022", "190.12",
-                "usr1or3", "Delivered", orderItemList));
-        orderList.add(new Order("resfcr","22/11/2022", "190.12",
-                "usr1or3", "Delivered", orderItemList));
-        orderList.add(new Order("resfcr","22/11/2022", "190.12",
-                "usr1or3", "Delivered", orderItemList));
+                List<Order> orderList = new ArrayList<>();
+                for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
+                    Order order = orderSnapshot.getValue(Order.class);
+                    orderList.add(0, order);
+                }
+                setOrderRecycler(orderList);
+            }
 
-
-
-
-
-        setOrderRecycler(orderList);
-
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Handle error
+            }
+        });
     }
     
     @Override

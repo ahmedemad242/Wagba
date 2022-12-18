@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public class Cart {
@@ -161,6 +162,11 @@ public class Cart {
     public Food getFood(String foodId){
         return items.get(foodId).getFood();
     }
+
+    public List<CartItem> getCartItems(){
+        return items.values().stream().collect(Collectors.toList());
+    }
+
 
     public List<String> getFoodIdList(){
         return new ArrayList<String>(items.keySet());

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wagba.R;
 import com.example.wagba.model.Order;
 import com.example.wagba.model.OrderItem;
+import com.example.wagba.utils.StatusColorMapper;
 
 import java.util.List;
 import java.util.Locale;
@@ -62,9 +63,11 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
         holder.orderStatus.setText(order.getStatus());
         holder.orderItemNumbers.setText(String.valueOf(order.getOrderItems().size()));
         holder.orderDate.setText(order.getOrderDate());
+        holder.orderPrice.setText(String.format(Locale.getDefault(),"%.2f",Float.parseFloat(order.getPrice())));
+        holder.orderStatus.setTextColor(context.getResources().getColor(StatusColorMapper.getColorForStatus(order.getStatus())));
 
         holder.orderItemsContainer.removeAllViews();
-        if (expandedGroups.get(position)) {
+        if (expandedGroups.get(position) && order.getOrderItems().size() > 0) {
             holder.orderItemsContainer.setVisibility(View.VISIBLE);
 
             for (OrderItem orderItem : order.getOrderItems()) {
@@ -87,7 +90,7 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView orderId, orderStatus, orderItemNumbers, orderDate;
+        TextView orderId, orderStatus, orderItemNumbers, orderDate, orderPrice;
         LinearLayout orderItemsContainer;
 
         public ViewHolder(View itemView, final OnItemClickListener listener) {
@@ -97,6 +100,7 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
             orderItemNumbers = itemView.findViewById(R.id.order_item_numbers);
             orderItemsContainer = itemView.findViewById(R.id.order_items_container);
             orderDate = itemView.findViewById(R.id.order_date);
+            orderPrice = itemView.findViewById(R.id.order_price);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

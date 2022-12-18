@@ -1,7 +1,9 @@
 package com.example.wagba;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import com.example.wagba.model.Food;
 import com.example.wagba.model.Restaurant;
 import com.example.wagba.utils.ImageUtils;
 import com.example.wagba.utils.WindowController;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -73,6 +76,15 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         activityResturantDetailsBinding.restaurantDetailsRating.setText(restaurant.getRating());
         //TODO:: Fill order number
         activityResturantDetailsBinding.restaurantDetailsOrders.setText("10");
+
+
+        activityResturantDetailsBinding.restaurantDetailsCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RestaurantDetailsActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         activityResturantDetailsBinding.restaurantFoodHome.setOnClickListener(v -> {

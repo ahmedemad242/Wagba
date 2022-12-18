@@ -27,17 +27,19 @@
                     android:layout_height="match_parent"
                     android:text="@string/order_number_placeholder"
                     android:textColor="@color/orange"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="end"/>
 
                 <TextView
                     android:id="@+id/order_number"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="1234"
                     android:textColor="@color/orange"
-                    android:textSize="22sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
+                    android:layout_gravity="end"
                     android:layout_weight="1"
                     />
 

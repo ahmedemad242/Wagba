@@ -4,16 +4,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wagba.adapter.CartAdapter;
 import com.example.wagba.databinding.ActivityCartBinding;
 import com.example.wagba.model.Cart;
+import com.example.wagba.model.CartItem;
+import com.example.wagba.model.Order;
+import com.example.wagba.model.OrderItem;
 import com.example.wagba.utils.WindowController;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,6 +68,18 @@ public class CartActivity extends AppCompatActivity {
         updateCartUi.run();
         setCartItemRecycler(Cart.getInstance().getFoodIdList(), updateCartUi);
 
+        activityCartBinding.checkOutButton.setOnClickListener(v -> {
+            Cart cart = Cart.getInstance();
+            if(cart.getCartItems().size() != 0){
+                saveCartToFirebase(cart);
+                startActivity(new Intent(CartActivity.this, HistoryActivity.class));
+                finish();
+            }
+            else{
+                Toast.makeText(this, "Cart is empty!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
 
@@ -71,5 +98,44 @@ public class CartActivity extends AppCompatActivity {
         activityCartBinding.cartRecyclerView.setLayoutManager(layoutManager);
         cartAdapter = new CartAdapter(this, foodIdList, updateCartUi);
         activityCartBinding.cartRecyclerView.setAdapter(cartAdapter);
+    }
+
+    private void saveCartToFirebase(Cart cart){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        DatabaseReference userOrderRef = FirebaseDatabase
+                .getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("users").child(userId).child("orders").push();
+        String orderId = userOrderRef.getKey();
+
+        DatabaseReference restaurantOrderRef = FirebaseDatabase
+                .getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("restaurants").child(cart.getRestaurant().getId()).child("orders").child(orderId);
+
+        Order order = cartToOrder(cart, orderId);
+        userOrderRef.setValue(order);
+        restaurantOrderRef.setValue(order);
+        cart.clear();
+    }
+
+    private Order cartToOrder(Cart cart, String orderId){
+        Order order = new Order();
+        order.setOrderId(orderId);
+        order.setPrice(String.valueOf(cart.getTotalCost()));
+        order.setOrderDate(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
+        order.setStatus("placed");
+        order.setRestaurantId(cart.getRestaurant().getId());
+        order.setOrderItems(cartItemToOrderItem(cart.getCartItems()));
+        return order;
+    }
+
+    private List<OrderItem> cartItemToOrderItem(List<CartItem> cartItems){
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (CartItem cartItem : cartItems) {
+            orderItems.add(new OrderItem(cartItem.getFood().getName(),
+                    String.valueOf(cartItem.getQuantity()),
+                    cartItem.getFood().getPrice()));
+        }
+        return orderItems;
     }
 }
