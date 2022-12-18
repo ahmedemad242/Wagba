@@ -28,9 +28,6 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
         void onItemClick(View itemView, int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
 
     @Override
     public int getItemCount() {
@@ -46,6 +43,13 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_row_item, parent, false);
+        listener = new OrderExpandableAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                // Toggle the expanded state of the group
+                toggleGroup(position);
+            }
+        };
         return new ViewHolder(view, listener);
     }
 
@@ -56,7 +60,7 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
         Order order = orders.get(position);
         holder.orderId.setText(order.getOrderId());
         holder.orderStatus.setText(order.getStatus());
-        holder.orderItemNumbers.setText(String.format("%d items", order.getOrderItems().size()));
+        holder.orderItemNumbers.setText(String.valueOf(order.getOrderItems().size()));
         holder.orderDate.setText(order.getOrderDate());
 
         holder.orderItemsContainer.removeAllViews();
@@ -70,9 +74,9 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
                 TextView orderItemQuantity = itemView.findViewById(R.id.order_item_quantity);
                 TextView orderItemTotalPrice = itemView.findViewById(R.id.order_item_total_price);
                 orderItemName.setText(orderItem.getName());
-                orderItemPrice.setText(String.format("$%.2f", orderItem.getPrice()));
+                orderItemPrice.setText(String.format(Locale.getDefault(),"%.2f", Float.parseFloat(orderItem.getPrice())));
                 orderItemQuantity.setText(String.valueOf(orderItem.getQuantity()));
-                orderItemTotalPrice.setText(String.format("$%.2f", orderItem.getPrice()*orderItem.getQuantity()));
+                orderItemTotalPrice.setText(String.format(Locale.getDefault(),"%.2f", Float.parseFloat(orderItem.getPrice())* Integer.parseInt(orderItem.getQuantity())));
 
                 holder.orderItemsContainer.addView(itemView);
             }
@@ -92,6 +96,7 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
             orderStatus = itemView.findViewById(R.id.order_status);
             orderItemNumbers = itemView.findViewById(R.id.order_item_numbers);
             orderItemsContainer = itemView.findViewById(R.id.order_items_container);
+            orderDate = itemView.findViewById(R.id.order_date);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

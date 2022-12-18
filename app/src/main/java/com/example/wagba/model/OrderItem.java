@@ -2,12 +2,12 @@ package com.example.wagba.model;
 
 public class OrderItem {
     private String name;
-    private int quantity;
-    private double price;
+    private String quantity;
+    private String price;
 
     public OrderItem() { }
 
-    public OrderItem(String name, int quantity, double price) {
+    public OrderItem(String name, String quantity, String price) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
@@ -21,19 +21,19 @@ public class OrderItem {
         this.name = name;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 }

@@ -51,7 +51,7 @@
     <string name="price_placeholder">119.12LE</string>
     <string name="order_number_placeholder">Order #</string>
     <string name="status_placeholder">Delivered</string>
-    <string name="number_of_items_placeholder">Number of Items: 5</string>
+    <string name="number_of_items_placeholder">Number of Items: </string>
     <string name="order_on">Order on</string>
     <string name="calender">calender</string>
     <string name="date_placeholder">09/12/2022</string>
