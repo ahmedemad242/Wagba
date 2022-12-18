@@ -64,7 +64,7 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
         holder.orderDate.setText(order.getOrderDate());
 
         holder.orderItemsContainer.removeAllViews();
-        if (expandedGroups.get(position)) {
+        if (expandedGroups.get(position) && order.getOrderItems().size() > 0) {
             holder.orderItemsContainer.setVisibility(View.VISIBLE);
 
             for (OrderItem orderItem : order.getOrderItems()) {

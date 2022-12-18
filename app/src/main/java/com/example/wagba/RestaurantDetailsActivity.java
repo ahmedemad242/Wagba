@@ -81,7 +81,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         activityResturantDetailsBinding.restaurantDetailsCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RestaurantDetails.this, CartActivity.class);
+                Intent intent = new Intent(RestaurantDetailsActivity.this, CartActivity.class);
                 startActivity(intent);
             }
         });
