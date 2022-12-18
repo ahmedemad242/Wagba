@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -77,10 +78,9 @@ public class CartActivity extends AppCompatActivity {
         activityCartBinding.checkOutButton.setOnClickListener(v -> {
             Cart cart = Cart.getInstance();
             if(cart.getCartItems().size() != 0){
-                showConfirmationDialog();
-//                saveCartToFirebase(cart);
-//                startActivity(new Intent(CartActivity.this, HistoryActivity.class));
-//                finish();
+                showConfirmationDialog(cart);
+                startActivity(new Intent(CartActivity.this, HistoryActivity.class));
+                finish();
             }
             else{
                 Toast.makeText(this, "Cart is empty!", Toast.LENGTH_SHORT).show();
@@ -107,46 +107,8 @@ public class CartActivity extends AppCompatActivity {
         activityCartBinding.cartRecyclerView.setAdapter(cartAdapter);
     }
 
-    private void saveCartToFirebase(Cart cart, String deliverySlot){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = user.getUid();
-        DatabaseReference userOrderRef = FirebaseDatabase
-                .getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/")
-                .getReference("users").child(userId).child("orders").push();
-        String orderId = userOrderRef.getKey();
 
-        DatabaseReference restaurantOrderRef = FirebaseDatabase
-                .getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/")
-                .getReference("restaurants").child(cart.getRestaurant().getId()).child("orders").child(orderId);
-
-        Order order = cartToOrder(cart, orderId);
-        userOrderRef.setValue(order);
-        restaurantOrderRef.setValue(order);
-        cart.clear();
-    }
-
-    private Order cartToOrder(Cart cart, String orderId){
-        Order order = new Order();
-        order.setOrderId(orderId);
-        order.setPrice(String.valueOf(cart.getTotalCost()));
-        order.setOrderDate(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
-        order.setStatus("placed");
-        order.setRestaurantId(cart.getRestaurant().getId());
-        order.setOrderItems(cartItemToOrderItem(cart.getCartItems()));
-        return order;
-    }
-
-    private List<OrderItem> cartItemToOrderItem(List<CartItem> cartItems){
-        List<OrderItem> orderItems = new ArrayList<>();
-        for (CartItem cartItem : cartItems) {
-            orderItems.add(new OrderItem(cartItem.getFood().getName(),
-                    String.valueOf(cartItem.getQuantity()),
-                    cartItem.getFood().getPrice()));
-        }
-        return orderItems;
-    }
-
-    private void showConfirmationDialog() {
+    private void showConfirmationDialog(Cart cart) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose delivery time");
         builder.setMessage("delivery at 12:00 noon must order before 10:00 am.\n" +
@@ -156,6 +118,7 @@ public class CartActivity extends AppCompatActivity {
             builder.setNegativeButton("12:00PM", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    saveCartToFirebase(cart, "12:00");
                 }
             });
         }
@@ -163,7 +126,7 @@ public class CartActivity extends AppCompatActivity {
             builder.setPositiveButton("3:00PM", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    saveCartToFirebase(cart, "3:00");
                 }
             });
         }
@@ -180,4 +143,46 @@ public class CartActivity extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
+
+    private void saveCartToFirebase(Cart cart, String deliverySlot){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        DatabaseReference userOrderRef = FirebaseDatabase
+                .getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("users").child(userId).child("orders").push();
+        String orderId = userOrderRef.getKey();
+
+        DatabaseReference restaurantOrderRef = FirebaseDatabase
+                .getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("restaurants").child(cart.getRestaurant().getId()).child("orders").child(orderId);
+
+        Order order = cartToOrder(cart, orderId, deliverySlot);
+        userOrderRef.setValue(order);
+        restaurantOrderRef.setValue(order);
+        cart.clear();
+    }
+
+    private Order cartToOrder(Cart cart, String orderId, String deliverySlot){
+        Order order = new Order();
+        order.setOrderId(orderId);
+        order.setPrice(String.valueOf(cart.getTotalCost()));
+        order.setOrderDate(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
+        order.setStatus("placed");
+        order.setDeliverySlot(deliverySlot);
+        order.setRestaurantId(cart.getRestaurant().getId());
+        order.setOrderItems(cartItemToOrderItem(cart.getCartItems()));
+        return order;
+    }
+
+    private List<OrderItem> cartItemToOrderItem(List<CartItem> cartItems){
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (CartItem cartItem : cartItems) {
+            orderItems.add(new OrderItem(cartItem.getFood().getName(),
+                    String.valueOf(cartItem.getQuantity()),
+                    cartItem.getFood().getPrice()));
+        }
+        return orderItems;
+    }
+
+
 }

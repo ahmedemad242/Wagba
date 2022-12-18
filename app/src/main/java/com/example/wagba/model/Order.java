@@ -9,16 +9,18 @@ public class Order {
     private String price;
     private String orderId;
     private String status;
+    private String deliverySlot;
     private List<OrderItem> orderItems;
 
     public Order() {}
 
-    public Order(String restaurantId, String orderDate, String price, String orderId, String status, List<OrderItem> orderItems) {
+    public Order(String restaurantId, String deliverySlot, String orderDate, String price, String orderId, String status, List<OrderItem> orderItems) {
         this.restaurantId = restaurantId;
         this.orderDate = orderDate;
         this.price = price;
         this.orderId = orderId;
         this.status = status;
+        this.deliverySlot = deliverySlot;
         this.orderItems = orderItems;
     }
 
@@ -32,6 +34,14 @@ public class Order {
 
     public String getOrderDate() {
         return orderDate;
+    }
+
+    public String getDeliverySlot() {
+        return deliverySlot;
+    }
+
+    public void setDeliverySlot(String deliverySlot) {
+        this.deliverySlot = deliverySlot;
     }
 
     public void setOrderDate(String orderDate) {
