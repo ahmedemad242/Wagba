@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {
@@ -55,7 +56,7 @@ public class HistoryActivity extends AppCompatActivity {
                 List<Order> orderList = new ArrayList<>();
                 for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
                     Order order = orderSnapshot.getValue(Order.class);
-                    orderList.add(order);
+                    orderList.add(0, order);
                 }
                 setOrderRecycler(orderList);
             }

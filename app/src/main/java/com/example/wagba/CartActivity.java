@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wagba.adapter.CartAdapter;
 import com.example.wagba.databinding.ActivityCartBinding;
@@ -68,8 +69,15 @@ public class CartActivity extends AppCompatActivity {
         setCartItemRecycler(Cart.getInstance().getFoodIdList(), updateCartUi);
 
         activityCartBinding.checkOutButton.setOnClickListener(v -> {
-            saveCartToFirebase(Cart.getInstance());
-            startActivity(new Intent(CartActivity.this, HistoryActivity.class));
+            Cart cart = Cart.getInstance();
+            if(cart.getCartItems().size() != 0){
+                saveCartToFirebase(cart);
+                startActivity(new Intent(CartActivity.this, HistoryActivity.class));
+                finish();
+            }
+            else{
+                Toast.makeText(this, "Cart is empty!", Toast.LENGTH_SHORT).show();
+            }
         });
 
 
@@ -114,7 +122,7 @@ public class CartActivity extends AppCompatActivity {
         Order order = new Order();
         order.setOrderId(orderId);
         order.setPrice(String.valueOf(cart.getTotalCost()));
-        order.setOrderDate(new SimpleDateFormat("dd/mm/yyyy").format(new Date()));
+        order.setOrderDate(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
         order.setStatus("placed");
         order.setRestaurantId(cart.getRestaurant().getId());
         order.setOrderItems(cartItemToOrderItem(cart.getCartItems()));
