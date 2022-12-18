@@ -61,4 +61,6 @@
     <string name="_4">4</string>
     <string name="multiply">x</string>
     <string name="_18">18</string>
+    <string name="at_sign">\@</string>
+    <string name="order_time_placeholder">12:00</string>
 </resources>

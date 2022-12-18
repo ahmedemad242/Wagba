@@ -79,8 +79,6 @@ public class CartActivity extends AppCompatActivity {
             Cart cart = Cart.getInstance();
             if(cart.getCartItems().size() != 0){
                 showConfirmationDialog(cart);
-                startActivity(new Intent(CartActivity.this, HistoryActivity.class));
-                finish();
             }
             else{
                 Toast.makeText(this, "Cart is empty!", Toast.LENGTH_SHORT).show();
@@ -113,12 +111,14 @@ public class CartActivity extends AppCompatActivity {
         builder.setTitle("Choose delivery time");
         builder.setMessage("delivery at 12:00 noon must order before 10:00 am.\n" +
                 "delivery at 3:00 pm must order before 1:00 pm");
-        LocalDateTime now = LocalDateTime.of(2000,9,9,15,32);
+        LocalDateTime now = LocalDateTime.now();
         if (now.getHour() < 10) {
             builder.setNegativeButton("12:00PM", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     saveCartToFirebase(cart, "12:00");
+                    startActivity(new Intent(CartActivity.this, HistoryActivity.class));
+                    finish();
                 }
             });
         }
@@ -126,7 +126,9 @@ public class CartActivity extends AppCompatActivity {
             builder.setPositiveButton("3:00PM", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    saveCartToFirebase(cart, "3:00");
+                    saveCartToFirebase(cart, "15:00");
+                    startActivity(new Intent(CartActivity.this, HistoryActivity.class));
+                    finish();
                 }
             });
         }
