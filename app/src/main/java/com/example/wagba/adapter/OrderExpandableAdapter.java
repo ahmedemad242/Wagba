@@ -63,6 +63,7 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
         holder.orderStatus.setText(order.getStatus());
         holder.orderItemNumbers.setText(String.valueOf(order.getOrderItems().size()));
         holder.orderDate.setText(order.getOrderDate());
+        holder.orderTime.setText(order.getDeliverySlot());
         holder.orderPrice.setText(String.format(Locale.getDefault(),"%.2f",Float.parseFloat(order.getPrice())));
         holder.orderStatus.setTextColor(context.getResources().getColor(StatusColorMapper.getColorForStatus(order.getStatus())));
 
@@ -90,7 +91,7 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView orderId, orderStatus, orderItemNumbers, orderDate, orderPrice;
+        TextView orderId, orderStatus, orderItemNumbers, orderDate, orderPrice, orderTime;
         LinearLayout orderItemsContainer;
 
         public ViewHolder(View itemView, final OnItemClickListener listener) {
@@ -101,6 +102,7 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
             orderItemsContainer = itemView.findViewById(R.id.order_items_container);
             orderDate = itemView.findViewById(R.id.order_date);
             orderPrice = itemView.findViewById(R.id.order_price);
+            orderTime = itemView.findViewById(R.id.order_time);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

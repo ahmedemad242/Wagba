@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +24,7 @@ import com.example.wagba.model.Cart;
 import com.example.wagba.model.CartItem;
 import com.example.wagba.model.Order;
 import com.example.wagba.model.OrderItem;
+import com.example.wagba.model.Restaurant;
 import com.example.wagba.utils.WindowController;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,10 +32,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -71,9 +78,7 @@ public class CartActivity extends AppCompatActivity {
         activityCartBinding.checkOutButton.setOnClickListener(v -> {
             Cart cart = Cart.getInstance();
             if(cart.getCartItems().size() != 0){
-                saveCartToFirebase(cart);
-                startActivity(new Intent(CartActivity.this, HistoryActivity.class));
-                finish();
+                showConfirmationDialog(cart);
             }
             else{
                 Toast.makeText(this, "Cart is empty!", Toast.LENGTH_SHORT).show();
@@ -100,7 +105,48 @@ public class CartActivity extends AppCompatActivity {
         activityCartBinding.cartRecyclerView.setAdapter(cartAdapter);
     }
 
-    private void saveCartToFirebase(Cart cart){
+
+    private void showConfirmationDialog(Cart cart) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose delivery time");
+        builder.setMessage("delivery at 12:00 noon must order before 10:00 am.\n" +
+                "delivery at 3:00 pm must order before 1:00 pm");
+        LocalDateTime now = LocalDateTime.now();
+        if (now.getHour() < 10) {
+            builder.setNegativeButton("12:00PM", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    saveCartToFirebase(cart, "12:00");
+                    startActivity(new Intent(CartActivity.this, HistoryActivity.class));
+                    finish();
+                }
+            });
+        }
+        if (now.getHour() < 13) {
+            builder.setPositiveButton("3:00PM", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    saveCartToFirebase(cart, "15:00");
+                    startActivity(new Intent(CartActivity.this, HistoryActivity.class));
+                    finish();
+                }
+            });
+        }
+        if (now.getHour() >= 13) {
+            builder.setPositiveButton("No Delivery Available Now!", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+        }
+
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    private void saveCartToFirebase(Cart cart, String deliverySlot){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
         DatabaseReference userOrderRef = FirebaseDatabase
@@ -112,18 +158,19 @@ public class CartActivity extends AppCompatActivity {
                 .getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("restaurants").child(cart.getRestaurant().getId()).child("orders").child(orderId);
 
-        Order order = cartToOrder(cart, orderId);
+        Order order = cartToOrder(cart, orderId, deliverySlot);
         userOrderRef.setValue(order);
         restaurantOrderRef.setValue(order);
         cart.clear();
     }
 
-    private Order cartToOrder(Cart cart, String orderId){
+    private Order cartToOrder(Cart cart, String orderId, String deliverySlot){
         Order order = new Order();
         order.setOrderId(orderId);
         order.setPrice(String.valueOf(cart.getTotalCost()));
         order.setOrderDate(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
         order.setStatus("placed");
+        order.setDeliverySlot(deliverySlot);
         order.setRestaurantId(cart.getRestaurant().getId());
         order.setOrderItems(cartItemToOrderItem(cart.getCartItems()));
         return order;
@@ -138,4 +185,6 @@ public class CartActivity extends AppCompatActivity {
         }
         return orderItems;
     }
+
+
 }

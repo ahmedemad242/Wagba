@@ -111,6 +111,20 @@
                     android:textColor="@color/dark_blue"
                     android:text="@string/date_placeholder"
                     android:textStyle="italic"/>
+                <TextView
+                    android:id="@+id/textView25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_blue"
+                    android:text="@string/at_sign"
+                    android:textStyle="italic"/>
+                <TextView
+                    android:id="@+id/order_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_blue"
+                    android:text="@string/order_time_placeholder"
+                    android:textStyle="italic"/>
 
                 <TextView
                     android:id="@+id/order_price"
