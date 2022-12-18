@@ -111,7 +111,17 @@
             </LinearLayout>
 
 
+
+
         </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/order_items_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!-- Child item views go here -->
+    </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>

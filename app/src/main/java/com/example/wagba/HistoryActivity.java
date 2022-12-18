@@ -5,21 +5,15 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wagba.adapter.OrderAdapter;
+import com.example.wagba.adapter.OrderExpandableAdapter;
 import com.example.wagba.databinding.ActivityHistoryBinding;
-import com.example.wagba.model.Order;
 import com.example.wagba.utils.WindowController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {
 
     private ActivityHistoryBinding activityHistoryBinding;
-    private OrderAdapter orderAdapter;
+    private OrderExpandableAdapter orderAdapter;
     private Window window;
 
     @Override
@@ -34,14 +28,14 @@ public class HistoryActivity extends AppCompatActivity {
         WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.white));
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.dark_blue), false);
 
-        List<Order> orderList = new ArrayList<Order>();
-        orderList.add(new Order("22/11/2022", "190.12", 13, "12311", "Delivered"));
-        orderList.add(new Order("22/10/2022", "1241.12", 1, "12312", "Delivered"));
-        orderList.add(new Order("22/12/2022", "13.12", 12, "12123", "Delivered"));
-        orderList.add(new Order("13/11/2022", "1312.12", 4, "12313", "Delivered"));
-        orderList.add(new Order("14/10/2022", "1412.12", 1, "12314", "Delivered"));
-
-        setOrderRecycler(orderList);
+//        List<Order> orderList = new ArrayList<Order>();
+//        orderList.add(new Order("22/11/2022", "190.12", 13, "12311", "Delivered"));
+//        orderList.add(new Order("22/10/2022", "1241.12", 1, "12312", "Delivered"));
+//        orderList.add(new Order("22/12/2022", "13.12", 12, "12123", "Delivered"));
+//        orderList.add(new Order("13/11/2022", "1312.12", 4, "12313", "Delivered"));
+//        orderList.add(new Order("14/10/2022", "1412.12", 1, "12314", "Delivered"));
+//
+//        setOrderRecycler(orderList);
 
     }
     
@@ -57,10 +51,10 @@ public class HistoryActivity extends AppCompatActivity {
 
 
 
-    private void setOrderRecycler(List<Order> orderList){
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        activityHistoryBinding.orderRecyclerView.setLayoutManager(layoutManager);
-        orderAdapter = new OrderAdapter(this, orderList);
-        activityHistoryBinding.orderRecyclerView.setAdapter(orderAdapter);
-    }
+//    private void setOrderRecycler(List<Order> orderList){
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+//        activityHistoryBinding.orderRecyclerView.setLayoutManager(layoutManager);
+//        orderAdapter = new OrderAdapter(this, orderList);
+//        activityHistoryBinding.orderRecyclerView.setAdapter(orderAdapter);
+//    }
 }
