@@ -49,12 +49,16 @@
     <string name="currency">LE</string>
     <string name="food_name_placeholder">Float Cake</string>
     <string name="price_placeholder">119.12LE</string>
-    <string name="order_number_placeholder">Order #1234</string>
+    <string name="order_number_placeholder">Order #</string>
     <string name="status_placeholder">Delivered</string>
-    <string name="number_of_items_placeholder">Number of Items: 5</string>
+    <string name="number_of_items_placeholder">Number of Items: </string>
     <string name="order_on">Order on</string>
     <string name="calender">calender</string>
     <string name="date_placeholder">09/12/2022</string>
     <string name="star">star</string>
     <string name="not_available">Not Available</string>
+    <string name="_150">150</string>
+    <string name="_4">4</string>
+    <string name="multiply">x</string>
+    <string name="_18">18</string>
 </resources>
