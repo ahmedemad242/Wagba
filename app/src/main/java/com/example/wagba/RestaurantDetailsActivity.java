@@ -75,7 +75,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                 String.valueOf(foodList.size()));
         activityResturantDetailsBinding.restaurantDetailsRating.setText(restaurant.getRating());
         //TODO:: Fill order number
-        activityResturantDetailsBinding.restaurantDetailsOrders.setText("10");
+        activityResturantDetailsBinding.restaurantDetailsOrders.setText(String.valueOf(restaurant.getOrderCount()));
 
 
         activityResturantDetailsBinding.restaurantDetailsCartBtn.setOnClickListener(new View.OnClickListener() {
