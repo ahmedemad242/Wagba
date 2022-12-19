@@ -53,15 +53,18 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         String path = "/restaurants/" + restaurant.getId() + "/menuItems";
         foodRef = database.getReference(path);
 
-        List<Food> foodList = new ArrayList<>();
         foodRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                List<Food> foodList = new ArrayList<>();
                 for (DataSnapshot dishSnapshot : snapshot.getChildren()) {
                     Food food = dishSnapshot.getValue(Food.class);
                     foodList.add(food);
                 }
                 setFoodRecycler(restaurant, foodList);
+
+                activityResturantDetailsBinding.restaurantDetailsDish.setText(
+                        String.valueOf(foodList.size()));
             }
             @Override
             public void onCancelled(DatabaseError error) {
@@ -71,8 +74,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         ImageUtils.loadImage(this, restaurant.getImageUrl(),
                 activityResturantDetailsBinding.restaurantDetailsImage, R.drawable.logo_bg_light);
 
-        activityResturantDetailsBinding.restaurantDetailsDish.setText(
-                String.valueOf(foodList.size()));
+
         activityResturantDetailsBinding.restaurantDetailsRating.setText(restaurant.getRating());
         //TODO:: Fill order number
         activityResturantDetailsBinding.restaurantDetailsOrders.setText(String.valueOf(restaurant.getOrderCount()));
