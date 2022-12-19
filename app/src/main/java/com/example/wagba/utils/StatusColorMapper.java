@@ -15,8 +15,8 @@ public class StatusColorMapper {
         statusColorMap = new HashMap<>();
         statusColorMap.put("placed", R.color.secondary_blue);
         statusColorMap.put("confirmed", R.color.dark_blue);
-        statusColorMap.put("completed", R.color.green);
-        statusColorMap.put("canceled", R.color.red);
+        statusColorMap.put("delivered", R.color.green);
+        statusColorMap.put("cancelled", R.color.red);
         statusColorMap.put("default", R.color.grey);
     }
 

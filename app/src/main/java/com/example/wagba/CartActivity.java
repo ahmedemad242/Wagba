@@ -163,13 +163,13 @@ public class CartActivity extends AppCompatActivity {
                 .getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("restaurants").child(cart.getRestaurant().getId()).child("orders").child(orderId);
 
-        Order order = cartToOrder(cart, orderId, deliverySlot);
+        Order order = cartToOrder(cart, orderId, userId, deliverySlot);
         userOrderRef.setValue(order);
         restaurantOrderRef.setValue(order);
         cart.clear();
     }
 
-    private Order cartToOrder(Cart cart, String orderId, String deliverySlot){
+    private Order cartToOrder(Cart cart, String orderId, String userId, String deliverySlot){
         Order order = new Order();
         order.setOrderId(orderId);
         order.setPrice(String.valueOf(cart.getTotalCost()));
@@ -178,6 +178,7 @@ public class CartActivity extends AppCompatActivity {
         order.setDeliverySlot(deliverySlot);
         order.setRestaurantId(cart.getRestaurant().getId());
         order.setOrderItems(cartItemToOrderItem(cart.getCartItems()));
+        order.setUserId(userId);
         return order;
     }
 
