@@ -66,16 +66,17 @@ public class CartActivity extends AppCompatActivity {
         cart.setDeliveryFeeCalculator(new FlatRateDeliveryFeeCalculator(10.00));
 
         updateCartUi = () -> {
+            Boolean isCartEmpty = cart.getCartItems().isEmpty();
             double subtotal = cart.getSubtotal();
 
             activityCartBinding.cartItemsTotal.setText(
-                    String.format(Locale.getDefault(), "%.2f", subtotal));
+                    String.format(Locale.getDefault(), "%.2f", isCartEmpty ? 0 : subtotal));
             activityCartBinding.cartDeliveryTotal.setText(
-                    String.format(Locale.getDefault(), "%.2f", cart.getDeliveryFee(subtotal)));
+                    String.format(Locale.getDefault(), "%.2f", isCartEmpty ? 0 : cart.getDeliveryFee(subtotal)));
             activityCartBinding.cartTaxTotal.setText(
-                    String.format(Locale.getDefault(), "%.2f", cart.getTax(subtotal)));
+                    String.format(Locale.getDefault(), "%.2f", isCartEmpty ? 0 : cart.getTax(subtotal)));
             activityCartBinding.cartTotal.setText(
-                    String.format(Locale.getDefault(), "%.2f", cart.getTotalCost()));
+                    String.format(Locale.getDefault(), "%.2f", isCartEmpty ? 0 : cart.getTotalCost()));
         };
 
         updateCartUi.run();
