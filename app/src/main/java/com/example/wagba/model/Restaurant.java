@@ -14,6 +14,7 @@ public class Restaurant implements Parcelable {
     private String description;
     private String imageUrl;
     private String rating;
+    private int orderCount;
 
     protected Restaurant(Parcel in) {
         name = in.readString();
@@ -21,6 +22,7 @@ public class Restaurant implements Parcelable {
         imageUrl = in.readString();
         rating = in.readString();
         id = in.readString();
+        orderCount = in.readInt();
     }
 
     public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
@@ -47,6 +49,7 @@ public class Restaurant implements Parcelable {
         dest.writeString(imageUrl);
         dest.writeString(rating);
         dest.writeString(id);
+        dest.writeInt(orderCount);
     }
 
     public Restaurant() { }
@@ -91,5 +94,11 @@ public class Restaurant implements Parcelable {
         this.id = id;
     }
 
+    public int getOrderCount() {
+        return orderCount;
+    }
 
+    public void setOrderCount(int orderCount) {
+        this.orderCount = orderCount;
+    }
 }
