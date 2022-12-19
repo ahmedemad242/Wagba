@@ -2,14 +2,21 @@ package com.example.wagba;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.view.View;
 import android.view.ViewTreeObserver;
+
+import com.example.wagba.database.AppDatabase;
+import com.example.wagba.database.DatabaseManager;
+import com.example.wagba.database.dao.ProfileDao;
+import com.example.wagba.database.entities.Profile;
 import com.example.wagba.databinding.SignUpSheetBinding;
 import com.example.wagba.databinding.SignInSheetBinding;
 import com.example.wagba.databinding.ActivityLoginBinding;
@@ -34,11 +41,13 @@ public class LoginActivity extends AppCompatActivity {
     private BottomSheet bottomSheet;
     private Window window;
     private FirebaseAuth mAuth;
+    AppDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        database = DatabaseManager.getInstance(this);
 
         loginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         singInSheetBinding = SignInSheetBinding.inflate(getLayoutInflater());
@@ -160,6 +169,17 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
+
+                                AsyncTask.execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ProfileDao profileDao = database.profileDao();
+                                        Profile newProfile = new Profile(user.getUid(), name, email);
+                                        profileDao.insert(newProfile);
+                                    }
+                                });
+
+
                                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                         .setDisplayName(name)
                                         .build();
