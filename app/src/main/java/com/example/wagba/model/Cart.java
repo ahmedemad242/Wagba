@@ -39,13 +39,13 @@ public class Cart {
         this.taxCalculator = taxCalculator;
     }
 
-    public static Cart getInstance(Restaurant restaurant, Context context) {
+    public static Cart getInstance(Context context, Restaurant restaurant) {
         if (instance == null) {
             instance = new Cart(restaurant);
         }
-        if(instance.restaurant != null){
+        if(instance.restaurant != null && instance.items.size() > 0){
             if(!restaurant.getId().equals(instance.restaurant.getId())){
-                showConfirmationDialog(restaurant, context);
+                showConfirmationDialog(context, restaurant);
             }
         }
         else {
@@ -136,7 +136,7 @@ public class Cart {
         return 0;
     }
 
-    private static void showConfirmationDialog(Restaurant restaurant, Context context) {
+    private static void showConfirmationDialog(Context context, Restaurant restaurant) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Clear cart?");
         builder.setMessage("You have a cart open in another restaurant, wanna clear that?");
@@ -145,6 +145,7 @@ public class Cart {
             public void onClick(DialogInterface dialog, int which) {
                 instance.restaurant = restaurant;
                 instance.clear();
+                dialog.dismiss();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

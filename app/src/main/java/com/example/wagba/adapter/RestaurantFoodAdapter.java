@@ -21,12 +21,15 @@ public class RestaurantFoodAdapter extends RecyclerView.Adapter<RestaurantFoodAd
     private final Context context;
     private final Restaurant restaurant;
     private final List<Food> foodList;
+    private final Cart cart;
+
 
 
     public RestaurantFoodAdapter(Context context, Restaurant restaurant, List<Food> foodList) {
         this.context = context;
         this.restaurant = restaurant;
         this.foodList = foodList;
+        this.cart = Cart.getInstance(context, restaurant);
     }
 
     @NonNull
@@ -38,15 +41,13 @@ public class RestaurantFoodAdapter extends RecyclerView.Adapter<RestaurantFoodAd
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantFoodViewHolder holder, int position) {
-        Cart cart = Cart.getInstance(restaurant, context);
-
         ImageUtils.loadImage(context, foodList.get(position).getImageUrl(), holder.image, R.drawable.logo_bg_light);
 
         holder.name.setText(foodList.get(position).getName());
         holder.price.setText(foodList.get(position).getPrice());
         holder.description.setText(foodList.get(position).getDescription());
 
-        holder.quantity.setText(String.valueOf(Cart.getInstance(restaurant, context).getQuantity(foodList.get(position).getId())));
+        holder.quantity.setText(String.valueOf(cart.getQuantity(foodList.get(position).getId())));
 
         if(!foodList.get(position).getAvailability()) {
             holder.available.setVisibility(View.VISIBLE);
