@@ -34,6 +34,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
     private Window window;
     FirebaseDatabase database;
     DatabaseReference foodRef;
+    Restaurant restaurant;
 
 
     @Override
@@ -48,28 +49,9 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.secondary_blue));
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
 
-        Restaurant restaurant = getIntent().getParcelableExtra("restaurant");
+        restaurant = getIntent().getParcelableExtra("restaurant");
 
-        String path = "/restaurants/" + restaurant.getId() + "/menuItems";
-        foodRef = database.getReference(path);
 
-        foodRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                List<Food> foodList = new ArrayList<>();
-                for (DataSnapshot dishSnapshot : snapshot.getChildren()) {
-                    Food food = dishSnapshot.getValue(Food.class);
-                    foodList.add(food);
-                }
-                setFoodRecycler(restaurant, foodList);
-
-                activityResturantDetailsBinding.restaurantDetailsDish.setText(
-                        String.valueOf(foodList.size()));
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Handle errors here
-            }});
 
         ImageUtils.loadImage(this, restaurant.getImageUrl(),
                 activityResturantDetailsBinding.restaurantDetailsImage, R.drawable.logo_bg_light);
@@ -92,6 +74,31 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         activityResturantDetailsBinding.restaurantFoodHome.setOnClickListener(v -> {
             onBackPressed();
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String path = "/restaurants/" + restaurant.getId() + "/menuItems";
+        foodRef = database.getReference(path);
+
+        foodRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                List<Food> foodList = new ArrayList<>();
+                for (DataSnapshot dishSnapshot : snapshot.getChildren()) {
+                    Food food = dishSnapshot.getValue(Food.class);
+                    foodList.add(food);
+                }
+                setFoodRecycler(restaurant, foodList);
+
+                activityResturantDetailsBinding.restaurantDetailsDish.setText(
+                        String.valueOf(foodList.size()));
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Handle errors here
+            }});
     }
 
     private void setFoodRecycler(Restaurant restaurant, List<Food> foodList){
