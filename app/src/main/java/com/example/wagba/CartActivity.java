@@ -20,6 +20,9 @@ import android.widget.Toast;
 
 import com.example.wagba.adapter.CartAdapter;
 import com.example.wagba.databinding.ActivityCartBinding;
+import com.example.wagba.feeCalculator.delivery.FlatRateDeliveryFeeCalculator;
+import com.example.wagba.feeCalculator.delivery.TieredDeliveryFeeCalculator;
+import com.example.wagba.feeCalculator.tax.FlatTaxCalculator;
 import com.example.wagba.model.Cart;
 import com.example.wagba.model.CartItem;
 import com.example.wagba.model.Order;
@@ -50,6 +53,7 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Cart cart = Cart.getInstance();
         activityCartBinding = ActivityCartBinding.inflate(getLayoutInflater());
         getSupportActionBar().setTitle("My Cart");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -58,8 +62,10 @@ public class CartActivity extends AppCompatActivity {
         WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.white));
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.dark_blue), false);
 
+        cart.setTaxCalculator(new FlatTaxCalculator(0.14));
+        cart.setDeliveryFeeCalculator(new FlatRateDeliveryFeeCalculator(10.00));
+
         updateCartUi = () -> {
-            Cart cart = Cart.getInstance();
             double subtotal = cart.getSubtotal();
 
             activityCartBinding.cartItemsTotal.setText(
@@ -76,7 +82,6 @@ public class CartActivity extends AppCompatActivity {
         setCartItemRecycler(Cart.getInstance().getFoodIdList(), updateCartUi);
 
         activityCartBinding.checkOutButton.setOnClickListener(v -> {
-            Cart cart = Cart.getInstance();
             if(cart.getCartItems().size() != 0){
                 showConfirmationDialog(cart);
             }
