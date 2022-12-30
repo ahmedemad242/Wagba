@@ -2,17 +2,17 @@ package com.example.wagba;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wagba.adapter.OrderExpandableAdapter;
 import com.example.wagba.databinding.ActivityHistoryBinding;
 import com.example.wagba.model.Order;
-import com.example.wagba.model.OrderItem;
 import com.example.wagba.utils.WindowController;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,35 +23,33 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class HistoryActivity extends AppCompatActivity {
 
     private ActivityHistoryBinding activityHistoryBinding;
-    private OrderExpandableAdapter orderAdapter;
-    private Window window;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = user.getUid();
+        String userId = Objects.requireNonNull(user).getUid();
         DatabaseReference ordersRef = FirebaseDatabase.getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users")
                 .child(userId).child("orders");
 
         activityHistoryBinding = ActivityHistoryBinding.inflate(getLayoutInflater());
-        getSupportActionBar().setTitle("History");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("History");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(activityHistoryBinding.getRoot());
-        window = this.getWindow();
+        Window window = this.getWindow();
 
-        WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.white));
-        WindowController.changeStatusBarColor(window, getResources().getColor(R.color.dark_blue), false);
+        WindowController.changeNavigationBarColor(window, ContextCompat.getColor(getApplicationContext(),R.color.white));
+        WindowController.changeStatusBarColor(window, ContextCompat.getColor(getApplicationContext(),R.color.dark_blue), false);
 
         ordersRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 List<Order> orderList = new ArrayList<>();
                 for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
@@ -62,7 +60,7 @@ public class HistoryActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
                 // Handle error
             }
         });
@@ -70,10 +68,9 @@ public class HistoryActivity extends AppCompatActivity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -83,7 +80,7 @@ public class HistoryActivity extends AppCompatActivity {
     private void setOrderRecycler(List<Order> orderList){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         activityHistoryBinding.orderRecyclerView.setLayoutManager(layoutManager);
-        orderAdapter = new OrderExpandableAdapter(this, orderList);
+        OrderExpandableAdapter orderAdapter = new OrderExpandableAdapter(this, orderList);
 
         activityHistoryBinding.orderRecyclerView.setAdapter(orderAdapter);
     }
