@@ -3,6 +3,7 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottomSheetLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -30,9 +31,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:autofillHints="emailAddress"
             android:hint="@string/email_hint"
             android:inputType="textWebEmailAddress"
-            android:autofillHints="emailAddress"/>
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/signInPasswordText"
@@ -40,9 +42,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:autofillHints="password"
             android:hint="@string/password_hint"
             android:inputType="textPassword"
-            android:autofillHints="password"/>
+            android:minHeight="48dp" />
 
         <Button
             android:id="@+id/signInButton"
@@ -82,7 +85,8 @@
                 android:layout_marginStart="4dp"
                 android:text="@string/sign_up"
                 android:textColor="@color/orange"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
         </LinearLayout>
     </LinearLayout>
 

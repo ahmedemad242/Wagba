@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
@@ -27,7 +26,7 @@ public class BottomSheet extends BottomSheetDialog {
         this.sheetView = sheetView;
         setContentView(sheetView);
 
-        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from((View) sheetView.getParent());
+        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from((View) sheetView.getParent());
         bottomSheetBehavior.setDraggable(false);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
