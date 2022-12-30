@@ -50,7 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
             String email = profile.email;
 
 
-            String profileName = " "+name.split(" ")[0]+" !";
+            String profileName = " "+name.split(" ")[0]+"!";
             activityProfileBinding.profileName.setText(profileName);
             activityProfileBinding.profileFullName.setText(name);
             activityProfileBinding.profileEmail.setText(email);
