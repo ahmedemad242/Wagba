@@ -68,20 +68,15 @@
                 android:textColor="@color/orange"
                 android:textSize="13sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/profile_full_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/full_name_placeholder"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/blue_grey" />
 
         </LinearLayout>
 
@@ -98,24 +93,36 @@
                 android:textColor="@color/orange"
                 android:textSize="13sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/profile_email"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="false"
+                android:enabled="false"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/email_placeholder"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/blue_grey" />
         </LinearLayout>
 
 
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/profile_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/orange"
+        app:backgroundTint="@color/orange"
+        android:src="@drawable/ic_baseline_save_24"
+        app:layout_anchorGravity="bottom|right|end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    />
 
 
 
