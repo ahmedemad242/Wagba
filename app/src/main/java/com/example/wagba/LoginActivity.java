@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
             if(!password.equals(confirmPassword)){
-                singUpSheetBinding.signUpConfirmPasswordText.setError("Password should at least be 6 characters");
+                singUpSheetBinding.signUpConfirmPasswordText.setError("Should be same as password");
                 return;
             }
 
