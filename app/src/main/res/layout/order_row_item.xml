@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+    android:layout_marginBottom="16dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="3dp">
+    app:cardElevation="5dp">
 
 
 
@@ -26,7 +26,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/order_number_placeholder"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/dark_blue"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_gravity="end"/>
@@ -36,7 +36,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="1234"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/dark_blue"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:layout_gravity="end"
@@ -128,12 +128,23 @@
 
                 <TextView
                     android:id="@+id/order_price"
-                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/orange"
                     android:text="@string/price_placeholder"
                     android:gravity="end"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/orange"
+                    android:text="@string/currency"
+                    android:gravity="end"
+                    android:textSize="16sp"
                     android:textStyle="bold"/>
 
             </LinearLayout>
