@@ -27,7 +27,7 @@
         android:gravity="bottom"
         android:textSize="12sp"/>
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/order_item_currency"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="@string/currency"
@@ -35,7 +35,7 @@
         android:gravity="bottom"
         android:textSize="12sp"/>
     <TextView
-        android:id="@+id/textView24"
+        android:id="@+id/order_item_multiply"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="@string/multiply"

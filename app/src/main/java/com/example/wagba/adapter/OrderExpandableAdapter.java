@@ -71,21 +71,44 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
             holder.orderItemsContainer.setVisibility(View.VISIBLE);
 
             for (OrderItem orderItem : order.getOrderItems()) {
-                View itemView = LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.order_item_row_item, holder.orderItemsContainer, false);
-                TextView orderItemName = itemView.findViewById(R.id.order_item_name);
-                TextView orderItemPrice = itemView.findViewById(R.id.order_item_price);
-                TextView orderItemQuantity = itemView.findViewById(R.id.order_item_quantity);
-                TextView orderItemTotalPrice = itemView.findViewById(R.id.order_item_total_price);
-                orderItemName.setText(orderItem.getName());
-                orderItemPrice.setText(String.format(Locale.getDefault(),"%.2f", Float.parseFloat(orderItem.getPrice())));
-                orderItemQuantity.setText(String.valueOf(orderItem.getQuantity()));
-                orderItemTotalPrice.setText(String.format(Locale.getDefault(),"%.2f", Float.parseFloat(orderItem.getPrice())* Integer.parseInt(orderItem.getQuantity())));
-
-                holder.orderItemsContainer.addView(itemView);
+                addOrderItemView(holder, orderItem.getName(), orderItem.getPrice(), orderItem.getQuantity());
             }
+            addFeeItemView(holder, "Delivery Fee", order.getDeliveryFee());
+            addFeeItemView(holder, "Tax Fee", order.getTaxFee());
+
         } else {
             holder.orderItemsContainer.setVisibility(View.GONE);
         }
+    }
+
+    private void addOrderItemView(ViewHolder holder, String name, String price, String quantity) {
+        View itemView = LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.order_item_row_item, holder.orderItemsContainer, false);
+        TextView orderItemName = itemView.findViewById(R.id.order_item_name);
+        TextView orderItemPrice = itemView.findViewById(R.id.order_item_price);
+        TextView orderItemQuantity = itemView.findViewById(R.id.order_item_quantity);
+        TextView orderItemTotalPrice = itemView.findViewById(R.id.order_item_total_price);
+        orderItemName.setText(name);
+        orderItemPrice.setText(String.format(Locale.getDefault(),"%.2f", Float.parseFloat(price)));
+        orderItemQuantity.setText(String.valueOf(quantity));
+        orderItemTotalPrice.setText(String.format(Locale.getDefault(),"%.2f", Float.parseFloat(price)* Integer.parseInt(quantity)));
+        holder.orderItemsContainer.addView(itemView);
+    }
+
+    private void addFeeItemView(ViewHolder holder, String name, String price) {
+        View itemView = LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.order_item_row_item, holder.orderItemsContainer, false);
+        TextView orderItemName = itemView.findViewById(R.id.order_item_name);
+        TextView orderItemPrice = itemView.findViewById(R.id.order_item_price);
+        TextView orderItemQuantity = itemView.findViewById(R.id.order_item_quantity);
+        TextView orderItemTotalPrice = itemView.findViewById(R.id.order_item_total_price);
+        TextView orderItemMultiply =itemView.findViewById(R.id.order_item_multiply);
+        TextView orderItemCurrency =itemView.findViewById(R.id.order_item_currency);
+        orderItemMultiply.setText("");
+        orderItemCurrency.setText("");
+        orderItemPrice.setText("");
+        orderItemQuantity.setText("");
+        orderItemName.setText(name);
+        orderItemTotalPrice.setText(String.format(Locale.getDefault(),"%.2f", Float.parseFloat(price)));
+        holder.orderItemsContainer.addView(itemView);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -127,5 +150,6 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
         expandedGroups.clear();
         notifyDataSetChanged();
     }
+
 
 }

@@ -153,6 +153,8 @@ public class CartActivity extends AppCompatActivity {
         Order order = new Order();
         order.setOrderId(orderId);
         order.setPrice(String.valueOf(cart.getTotalCost()));
+        order.setDeliveryFee(String.valueOf(cart.getDeliveryFee()));
+        order.setTaxFee(String.valueOf(cart.getTax()));
         order.setOrderDate(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
         order.setStatus("placed");
         order.setDeliverySlot(deliverySlot);
