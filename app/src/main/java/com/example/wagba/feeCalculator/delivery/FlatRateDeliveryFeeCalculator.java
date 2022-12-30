@@ -1,7 +1,7 @@
 package com.example.wagba.feeCalculator.delivery;
 
 public class FlatRateDeliveryFeeCalculator implements DeliveryFeeCalculator {
-    private double fee;
+    private final double fee;
 
     public FlatRateDeliveryFeeCalculator(double fee) {
         this.fee = fee;

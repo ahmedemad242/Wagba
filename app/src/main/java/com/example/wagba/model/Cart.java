@@ -3,7 +3,6 @@ package com.example.wagba.model;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 
 import com.example.wagba.feeCalculator.delivery.DeliveryFeeCalculator;
 import com.example.wagba.feeCalculator.tax.TaxCalculator;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 
 public class Cart {
@@ -65,14 +64,14 @@ public class Cart {
     public void plus(Food food) {
         int quantity = 1;
         if (items.containsKey(food.getId())) {
-            quantity += items.get(food.getId()).getQuantity();
+            quantity += Objects.requireNonNull(items.get(food.getId())).getQuantity();
         }
         items.put(food.getId(), new CartItem(food, quantity));
     }
 
     public void minus(Food food) {
         if (items.containsKey(food.getId())) {
-            int quantity = items.get(food.getId()).getQuantity();
+            int quantity = Objects.requireNonNull(items.get(food.getId())).getQuantity();
             if (quantity > 1) {
                 items.put(food.getId(), new CartItem(food, quantity - 1) );
             } else {
@@ -124,14 +123,14 @@ public class Cart {
         for (Map.Entry<String, CartItem> entry : items.entrySet()) {
             String foodId = entry.getKey();
             int itemQuantity = entry.getValue().getQuantity();
-            subtotal += Float.parseFloat(items.get(foodId).getFood().getPrice()) * itemQuantity;
+            subtotal += Float.parseFloat(Objects.requireNonNull(items.get(foodId)).getFood().getPrice()) * itemQuantity;
         }
         return subtotal;
     }
 
     public int getQuantity(String foodId) {
         if (this.items.containsKey(foodId)) {
-            return this.items.get(foodId).getQuantity();
+            return Objects.requireNonNull(this.items.get(foodId)).getQuantity();
         }
         return 0;
     }
@@ -140,20 +139,14 @@ public class Cart {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Clear cart?");
         builder.setMessage("You have a cart open in another restaurant, wanna clear that?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                instance.restaurant = restaurant;
-                instance.clear();
-                dialog.dismiss();
-            }
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            instance.restaurant = restaurant;
+            instance.clear();
+            dialog.dismiss();
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (context instanceof Activity) {
-                    ((Activity) context).finish();
-                }
+        builder.setNegativeButton("No", (dialog, which) -> {
+            if (context instanceof Activity) {
+                ((Activity) context).finish();
             }
         });
         AlertDialog dialog = builder.create();
@@ -162,16 +155,16 @@ public class Cart {
     }
 
     public Food getFood(String foodId){
-        return items.get(foodId).getFood();
+        return Objects.requireNonNull(items.get(foodId)).getFood();
     }
 
     public List<CartItem> getCartItems(){
-        return items.values().stream().collect(Collectors.toList());
+        return new ArrayList<>(items.values());
     }
 
 
     public List<String> getFoodIdList(){
-        return new ArrayList<String>(items.keySet());
+        return new ArrayList<>(items.keySet());
 
     }
 

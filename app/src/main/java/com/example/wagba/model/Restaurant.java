@@ -2,11 +2,6 @@ package com.example.wagba.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.view.MenuItem;
-
-import com.example.wagba.model.Food;
-
-import java.util.List;
 
 public class Restaurant implements Parcelable {
     private String name;

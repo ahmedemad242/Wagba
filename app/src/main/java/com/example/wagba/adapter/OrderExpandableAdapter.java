@@ -5,10 +5,11 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wagba.R;
@@ -20,10 +21,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandableAdapter.ViewHolder> {
-    private Context context;
-    private List<Order> orders;
-    private OnItemClickListener listener;
-    private SparseBooleanArray expandedGroups;
+    private final Context context;
+    private final List<Order> orders;
+    private final SparseBooleanArray expandedGroups;
 
     public interface OnItemClickListener {
         void onItemClick(View itemView, int position);
@@ -41,15 +41,14 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
         this.expandedGroups = new SparseBooleanArray();
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_row_item, parent, false);
-        listener = new OrderExpandableAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-                // Toggle the expanded state of the group
-                toggleGroup(position);
-            }
+        // Toggle the expanded state of the group
+        OnItemClickListener listener = (itemView, position) -> {
+            // Toggle the expanded state of the group
+            toggleGroup(position);
         };
         return new ViewHolder(view, listener);
     }
@@ -65,7 +64,7 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
         holder.orderDate.setText(order.getOrderDate());
         holder.orderTime.setText(order.getDeliverySlot());
         holder.orderPrice.setText(String.format(Locale.getDefault(),"%.2f",Float.parseFloat(order.getPrice())));
-        holder.orderStatus.setTextColor(context.getResources().getColor(StatusColorMapper.getColorForStatus(order.getStatus())));
+        holder.orderStatus.setTextColor(ContextCompat.getColor(context.getApplicationContext(),StatusColorMapper.getColorForStatus(order.getStatus())));
 
         holder.orderItemsContainer.removeAllViews();
         if (expandedGroups.get(position) && order.getOrderItems().size() > 0) {
@@ -104,14 +103,11 @@ public class OrderExpandableAdapter extends RecyclerView.Adapter<OrderExpandable
             orderPrice = itemView.findViewById(R.id.order_price);
             orderTime = itemView.findViewById(R.id.order_time);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(v, position);
-                        }
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(v, position);
                     }
                 }
             });

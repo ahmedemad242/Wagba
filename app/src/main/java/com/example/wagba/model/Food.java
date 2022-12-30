@@ -1,10 +1,7 @@
 package com.example.wagba.model;
 
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import androidx.annotation.RequiresApi;
 
 public class Food implements Parcelable {
     private String name;

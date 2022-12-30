@@ -19,8 +19,8 @@ import com.example.wagba.utils.ImageUtils;
 import java.util.List;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
-    private Context context;
-    private List<Restaurant> restaurantList;
+    private final Context context;
+    private final List<Restaurant> restaurantList;
 
     public RestaurantAdapter(Context context, List<Restaurant> restaurantList) {
         this.context = context;

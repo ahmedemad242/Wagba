@@ -19,7 +19,6 @@ import java.util.List;
 
 public class RestaurantFoodAdapter extends RecyclerView.Adapter<RestaurantFoodAdapter.RestaurantFoodViewHolder> {
     private final Context context;
-    private final Restaurant restaurant;
     private final List<Food> foodList;
     private final Cart cart;
 
@@ -27,7 +26,6 @@ public class RestaurantFoodAdapter extends RecyclerView.Adapter<RestaurantFoodAd
 
     public RestaurantFoodAdapter(Context context, Restaurant restaurant, List<Food> foodList) {
         this.context = context;
-        this.restaurant = restaurant;
         this.foodList = foodList;
         this.cart = Cart.getInstance(context, restaurant);
     }

@@ -3,7 +3,7 @@ package com.example.wagba.feeCalculator.delivery;
 import java.util.Map;
 
 public class TieredDeliveryFeeCalculator implements DeliveryFeeCalculator {
-    private Map<Double, Double> tiers;
+    private final Map<Double, Double> tiers;
 
     public TieredDeliveryFeeCalculator(Map<Double, Double> tiers) {
         this.tiers = tiers;
