@@ -28,9 +28,8 @@ import java.util.List;
 public class RestaurantDetailsActivity extends AppCompatActivity {
 
     private ActivityResturantDetailsBinding activityResturantDetailsBinding;
-    FirebaseDatabase database;
-    DatabaseReference foodRef;
-    Restaurant restaurant;
+    private FirebaseDatabase database;
+    private Restaurant restaurant;
 
 
     @Override
@@ -55,8 +54,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
 
         activityResturantDetailsBinding.restaurantDetailsRating.setText(restaurant.getRating());
         //TODO:: Fill order number
-        activityResturantDetailsBinding.restaurantDetailsOrders.setText(String.valueOf(restaurant.getOrderCount()));
-
 
         activityResturantDetailsBinding.restaurantDetailsCartBtn.setOnClickListener(view -> {
             Intent intent = new Intent(RestaurantDetailsActivity.this, CartActivity.class);
@@ -70,8 +67,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String path = "/restaurants/" + restaurant.getId() + "/menuItems";
-        foodRef = database.getReference(path);
+        DatabaseReference foodRef = database.getReference("/restaurants/" + restaurant.getId() + "/menuItems");
+        DatabaseReference orderCountRef = database.getReference("/restaurants/" + restaurant.getId() + "/orderCount");
 
         foodRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -86,6 +83,19 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                 activityResturantDetailsBinding.restaurantDetailsDish.setText(
                         String.valueOf(foodList.size()));
             }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle errors here
+            }});
+
+        orderCountRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                activityResturantDetailsBinding.restaurantDetailsOrders.setText(
+                        String.valueOf(snapshot.getValue()));
+            }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle errors here
