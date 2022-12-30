@@ -1,12 +1,5 @@
 package com.example.wagba;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +8,17 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.wagba.adapter.PopularRestaurantAdapter;
 import com.example.wagba.adapter.RestaurantAdapter;
-import com.example.wagba.database.AppDatabase;
 import com.example.wagba.databinding.ActivityMainBinding;
-import com.example.wagba.databinding.NavigationHeaderBinding;
 import com.example.wagba.model.Restaurant;
 import com.example.wagba.utils.WindowController;
 import com.google.android.material.navigation.NavigationView;
@@ -31,28 +30,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding activityMainBinding;
-    private NavigationHeaderBinding navigationHeaderBinding;
-    private PopularRestaurantAdapter popularFoodAdapter;
-    private RestaurantAdapter restaurantAdapter;
     private Window window;
-    private ActionBarDrawerToggle toggle;
     private FirebaseAuth firebaseAuth;
-    private FirebaseDatabase database;
-    private DatabaseReference restaurantRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         firebaseAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/");
-        restaurantRef = database.getReference("restaurants");
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/");
+        DatabaseReference restaurantRef = database.getReference("restaurants");
 
 
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -60,13 +52,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         window = this.getWindow();
-        WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.secondary_blue));
-        WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
+        WindowController.changeNavigationBarColor(window, ContextCompat.getColor(getApplicationContext(),R.color.secondary_blue));
+        WindowController.changeStatusBarColor(window, ContextCompat.getColor(getApplicationContext(),R.color.white), true);
 
 
         restaurantRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Restaurant> restaurants = new ArrayList<>();
                 for (DataSnapshot childSnapshot: snapshot.getChildren()) {
                     Restaurant restaurant = childSnapshot.getValue(Restaurant.class);
@@ -76,33 +68,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setPopularFoodRecycler(restaurants.subList(0, 3));
             }
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
                 //TODO:: Handle errors
                 Log.w("TAG", "Failed to read value.", error.toException());
             }
         });
 
 
-        activityMainBinding.drawerButton.setOnClickListener(v -> {
-            activityMainBinding.drawer.openDrawer(GravityCompat.END);
-        });
+        activityMainBinding.drawerButton.setOnClickListener(v -> activityMainBinding.drawer.openDrawer(GravityCompat.END));
 
         TextView drawerName = activityMainBinding.navigationView.getHeaderView(0)
                 .findViewById(R.id.drawer_name);
         TextView drawerEmail = activityMainBinding.navigationView.getHeaderView(0)
                 .findViewById(R.id.drawer_email);
-        drawerName.setText(firebaseAuth.getCurrentUser().getDisplayName());
+        if(firebaseAuth.getCurrentUser().getDisplayName() != null){
+            drawerName.setText(firebaseAuth.getCurrentUser().getDisplayName());
+        }
+        else {
+            drawerName.setText("");
+        }
         drawerEmail.setText(firebaseAuth.getCurrentUser().getEmail());
 
-        toggle = new ActionBarDrawerToggle(this, activityMainBinding.drawer,
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, activityMainBinding.drawer,
                 R.string.nav_drawer_open, R.string.nav_drawer_close) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
+                WindowController.changeStatusBarColor(window, ContextCompat.getColor(getApplicationContext(), R.color.white) , true);
             }
+
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                WindowController.changeStatusBarColor(window, getResources().getColor(R.color.dark_blue), false);
+                WindowController.changeStatusBarColor(window, ContextCompat.getColor(getApplicationContext(), R.color.dark_blue), false);
             }
         };
 
@@ -111,12 +107,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         activityMainBinding.navigationView.setNavigationItemSelectedListener(this);
 
 
-        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() == null) {
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                }
+        firebaseAuth.addAuthStateListener(firebaseAuth -> {
+            if (firebaseAuth.getCurrentUser() == null) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
     }
@@ -124,14 +117,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setPopularFoodRecycler(List<Restaurant> foodList){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         activityMainBinding.foodRecycleView.setLayoutManager(layoutManager);
-        popularFoodAdapter = new PopularRestaurantAdapter(this, foodList);
+        PopularRestaurantAdapter popularFoodAdapter = new PopularRestaurantAdapter(this, foodList);
         activityMainBinding.foodRecycleView.setAdapter(popularFoodAdapter);
     }
 
     private void setRestaurantRecycler(List<Restaurant> restaurantList){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         activityMainBinding.restaurantRecycleView.setLayoutManager(layoutManager);
-        restaurantAdapter = new RestaurantAdapter(this, restaurantList);
+        RestaurantAdapter restaurantAdapter = new RestaurantAdapter(this, restaurantList);
         activityMainBinding.restaurantRecycleView.setAdapter(restaurantAdapter);
     }
 
@@ -146,19 +139,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-        switch (menuItem.getItemId()) {
-            case R.id.profileDrawerButton:
-                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-                break;
-            case R.id.historyDrawerButton:
-                startActivity(new Intent(MainActivity.this, HistoryActivity.class));
-                break;
-            case R.id.cartDrawerButton:
-                startActivity(new Intent(MainActivity.this, CartActivity.class));
-                break;
-            case R.id.logOutDrawerButton:
-                firebaseAuth.signOut();
+        if(menuItem.getItemId() == R.id.profileDrawerButton){
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+        } else if (menuItem.getItemId() == R.id.historyDrawerButton) {
+            startActivity(new Intent(MainActivity.this, HistoryActivity.class));
+        } else if (menuItem.getItemId() == R.id.cartDrawerButton) {
+            startActivity(new Intent(MainActivity.this, CartActivity.class));
+        } else if (menuItem.getItemId() == R.id.logOutDrawerButton) {
+            firebaseAuth.signOut();
         }
 
         activityMainBinding.drawer.closeDrawer(GravityCompat.END);
