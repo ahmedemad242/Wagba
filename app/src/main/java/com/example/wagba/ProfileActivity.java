@@ -13,9 +13,11 @@ import com.example.wagba.database.DatabaseManager;
 import com.example.wagba.database.dao.ProfileDao;
 import com.example.wagba.database.entities.Profile;
 import com.example.wagba.databinding.ActivityProfileBinding;
+import com.example.wagba.utils.Validator;
 import com.example.wagba.utils.WindowController;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.Objects;
 
@@ -46,17 +48,41 @@ public class ProfileActivity extends AppCompatActivity {
             ProfileDao profileDao = database.profileDao();
             Profile profile = profileDao.getById(user.getUid());
 
-            String name = profile.name;
-            String email = profile.email;
-
-
-            String profileName = " "+name.split(" ")[0]+"!";
-            activityProfileBinding.profileName.setText(profileName);
-            activityProfileBinding.profileFullName.setText(name);
-            activityProfileBinding.profileEmail.setText(email);
+            updateUiFromRoom(profile.name, profile.email);
         });
 
 
+        activityProfileBinding.profileSave.setOnClickListener(view -> {
+            String name = String.valueOf(activityProfileBinding.profileFullName.getText()).trim();
+
+            if(!Validator.isValidName(name)) {
+                activityProfileBinding.profileFullName.setError("Name should at least be 3 characters");
+                return;
+            }
+
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(name)
+                    .build();
+
+            Objects.requireNonNull(user).updateProfile(profileUpdates)
+                    .addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()) {
+                            AsyncTask.execute(() -> {
+                                ProfileDao profileDao = database.profileDao();
+                                Profile profile = new Profile(user.getUid(), name, user.getEmail());
+                                profileDao.update(profile);
+                            });
+                            updateUiFromRoom(name, user.getEmail());
+                        }  //TODO:: Handle display name not set
+                    });
+            });
+    }
+
+    private void updateUiFromRoom(String name, String email){
+        String profileName = " "+name.split(" ")[0]+"!";
+        activityProfileBinding.profileName.setText(profileName);
+        activityProfileBinding.profileFullName.setText(name);
+        activityProfileBinding.profileEmail.setText(email);
     }
 
     @Override
