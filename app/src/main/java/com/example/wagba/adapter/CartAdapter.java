@@ -66,10 +66,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.minusBtn.setOnClickListener(v -> {
             int quantity = Integer.parseInt((String) holder.quantity.getText());
             if (quantity > 0) {
-                holder.quantity.setText(String.valueOf(quantity - 1));
+                quantity -= 1;
+                holder.quantity.setText(String.valueOf(quantity));
                 Cart.getInstance().minus(cart.getFood(foodIdList.get(position)));
             }
+            if(quantity == 0) {
+                foodIdList.remove(position);
+                notifyItemRemoved(position);
+            }
             updateCartUi.run();
+
         });
     }
 
