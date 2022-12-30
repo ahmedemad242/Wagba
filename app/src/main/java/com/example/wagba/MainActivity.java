@@ -88,18 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         activityMainBinding.drawerButton.setOnClickListener(v -> activityMainBinding.drawer.openDrawer(GravityCompat.END));
 
-        TextView drawerName = activityMainBinding.navigationView.getHeaderView(0)
-                .findViewById(R.id.drawer_name);
-        TextView drawerEmail = activityMainBinding.navigationView.getHeaderView(0)
-                .findViewById(R.id.drawer_email);
-        if(user.getDisplayName() != null){
-            drawerName.setText(user.getDisplayName());
-        }
-        else {
-            drawerName.setText("");
-        }
-        drawerEmail.setText(user.getEmail());
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, activityMainBinding.drawer,
                 R.string.nav_drawer_open, R.string.nav_drawer_close) {
             public void onDrawerClosed(View view) {
@@ -133,6 +121,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateDrawerInfo(user.getDisplayName(), user.getEmail());
+    }
+
     private void setPopularFoodRecycler(List<Restaurant> foodList){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         activityMainBinding.foodRecycleView.setLayoutManager(layoutManager);
@@ -145,6 +139,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         activityMainBinding.restaurantRecycleView.setLayoutManager(layoutManager);
         RestaurantAdapter restaurantAdapter = new RestaurantAdapter(this, restaurantList);
         activityMainBinding.restaurantRecycleView.setAdapter(restaurantAdapter);
+    }
+
+    private void updateDrawerInfo(String name, String email){
+        TextView drawerName = activityMainBinding.navigationView.getHeaderView(0)
+                .findViewById(R.id.drawer_name);
+        TextView drawerEmail = activityMainBinding.navigationView.getHeaderView(0)
+                .findViewById(R.id.drawer_email);
+        drawerName.setText(name);
+        drawerEmail.setText(email);
     }
 
     @Override
