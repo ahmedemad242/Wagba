@@ -1,33 +1,25 @@
 package com.example.wagba;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wagba.adapter.CartAdapter;
 import com.example.wagba.databinding.ActivityCartBinding;
 import com.example.wagba.feeCalculator.delivery.FlatRateDeliveryFeeCalculator;
-import com.example.wagba.feeCalculator.delivery.TieredDeliveryFeeCalculator;
 import com.example.wagba.feeCalculator.tax.FlatTaxCalculator;
 import com.example.wagba.model.Cart;
 import com.example.wagba.model.CartItem;
 import com.example.wagba.model.Order;
 import com.example.wagba.model.OrderItem;
-import com.example.wagba.model.Restaurant;
 import com.example.wagba.utils.WindowController;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,14 +32,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Function;
+import java.util.Objects;
 
 public class CartActivity extends AppCompatActivity {
 
     private ActivityCartBinding activityCartBinding;
-    private CartAdapter cartAdapter;
-    private Window window;
-    private Runnable updateCartUi;
 
 
     @Override
@@ -55,18 +44,18 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Cart cart = Cart.getInstance();
         activityCartBinding = ActivityCartBinding.inflate(getLayoutInflater());
-        getSupportActionBar().setTitle("My Cart");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("My Cart");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(activityCartBinding.getRoot());
-        window = this.getWindow();
-        WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.white));
-        WindowController.changeStatusBarColor(window, getResources().getColor(R.color.dark_blue), false);
+        Window window = this.getWindow();
+        WindowController.changeNavigationBarColor(window, ContextCompat.getColor(getApplicationContext(),R.color.white));
+        WindowController.changeStatusBarColor(window, ContextCompat.getColor(getApplicationContext(),R.color.dark_blue), false);
 
         cart.setTaxCalculator(new FlatTaxCalculator(0.14));
         cart.setDeliveryFeeCalculator(new FlatRateDeliveryFeeCalculator(10.00));
 
-        updateCartUi = () -> {
-            Boolean isCartEmpty = cart.getCartItems().isEmpty();
+        Runnable updateCartUi = () -> {
+            boolean isCartEmpty = cart.getCartItems().isEmpty();
             double subtotal = cart.getSubtotal();
 
             activityCartBinding.cartItemsTotal.setText(
@@ -96,10 +85,9 @@ public class CartActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -107,7 +95,7 @@ public class CartActivity extends AppCompatActivity {
     private void setCartItemRecycler(List<String> foodIdList, Runnable updateCartUi){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         activityCartBinding.cartRecyclerView.setLayoutManager(layoutManager);
-        cartAdapter = new CartAdapter(this, foodIdList, updateCartUi);
+        CartAdapter cartAdapter = new CartAdapter(this, foodIdList, updateCartUi);
         activityCartBinding.cartRecyclerView.setAdapter(cartAdapter);
     }
 
@@ -119,31 +107,22 @@ public class CartActivity extends AppCompatActivity {
                 "delivery at 3:00 pm must order before 1:00 pm");
         LocalDateTime now = LocalDateTime.now();
         if (now.getHour() < 10) {
-            builder.setNegativeButton("12:00PM", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    saveCartToFirebase(cart, "12:00");
-                    startActivity(new Intent(CartActivity.this, HistoryActivity.class));
-                    finish();
-                }
+            builder.setNegativeButton("12:00PM", (dialog, which) -> {
+                saveCartToFirebase(cart, "12:00");
+                startActivity(new Intent(CartActivity.this, HistoryActivity.class));
+                finish();
             });
         }
         if (now.getHour() < 13) {
-            builder.setPositiveButton("3:00PM", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    saveCartToFirebase(cart, "15:00");
-                    startActivity(new Intent(CartActivity.this, HistoryActivity.class));
-                    finish();
-                }
+            builder.setPositiveButton("3:00PM", (dialog, which) -> {
+                saveCartToFirebase(cart, "15:00");
+                startActivity(new Intent(CartActivity.this, HistoryActivity.class));
+                finish();
             });
         }
         if (now.getHour() >= 13) {
-            builder.setPositiveButton("No Delivery Available Now!", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+            builder.setPositiveButton("No Delivery Available Now!", (dialog, which) -> {
 
-                }
             });
         }
 
@@ -154,7 +133,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void saveCartToFirebase(Cart cart, String deliverySlot){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = user.getUid();
+        String userId = Objects.requireNonNull(user).getUid();
         DatabaseReference userOrderRef = FirebaseDatabase
                 .getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("users").child(userId).child("orders").push();
@@ -162,7 +141,7 @@ public class CartActivity extends AppCompatActivity {
 
         DatabaseReference restaurantOrderRef = FirebaseDatabase
                 .getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/")
-                .getReference("restaurants").child(cart.getRestaurant().getId()).child("orders").child(orderId);
+                .getReference("restaurants").child(cart.getRestaurant().getId()).child("orders").child(Objects.requireNonNull(orderId));
 
         Order order = cartToOrder(cart, orderId, userId, deliverySlot);
         userOrderRef.setValue(order);

@@ -1,36 +1,29 @@
 package com.example.wagba;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Window;
+import android.widget.Toast;
 
-import android.view.View;
-import android.view.ViewTreeObserver;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.wagba.database.AppDatabase;
 import com.example.wagba.database.DatabaseManager;
 import com.example.wagba.database.dao.ProfileDao;
 import com.example.wagba.database.entities.Profile;
-import com.example.wagba.databinding.SignUpSheetBinding;
-import com.example.wagba.databinding.SignInSheetBinding;
 import com.example.wagba.databinding.ActivityLoginBinding;
+import com.example.wagba.databinding.SignInSheetBinding;
+import com.example.wagba.databinding.SignUpSheetBinding;
 import com.example.wagba.utils.Validator;
 import com.example.wagba.utils.WindowController;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-import android.view.Window;
-import android.widget.Toast;
+import java.util.Objects;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -41,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private BottomSheet bottomSheet;
     private Window window;
     private FirebaseAuth mAuth;
-    AppDatabase database;
+    private AppDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,91 +44,69 @@ public class LoginActivity extends AppCompatActivity {
 
         loginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         singInSheetBinding = SignInSheetBinding.inflate(getLayoutInflater());
-        singUpSheetBinding = singUpSheetBinding.inflate(getLayoutInflater());
+        singUpSheetBinding = SignUpSheetBinding.inflate(getLayoutInflater());
         setContentView(loginBinding.getRoot());
         window = this.getWindow();
-        WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.white));
-        WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
+        WindowController.changeNavigationBarColor(window, ContextCompat.getColor(getApplicationContext(),R.color.white));
+        WindowController.changeStatusBarColor(window, ContextCompat.getColor(getApplicationContext(),R.color.white), true);
 
-        bottomSheet = new BottomSheet(LoginActivity.this, R.style.bottomSheetTheme, new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                setLightTheme();
-            }
-        });
+        bottomSheet = new BottomSheet(LoginActivity.this, R.style.bottomSheetTheme, dialog -> setLightTheme());
         bottomSheet.setSheetView(singInSheetBinding.getRoot());
 
-        loginBinding.loginLayout.getViewTreeObserver().addOnGlobalLayoutListener(new  ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                Rect r = new Rect();
-                loginBinding.loginLayout.getWindowVisibleDisplayFrame(r);
-                int screenHeight = loginBinding.loginLayout.getRootView().getHeight();
-                int keypadHeight = screenHeight - r.bottom;
-                if (keypadHeight > screenHeight * 0.15) {
-                    bottomSheet.setHeight(0.95);
-                } else {
-                    bottomSheet.setHeight(0.8);
-                }
+        loginBinding.loginLayout.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            Rect r = new Rect();
+            loginBinding.loginLayout.getWindowVisibleDisplayFrame(r);
+            int screenHeight = loginBinding.loginLayout.getRootView().getHeight();
+            int keypadHeight = screenHeight - r.bottom;
+            if (keypadHeight > screenHeight * 0.15) {
+                bottomSheet.setHeight(0.95);
+            } else {
+                bottomSheet.setHeight(0.8);
             }
         });
 
-        loginBinding.signInSheetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSignInBottomSheet();
-                setDarkTheme();
-            }
+        loginBinding.signInSheetButton.setOnClickListener(v -> {
+            showSignInBottomSheet();
+            setDarkTheme();
         });
 
-        singUpSheetBinding.signInSheetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSignInBottomSheet();
-                setDarkTheme();
-            }
+        singUpSheetBinding.signInSheetButton.setOnClickListener(v -> {
+            showSignInBottomSheet();
+            setDarkTheme();
         });
 
-        loginBinding.signUpSheetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSignUpBottomSheet();
-                setDarkTheme();
-            }
+        loginBinding.signUpSheetButton.setOnClickListener(v -> {
+            showSignUpBottomSheet();
+            setDarkTheme();
         });
 
-        singInSheetBinding.signUpSheetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSignUpBottomSheet();
-                setDarkTheme();
-            }
+        singInSheetBinding.signUpSheetButton.setOnClickListener(v -> {
+            showSignUpBottomSheet();
+            setDarkTheme();
         });
 
         singInSheetBinding.signInButton.setOnClickListener(v -> {
             String email = String.valueOf(singInSheetBinding.signInEmailText.getText()).trim();
             String password = String.valueOf(singInSheetBinding.signInPasswordText.getText()).trim();
 
-            if(!Validator.isValidEmail(email)){
+            if(Validator.isInvalidEmail(email)){
                 singInSheetBinding.signInEmailText.setError("We only accept emails from @eng.asu.edu.eg");
                 return;
             }
-            if(!Validator.isValidPassword(password)){
+            if(Validator.isInvalidPassword(password)){
                 singInSheetBinding.signInPasswordText.setError("Password should at least be 6 characters");
                 return;
             }
 
             mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                successfulLogin();
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+//                            FirebaseUser user = mAuth.getCurrentUser();
+
+                            successfulLogin();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     });
         });
@@ -150,11 +121,11 @@ public class LoginActivity extends AppCompatActivity {
                 singUpSheetBinding.signUpNameText.setError("Name should at least be 3 characters");
                 return;
             }
-            if(!Validator.isValidEmail(email)){
+            if(Validator.isInvalidEmail(email)){
                 singUpSheetBinding.signUpEmailText.setError("We only accept emails from @eng.asu.edu.eg");
                 return;
             }
-            if(!Validator.isValidPassword(password)){
+            if(Validator.isInvalidPassword(password)){
                 singUpSheetBinding.signUpPasswordText.setError("Password should at least be 6 characters");
                 return;
             }
@@ -164,42 +135,32 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
 
-                                AsyncTask.execute(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        ProfileDao profileDao = database.profileDao();
-                                        Profile newProfile = new Profile(user.getUid(), name, email);
-                                        profileDao.insert(newProfile);
-                                    }
-                                });
+                            AsyncTask.execute(() -> {
+                                ProfileDao profileDao = database.profileDao();
+                                Profile newProfile = new Profile(Objects.requireNonNull(user).getUid(), name, email);
+                                profileDao.insert(newProfile);
+                            });
 
 
-                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                        .setDisplayName(name)
-                                        .build();
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(name)
+                                    .build();
 
-                                user.updateProfile(profileUpdates)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    successfulLogin();
-                                                } else {
-                                                    //TODO:: Handle display name not set
-                                                }
-                                            }
-                                        });
+                            Objects.requireNonNull(user).updateProfile(profileUpdates)
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            successfulLogin();
+                                        }  //TODO:: Handle display name not set
 
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                                    });
+
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     });
         });
@@ -222,14 +183,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setLightTheme(){
-        WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
-        loginBinding.loginLayout.setBackgroundColor(getResources().getColor(R.color.white));
+        WindowController.changeStatusBarColor(window, ContextCompat.getColor(getApplicationContext(),R.color.white), true);
+        loginBinding.loginLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
         loginBinding.logo.setImageResource(R.drawable.logo_bg_light);
     }
 
     private void setDarkTheme(){
-        WindowController.changeStatusBarColor(window, getResources().getColor(R.color.dark_blue), false);
-        loginBinding.loginLayout.setBackgroundColor(getResources().getColor(R.color.dark_blue));
+        WindowController.changeStatusBarColor(window, ContextCompat.getColor(getApplicationContext(),R.color.dark_blue), false);
+        loginBinding.loginLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.dark_blue));
         loginBinding.logo.setImageResource(R.drawable.logo_bg_dark);
     }
 

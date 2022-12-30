@@ -2,7 +2,6 @@ package com.example.wagba.adapter;
 
 import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import com.example.wagba.utils.ImageUtils;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Function;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     private Context context;
@@ -70,8 +68,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             if (quantity > 0) {
                 holder.quantity.setText(String.valueOf(quantity - 1));
                 Cart.getInstance().minus(cart.getFood(foodIdList.get(position)));
-                updateCartUi.run();
             }
+            updateCartUi.run();
         });
     }
 

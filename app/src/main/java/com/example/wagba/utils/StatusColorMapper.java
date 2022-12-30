@@ -1,15 +1,12 @@
 package com.example.wagba.utils;
 
-import android.graphics.Color;
-import android.util.Log;
-
 import com.example.wagba.R;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class StatusColorMapper {
-    private static Map<String, Integer> statusColorMap;
+    private static final Map<String, Integer> statusColorMap;
 
     static {
         statusColorMap = new HashMap<>();

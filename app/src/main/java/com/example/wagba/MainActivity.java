@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .findViewById(R.id.drawer_name);
         TextView drawerEmail = activityMainBinding.navigationView.getHeaderView(0)
                 .findViewById(R.id.drawer_email);
-        if(firebaseAuth.getCurrentUser().getDisplayName() != null){
+        if(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getDisplayName() != null){
             drawerName.setText(firebaseAuth.getCurrentUser().getDisplayName());
         }
         else {
