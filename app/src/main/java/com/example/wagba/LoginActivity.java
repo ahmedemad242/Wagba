@@ -101,7 +101,13 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
-//                            FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseUser user = Objects.requireNonNull(mAuth.getCurrentUser());
+
+                            AsyncTask.execute(() -> {
+                                ProfileDao profileDao = database.profileDao();
+                                Profile newProfile = new Profile(user.getUid(), user.getDisplayName(), user.getEmail());
+                                profileDao.insert(newProfile);
+                            });
 
                             successfulLogin();
                         } else {

@@ -1,6 +1,7 @@
 package com.example.wagba;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,11 +19,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wagba.adapter.PopularRestaurantAdapter;
 import com.example.wagba.adapter.RestaurantAdapter;
+import com.example.wagba.database.AppDatabase;
+import com.example.wagba.database.DatabaseManager;
+import com.example.wagba.database.dao.ProfileDao;
+import com.example.wagba.database.entities.Profile;
 import com.example.wagba.databinding.ActivityMainBinding;
 import com.example.wagba.model.Restaurant;
 import com.example.wagba.utils.WindowController;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,11 +45,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActivityMainBinding activityMainBinding;
     private Window window;
     private FirebaseAuth firebaseAuth;
+    private AppDatabase appDatabase;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        appDatabase = DatabaseManager.getInstance(this);
         firebaseAuth = FirebaseAuth.getInstance();
+        user = Objects.requireNonNull(firebaseAuth.getCurrentUser());
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://wagba-cadcf-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference restaurantRef = database.getReference("restaurants");
 
@@ -82,13 +92,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .findViewById(R.id.drawer_name);
         TextView drawerEmail = activityMainBinding.navigationView.getHeaderView(0)
                 .findViewById(R.id.drawer_email);
-        if(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getDisplayName() != null){
-            drawerName.setText(firebaseAuth.getCurrentUser().getDisplayName());
+        if(user.getDisplayName() != null){
+            drawerName.setText(user.getDisplayName());
         }
         else {
             drawerName.setText("");
         }
-        drawerEmail.setText(firebaseAuth.getCurrentUser().getEmail());
+        drawerEmail.setText(user.getEmail());
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, activityMainBinding.drawer,
                 R.string.nav_drawer_open, R.string.nav_drawer_close) {
@@ -111,6 +121,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         firebaseAuth.addAuthStateListener(firebaseAuth -> {
             if (firebaseAuth.getCurrentUser() == null) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+
+                AsyncTask.execute(() -> {
+                    ProfileDao profileDao = appDatabase.profileDao();
+                    Profile currentProfile = new Profile(user.getUid(), user.getDisplayName(), user.getEmail());
+                    profileDao.delete(currentProfile);
+                });
+
+                finish();
             }
         });
     }
