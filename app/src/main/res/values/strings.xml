@@ -48,7 +48,7 @@
     <string name="_0">0</string>
     <string name="currency">LE</string>
     <string name="food_name_placeholder">Float Cake</string>
-    <string name="price_placeholder">119.12LE</string>
+    <string name="price_placeholder">119.12</string>
     <string name="order_number_placeholder">Order #</string>
     <string name="status_placeholder">Delivered</string>
     <string name="number_of_items_placeholder">Number of Items: </string>
