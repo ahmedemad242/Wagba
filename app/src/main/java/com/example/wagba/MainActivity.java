@@ -13,10 +13,13 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.example.wagba.adapter.PopularRestaurantAdapter;
 import com.example.wagba.adapter.RestaurantAdapter;
+import com.example.wagba.database.AppDatabase;
 import com.example.wagba.databinding.ActivityMainBinding;
+import com.example.wagba.databinding.NavigationHeaderBinding;
 import com.example.wagba.model.Restaurant;
 import com.example.wagba.utils.WindowController;
 import com.google.android.material.navigation.NavigationView;
@@ -35,15 +38,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding activityMainBinding;
+    private NavigationHeaderBinding navigationHeaderBinding;
     private PopularRestaurantAdapter popularFoodAdapter;
     private RestaurantAdapter restaurantAdapter;
     private Window window;
     private ActionBarDrawerToggle toggle;
-    FirebaseAuth firebaseAuth;
-    FirebaseDatabase database;
-    DatabaseReference restaurantRef;
-
-
+    private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference restaurantRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
-        window = this.getWindow();
 
+
+        window = this.getWindow();
         WindowController.changeNavigationBarColor(window, getResources().getColor(R.color.secondary_blue));
         WindowController.changeStatusBarColor(window, getResources().getColor(R.color.white), true);
-
-
 
 
         restaurantRef.addValueEventListener(new ValueEventListener() {
@@ -74,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setRestaurantRecycler(restaurants);
                 setPopularFoodRecycler(restaurants.subList(0, 3));
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 //TODO:: Handle errors
@@ -86,6 +86,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         activityMainBinding.drawerButton.setOnClickListener(v -> {
             activityMainBinding.drawer.openDrawer(GravityCompat.END);
         });
+
+        TextView drawerName = activityMainBinding.navigationView.getHeaderView(0)
+                .findViewById(R.id.drawer_name);
+        TextView drawerEmail = activityMainBinding.navigationView.getHeaderView(0)
+                .findViewById(R.id.drawer_email);
+        drawerName.setText(firebaseAuth.getCurrentUser().getDisplayName());
+        drawerEmail.setText(firebaseAuth.getCurrentUser().getEmail());
 
         toggle = new ActionBarDrawerToggle(this, activityMainBinding.drawer,
                 R.string.nav_drawer_open, R.string.nav_drawer_close) {
@@ -112,8 +119,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
-
-
     }
 
     private void setPopularFoodRecycler(List<Restaurant> foodList){
