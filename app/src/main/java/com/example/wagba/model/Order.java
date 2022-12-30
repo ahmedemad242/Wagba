@@ -11,10 +11,13 @@ public class Order {
     private String deliverySlot;
     private List<OrderItem> orderItems;
     private String userId;
+    private String deliveryFee;
+    private String taxFee;
 
     public Order() {}
 
-    public Order(String restaurantId, String userId, String deliverySlot, String orderDate, String price, String orderId, String status, List<OrderItem> orderItems) {
+
+    public Order(String restaurantId, String orderDate, String price, String orderId, String status, String deliverySlot, List<OrderItem> orderItems, String userId, String deliveryFee, String taxFee) {
         this.restaurantId = restaurantId;
         this.orderDate = orderDate;
         this.price = price;
@@ -23,6 +26,24 @@ public class Order {
         this.deliverySlot = deliverySlot;
         this.orderItems = orderItems;
         this.userId = userId;
+        this.deliveryFee = deliveryFee;
+        this.taxFee = taxFee;
+    }
+
+    public String getDeliveryFee() {
+        return deliveryFee;
+    }
+
+    public void setDeliveryFee(String deliveryFee) {
+        this.deliveryFee = deliveryFee;
+    }
+
+    public String getTaxFee() {
+        return taxFee;
+    }
+
+    public void setTaxFee(String taxFee) {
+        this.taxFee = taxFee;
     }
 
     public String getRestaurantId() {
