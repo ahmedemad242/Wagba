@@ -33,7 +33,7 @@
             android:autofillHints="name"
             android:hint="@string/full_name"
             android:inputType="textPersonName"
-            android:minHeight="48dp" />
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"             android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/signUpEmailText"
