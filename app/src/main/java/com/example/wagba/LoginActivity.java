@@ -61,7 +61,8 @@ public class LoginActivity extends AppCompatActivity {
             if (keypadHeight > screenHeight * 0.15) {
                 bottomSheet.setHeight(0.95);
             } else {
-                bottomSheet.setHeight(0.8);
+                int logoBottom = loginBinding.logo.getBottom();
+                bottomSheet.setHeight(1 - ((float)logoBottom + (float)getStatusBarHeight())/screenHeight);
             }
         });
 
@@ -197,6 +198,16 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
     }
+
+    private int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
 
     private void setLightTheme(){
         WindowController.changeStatusBarColor(window, ContextCompat.getColor(getApplicationContext(),R.color.white), true);
