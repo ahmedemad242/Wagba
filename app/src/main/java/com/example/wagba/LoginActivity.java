@@ -89,12 +89,15 @@ public class LoginActivity extends AppCompatActivity {
             String email = String.valueOf(singInSheetBinding.signInEmailText.getText()).trim();
             String password = String.valueOf(singInSheetBinding.signInPasswordText.getText()).trim();
 
-            if(Validator.isInvalidEmail(email)){
-                singInSheetBinding.signInEmailText.setError("We only accept emails from @eng.asu.edu.eg");
+            String isInvalidEmail = Validator.isValidEmail(email);
+            if(isInvalidEmail != null){
+                singInSheetBinding.signInEmailText.setError(isInvalidEmail);
                 return;
             }
-            if(Validator.isInvalidPassword(password)){
-                singInSheetBinding.signInPasswordText.setError("Password should at least be 6 characters");
+
+            String isInvalidPassword = Validator.isValidPassword(password);
+            if(isInvalidPassword != null){
+                singInSheetBinding.signInPasswordText.setError(isInvalidPassword);
                 return;
             }
 
@@ -123,20 +126,27 @@ public class LoginActivity extends AppCompatActivity {
             String password = String.valueOf(singUpSheetBinding.signUpPasswordText.getText()).trim();
             String confirmPassword = String.valueOf(singUpSheetBinding.signUpConfirmPasswordText.getText()).trim();
 
-            if(!Validator.isValidName(name)) {
-                singUpSheetBinding.signUpNameText.setError("Name should at least be 3 characters");
+            String isValidName = Validator.isValidName(name);
+            if(isValidName != null) {
+                singUpSheetBinding.signUpNameText.setError(isValidName);
                 return;
             }
-            if(Validator.isInvalidEmail(email)){
-                singUpSheetBinding.signUpEmailText.setError("We only accept emails from @eng.asu.edu.eg");
+
+            String isInvalidEmail = Validator.isValidEmail(email);
+            if(isInvalidEmail != null){
+                singUpSheetBinding.signUpEmailText.setError(isInvalidEmail);
                 return;
             }
-            if(Validator.isInvalidPassword(password)){
-                singUpSheetBinding.signUpPasswordText.setError("Password should at least be 6 characters");
+
+            String isInvalidPassword = Validator.isValidPassword(password);
+            if(isInvalidPassword != null){
+                singUpSheetBinding.signUpPasswordText.setError(isInvalidPassword);
                 return;
             }
-            if(!password.equals(confirmPassword)){
-                singUpSheetBinding.signUpConfirmPasswordText.setError("Should be same as password");
+
+            String isValidConfirmPassword = Validator.isValidConfirmPassword(password, confirmPassword);
+            if(isValidConfirmPassword != null){
+                singUpSheetBinding.signUpConfirmPasswordText.setError(isValidConfirmPassword);
                 return;
             }
 

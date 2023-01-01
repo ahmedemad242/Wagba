@@ -55,8 +55,9 @@ public class ProfileActivity extends AppCompatActivity {
         activityProfileBinding.profileSave.setOnClickListener(view -> {
             String name = String.valueOf(activityProfileBinding.profileFullName.getText()).trim();
 
-            if(!Validator.isValidName(name)) {
-                activityProfileBinding.profileFullName.setError("Name should at least be 3 characters");
+            String isValidName = Validator.isValidName(name);
+            if(isValidName != null) {
+                activityProfileBinding.profileFullName.setError(isValidName);
                 return;
             }
 
